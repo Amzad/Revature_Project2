@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190717151147_M1.cs" />
+    <Compile Remove="Migrations\20190717151147_M1.Designer.cs" />
+    <Compile Remove="Migrations\20190717151259_M1.cs" />
+    <Compile Remove="Migrations\20190717151259_M1.Designer.cs" />
+    <Compile Remove="Migrations\20190717153211_M1.cs" />
+    <Compile Remove="Migrations\20190717153211_M1.Designer.cs" />
+    <Compile Remove="Migrations\20190717170216_M1.cs" />
+    <Compile Remove="Migrations\20190717170216_M1.Designer.cs" />
+    <Compile Remove="Migrations\20190717171137_M1.cs" />
+    <Compile Remove="Migrations\20190717171137_M1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Areas\wwwroot\css\site.css" />
     <Content Include="Areas\wwwroot\favicon.ico" />
     <Content Include="Areas\wwwroot\js\site.js" />

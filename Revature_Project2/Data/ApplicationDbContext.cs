@@ -18,8 +18,9 @@ namespace Revature_Project2.Data
 
 
         //public DbSet<Topping> Toppings { get; set; }
-        public DbSet<Ham> Ham { get; set; }
-        public DbSet<Chicken> Chicken { get; set; }
+        //public DbSet<Ham> Ham { get; set; }
+       // public DbSet<Chicken> Chicken { get; set; }
+       public DbSet<Customer> Customers { get; set; }
 
 
     }

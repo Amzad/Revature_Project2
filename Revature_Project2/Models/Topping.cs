@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 namespace Revature_Project2.Models
 {
     public class Topping
-    { 
+    {
         [Key]
-        public int ID { get; set; }
-        public decimal Price { get;set; }
-        //public ToppingType Type { get; set; }
+        public int ToppingID { get; set; }
+        public string ToppingName { get; set; }
+        public decimal ToppingPrice { get; set; }
+        public string ToppingType { get; set; }
+
+        public int PizzaID { get; set; }
+        public virtual Pizza Pizza { get; set; }
     }
 }

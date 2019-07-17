@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Revature_Project2.Data;
+using Revature_Project2.Models;
 
 namespace Revature_Project2.Areas.Identity.Pages.Account
 {
@@ -39,7 +40,8 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public class InputModel
-        {
+        { 
+            
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
@@ -73,6 +75,8 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public virtual ICollection<Order> Orders { get; set; }
         }
 
         public void OnGet(string returnUrl = null)

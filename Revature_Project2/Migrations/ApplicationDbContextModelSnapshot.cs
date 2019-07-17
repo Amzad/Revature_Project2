@@ -190,34 +190,14 @@ namespace Revature_Project2.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Revature_Project2.Models.Customer", b =>
-                {
-                    b.Property<int>("CustomerID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CustomerAddress");
-
-                    b.Property<string>("CustomerFirstName");
-
-                    b.Property<string>("CustomerLastName");
-
-                    b.Property<string>("CustomerPhoneNumber");
-
-                    b.HasKey("CustomerID");
-
-                    b.ToTable("Customers");
-                });
-
             modelBuilder.Entity("Revature_Project2.Models.Order", b =>
                 {
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CustomerID");
-
-                    b.Property<int?>("CustomerID1");
+                    b.Property<string>("CustomerID")
+                        .IsRequired();
 
                     b.Property<DateTime>("OrderDateTime");
 
@@ -225,9 +205,9 @@ namespace Revature_Project2.Migrations
 
                     b.HasKey("OrderID");
 
-                    b.HasIndex("CustomerID1");
+                    b.HasIndex("CustomerID");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Revature_Project2.Models.OrderDetail", b =>
@@ -336,9 +316,11 @@ namespace Revature_Project2.Migrations
 
             modelBuilder.Entity("Revature_Project2.Models.Order", b =>
                 {
-                    b.HasOne("Revature_Project2.Models.Customer", "Customer")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerID1");
+                        .HasForeignKey("CustomerID")
+                        .HasConstraintName("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Revature_Project2.Models.OrderDetail", b =>

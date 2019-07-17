@@ -10,8 +10,8 @@ using Revature_Project2.Data;
 namespace Revature_Project2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190715204247_Initial4")]
-    partial class Initial4
+    [Migration("20190717181433_M1")]
+    partial class M1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,30 +192,83 @@ namespace Revature_Project2.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Revature_Project2.Models.Chicken", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Order", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Price");
+                    b.Property<string>("CustomerID")
+                        .IsRequired();
 
-                    b.HasKey("ID");
+                    b.Property<DateTime>("OrderDateTime");
 
-                    b.ToTable("Chicken");
+                    b.Property<decimal>("OrderPrice");
+
+                    b.HasKey("OrderID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Revature_Project2.Models.Ham", b =>
+            modelBuilder.Entity("Revature_Project2.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("OrderDetailID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("OrderDetailPrice");
 
-                    b.HasKey("ID");
+                    b.Property<int>("OrderID");
 
-                    b.ToTable("Ham");
+                    b.HasKey("OrderDetailID");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Pizza", b =>
+                {
+                    b.Property<int>("PizzaID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderDetailID");
+
+                    b.Property<string>("PizzaBread");
+
+                    b.Property<string>("PizzaSauce");
+
+                    b.Property<string>("PizzaType");
+
+                    b.HasKey("PizzaID");
+
+                    b.HasIndex("OrderDetailID");
+
+                    b.ToTable("Pizza");
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Topping", b =>
+                {
+                    b.Property<int>("ToppingID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PizzaID");
+
+                    b.Property<string>("ToppingName");
+
+                    b.Property<decimal>("ToppingPrice");
+
+                    b.Property<string>("ToppingType");
+
+                    b.HasKey("ToppingID");
+
+                    b.HasIndex("PizzaID");
+
+                    b.ToTable("Topping");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -260,6 +313,39 @@ namespace Revature_Project2.Migrations
                     b.HasOne("Revature_Project2.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Order", b =>
+                {
+                    b.HasOne("Revature_Project2.Data.ApplicationUser", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerID")
+                        .HasConstraintName("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.OrderDetail", b =>
+                {
+                    b.HasOne("Revature_Project2.Models.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Pizza", b =>
+                {
+                    b.HasOne("Revature_Project2.Models.OrderDetail", "OrderDetail")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("OrderDetailID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Topping", b =>
+                {
+                    b.HasOne("Revature_Project2.Models.Pizza", "Pizza")
+                        .WithMany("Toppings")
+                        .HasForeignKey("PizzaID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

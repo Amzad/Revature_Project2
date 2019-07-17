@@ -10,12 +10,10 @@ namespace Revature_Project2.Models
     {
         [Key]
         public int OrderDetailID { get; set; }
-
-
         public virtual int OrderID { get; set; }
         public decimal OrderDetailPrice { get; set; }
         public virtual Order Order { get; set; }
-
         public virtual ICollection<Pizza> Pizzas { get; set; }
+        public virtual ICollection<Drink> Dinks { get; set; }
     }
 }

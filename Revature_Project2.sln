@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature_Project2", "Revature_Project2\Revature_Project2.csproj", "{C4117F5C-748A-4205-9132-97ABDDB00D9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature_Project2API", "..\Revature_Project2API\Revature_Project2API\Revature_Project2API.csproj", "{F3C707D9-7E4F-40F1-A5AB-365C1BE533B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature_Project2API", "Revature_Project2API\Revature_Project2API.csproj", "{C6861E7A-4421-4E5E-90BF-237C9165FA7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C4117F5C-748A-4205-9132-97ABDDB00D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4117F5C-748A-4205-9132-97ABDDB00D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4117F5C-748A-4205-9132-97ABDDB00D9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3C707D9-7E4F-40F1-A5AB-365C1BE533B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C707D9-7E4F-40F1-A5AB-365C1BE533B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C707D9-7E4F-40F1-A5AB-365C1BE533B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3C707D9-7E4F-40F1-A5AB-365C1BE533B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

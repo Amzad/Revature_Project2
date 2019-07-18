@@ -67,7 +67,7 @@ namespace Revature_Project2.Controllers
                 //GetBranchesError = true;
                 Branches = Array.Empty<GitHubBranch>();
             }
-
+            //Null
 
             return View();
 

@@ -194,6 +194,8 @@ namespace Revature_Project2API.Migrations
 
                     b.Property<string>("CustomerAddress");
 
+                    b.Property<string>("CustomerEmail");
+
                     b.Property<string>("CustomerFirstName");
 
                     b.Property<string>("CustomerLastName");

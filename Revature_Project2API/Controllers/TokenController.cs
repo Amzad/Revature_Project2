@@ -25,7 +25,7 @@
         [AllowAnonymous]
         [Route("api/token")]
         [HttpPost]
-        public async Task<IActionResult> Token([FromBody]Customer user)
+        public async Task<IActionResult> Authenicate([FromBody]Customer user)
         {
             System.Diagnostics.Debug.WriteLine("TokenController TokenMethod");
             Console.WriteLine("TokenController TokenMethod");
@@ -46,7 +46,7 @@
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("rlyaKithdrYVl6Z80ODU350md")); //Secret
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken("me",
@@ -62,6 +62,66 @@
                 token_type = "bearer"
             });
         }
+
+        [AllowAnonymous]
+        [Route("api/create")]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody]Customer user)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Check if username exsits
+            var userIdentified = _context.Customers.FirstOrDefault(u => u.Username == user.Username);
+            if (userIdentified != null)
+            {
+                return Unauthorized("Username already exists");
+            }
+            var emailIdentified = _context.Customers.FirstOrDefault(u => u.CustomerEmail == user.CustomerEmail);
+            if (emailIdentified != null)
+            {
+                return Unauthorized("Email already exists");
+            }
+
+            Customer cust = new Customer()
+            {
+                Username = user.Username,
+                Password = user.Password,
+                CustomerFirstName = user.CustomerFirstName,
+                CustomerLastName = user.CustomerLastName,
+                CustomerEmail = user.CustomerEmail,
+                CustomerAddress = user.CustomerAddress,
+                CustomerPhoneNumber = user.CustomerPhoneNumber,
+                CustomerID = 0
+            };
+            _context.Customers.Add(cust);
+            _context.SaveChanges();
+
+
+            //Add Claims
+            var claims = new[]
+            {
+            new Claim(JwtRegisteredClaimNames.UniqueName, "data"),
+            new Claim(JwtRegisteredClaimNames.Sub, "data"),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken("me",
+                "you",
+                claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+            System.Diagnostics.Debug.WriteLine("TokenController TokenMethod3");
+            return Ok(new
+            {
+                access_token = new JwtSecurityTokenHandler().WriteToken(token),
+                expires_in = DateTime.Now.AddMinutes(30),
+                token_type = "bearer"
+            });
+        }
+
 
     }
 }

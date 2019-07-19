@@ -16,7 +16,7 @@ namespace Revature_Project2.Controllers
     {
         ApplicationDbContext _db;
         private readonly IHttpClientFactory _clientFactory;
-        public IEnumerable<GitHubBranch> Branches { get; private set; }
+        public IEnumerable<Customer> Branches { get; private set; }
         /*public HomeController(ApplicationDbContext db)
         {
             _db = db;
@@ -45,9 +45,13 @@ namespace Revature_Project2.Controllers
              _db.SaveChanges();*/
 
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://api.github.com/repos/Amzad/Revature_Project2/branches");
-            request.Headers.Add("Accept", "application/vnd.github.v3+json");
-            request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
+                "https://localhost:44376/api/customers");
+            //request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            request.Headers.Add("authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRhdGEiLCJzdWIiOiJkYXRhIiwianRpIjoiZTc4Y2I5YTEtNzRjNC00M2EwLWE2YzAtYjYzZGMzN2YyMzBkIiwiZXhwIjoxNTYzNTYwMTE4LCJpc3MiOiJtZSIsImF1ZCI6InlvdSJ9.DnSVJxJbGJdLlxqvTfSjXMIw3kdVYnSBqVmzgcxfKoU");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
 
             var client = _clientFactory.CreateClient();
 
@@ -56,16 +60,14 @@ namespace Revature_Project2.Controllers
             if (response.IsSuccessStatusCode)
             {
                 Branches = await response.Content
-                    .ReadAsAsync<IEnumerable<GitHubBranch>>();
-                foreach (var b in Branches)
-                {
-                    System.Diagnostics.Debug.WriteLine(b.Name);
-                }
+                    .ReadAsAsync<IEnumerable<Customer>>();
+                return View(Branches);
             }
             else
             {
                 //GetBranchesError = true;
-                Branches = Array.Empty<GitHubBranch>();
+                System.Diagnostics.Debug.WriteLine("DAMN");
+                Branches = Array.Empty<Customer>();
             }
             //Null
 

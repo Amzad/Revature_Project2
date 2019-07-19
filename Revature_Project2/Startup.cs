@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Revature_Project2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Revature_Project2
 {

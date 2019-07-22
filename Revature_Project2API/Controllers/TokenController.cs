@@ -30,7 +30,7 @@
             System.Diagnostics.Debug.WriteLine("TokenController TokenMethod");
             Console.WriteLine("TokenController TokenMethod");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var userIdentified = _context.Customers.FirstOrDefault(u => u.Username == user.Username);
+            var userIdentified = _context.Customers.FirstOrDefault(u => u.CustomerEmail == user.CustomerEmail);
             if (userIdentified == null)
             {
                 return Unauthorized();

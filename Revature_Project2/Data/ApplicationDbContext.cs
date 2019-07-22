@@ -18,20 +18,17 @@ namespace Revature_Project2.Data
         }
 
 
-        //public DbSet<Topping> Toppings { get; set; }
-        //public DbSet<Ham> Ham { get; set; }
-        // public DbSet<Chicken> Chicken { get; set; }
         public DbSet<Order> Orders { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            /*base.OnModelCreating(builder);
             builder.Entity<Order>()
                            .HasOne(u => u.Customer)
                            .WithMany(a => a.Orders)
                            .HasForeignKey(k => k.CustomerID)
                            .HasConstraintName("CustomerID")
                            .OnDelete(DeleteBehavior.Cascade)
-                           .IsRequired();
+                           .IsRequired();*/
         }
     }
 }

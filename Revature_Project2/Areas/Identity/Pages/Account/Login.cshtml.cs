@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Revature_Project2.Data;
+using System.Net.Http;
 
 namespace Revature_Project2.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IHttpClientFactory clientFactory)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _clientFactory = clientFactory;
         }
 
         [BindProperty]
@@ -39,7 +42,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            public string Email { get; set; }
+            public string CustomerEmail { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -68,7 +71,33 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                //var result = await _signInManager.
+                using (var client = new HttpClient())
+                {
+                    var response =
+                        client.PostAsJsonAsync(
+                        "https://localhost:44376/api/token",
+                        Input).Result;
+                    //System.Diagnostics.Debug.WriteLine(response.StatusCode.ToString());
+                    if (response != null)
+                    {
+                        ModelState.AddModelError(string.Empty, response.StatusCode.ToString() + response.Content.ReadAsStringAsync().Result);
+                        return Page();
+                    }
+                }
+            }
+            //System.Diagnostics.Debug.WriteLine("HELLO");
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return Page();
+
+                
+
+
+
+
+            /*returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
             {
@@ -97,7 +126,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return Page();*/
         }
     }
 }

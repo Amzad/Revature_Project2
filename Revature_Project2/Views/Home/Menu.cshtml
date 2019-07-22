@@ -70,6 +70,7 @@
         background-image: url('https://img.taste.com.au/YfX0h9hC/taste/2017/10/mexican-taco-pizza-131640-1.jpg');
         font-family: 'Shadows Into Light', cursive;
         font-size: 20px;
+        user-select: none;
     }
 
     .container-itemlist{
@@ -317,78 +318,78 @@
                         <div class="pizza-form-part1 pizza-form-part">
                             <label id="label-title">Choose Your Crust</label>
                             <br>
-                            <input id="radio-crust" type="radio" name="TypeCrust" value="Brooklyn Style" checked>
-                            <label>Brooklyn Style</label><br>
-                            <input id="radio-crust" type="radio" name="TypeCrust" value="Hand Tossed">
-                            <label>Hand Tossed</label><br>
-                            <input id="radio-crust" type="radio" name="TypeCrust" value="Crunchy Thin Crust">
-                            <label>Crunchy Thin Crust</label><br>
-                            <input id="radio-crust" type="radio" name="TypeCrust" value="Handmake Pan">
-                            <label>Handmake Pan</label>
+                            <input id="radio-crust1" type="radio" name="TypeCrust" value="Brooklyn Style" checked>
+                            <label for="radio-crust1">Brooklyn Style</label><br>
+                            <input id="radio-crust2" type="radio" name="TypeCrust" value="Hand Tossed">
+                            <label for="radio-crust2">Hand Tossed</label><br>
+                            <input id="radio-crust3" type="radio" name="TypeCrust" value="Crunchy Thin Crust">
+                            <label for="radio-crust3">Crunchy Thin Crust</label><br>
+                            <input id="radio-crust4" type="radio" name="TypeCrust" value="Handmake Pan">
+                            <label for="radio-crust4">Handmake Pan</label>
                             <br><br>
                             <label id="label-title">Choose Your Size</label>
                             <br>
-                            <input type="radio" name="SizeCrust" value=123 checked>
-                            <label>10" Small</label>
-                            <input type="radio" name="SizeCrust">
-                            <label>12" Medium</label>
-                            <input type="radio" name="SizeCrust">
-                            <label>14" Large</label>
-                            <input type="radio" name="SizeCrust">
-                            <label>16" X-Large</label>
+                            <input id="radio-crustSize1" type="radio" name="SizeCrust" value=123 checked>
+                            <label for="radio-crustSize1">10" Small</label>
+                            <input id="radio-crustSize2" type="radio" name="SizeCrust">
+                            <label for="radio-crustSize2">12" Medium</label>
+                            <input id="radio-crustSize3" type="radio" name="SizeCrust">
+                            <label for="radio-crustSize3">14" Large</label>
+                            <input id="radio-crustSize4" type="radio" name="SizeCrust">
+                            <label for="radio-crustSize4">16" X-Large</label>
                         </div>
 
                         <div class="pizza-form-part2 pizza-form-part" style="display:none">
                             <label id="label-title">Do you want cheese?</label>
                             <br>
-                            <input type="radio" name="isCheese" checked>
-                            <label>Yes</label>
-                            <input type="radio" name="isCheese">
-                            <label>No</label>
+                            <input id="radio-cheese-yes" type="radio" name="isCheese" checked>
+                            <label for="radio-cheese-yes">Yes</label>
+                            <input id="radio-cheese-no" type="radio" name="isCheese">
+                            <label for="radio-cheese-no">No</label>
                             <br><br>
                             <label id="label-title">Choose a Sauce</label>
                             <br>
-                            <input type="radio" name="TypeSause" value="BBQ Sauce" checked>
-                            <label>BBQ Sauce</label><br>
-                            <input type="radio" name="TypeSause" value="Alfredo Sauce">
-                            <label>Alfredo Sauce</label><br>
-                            <input type="radio" name="TypeSause" value="Robust Inspired Tomato Sauce">
-                            <label>Robust Inspired Tomato Sauce</label><br>
-                            <input type="radio" name="TypeSause" value="Garlic Parmesan White Sauce">
-                            <label>Garlic Parmesan White Sauce</label><br>
-                            <input type="radio" name="TypeSause" value="Hearty Marinara Sauce">
-                            <label>Hearty Marinara Sauce</label><br>
-                            <input type="radio" name="TypeSause">
-                            <label>None</label>
+                            <input id="radio-sauce1" type="radio" name="TypeSause" value="BBQ Sauce" checked>
+                            <label for="radio-sauce1">BBQ Sauce</label><br>
+                            <input id="radio-sauce2" type="radio" name="TypeSause" value="Alfredo Sauce">
+                            <label for="radio-sauce2">Alfredo Sauce</label><br>
+                            <input id="radio-sauce3" type="radio" name="TypeSause" value="Robust Inspired Tomato Sauce">
+                            <label for="radio-sauce3">Robust Inspired Tomato Sauce</label><br>
+                            <input id="radio-sauce4" type="radio" name="TypeSause" value="Garlic Parmesan White Sauce">
+                            <label for="radio-sauce4">Garlic Parmesan White Sauce</label><br>
+                            <input id="radio-sauce5" type="radio" name="TypeSause" value="Hearty Marinara Sauce">
+                            <label for="radio-sauce5">Hearty Marinara Sauce</label><br>
+                            <input id="radio-sauce6" type="radio" name="TypeSause">
+                            <label for="radio-sauce6">None</label>
                         </div>
 
                         <div class="pizza-form-part3 pizza-form-part" style="display:none">
                             <label id="label-title">Choose Toppings</label>
                             <br>
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping1</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping2</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping3</label><br>
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping4</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping5</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping6</label><br>
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping7</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping8</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping9</label><br>
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping10</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping11</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping">
-                            <label>Topping12</label><br>
+                            <input id="check-topping1" type="checkbox" name="TypeTopping">
+                            <label for="check-topping1">Topping1</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping2" type="checkbox" name="TypeTopping">
+                            <label for="check-topping2">Topping2</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping3" type="checkbox" name="TypeTopping">
+                            <label for="check-topping3">Topping3</label><br>
+                            <input id="check-topping4" type="checkbox" name="TypeTopping">
+                            <label for="check-topping4">Topping4</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping5" type="checkbox" name="TypeTopping">
+                            <label for="check-topping5">Topping5</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping6" type="checkbox" name="TypeTopping">
+                            <label for="check-topping6">Topping6</label><br>
+                            <input id="check-topping7" type="checkbox" name="TypeTopping">
+                            <label for="check-topping7">Topping7</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping8" type="checkbox" name="TypeTopping">
+                            <label for="check-topping8">Topping8</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping9" type="checkbox" name="TypeTopping">
+                            <label for="check-topping9">Topping9</label><br>
+                            <input id="check-topping10" type="checkbox" name="TypeTopping">
+                            <label for="check-topping10">Topping10</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping11" type="checkbox" name="TypeTopping">
+                            <label for="check-topping11">Topping11</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping12" type="checkbox" name="TypeTopping">
+                            <label for="check-topping12">Topping12</label><br>
                         </div>
                     </form>
                     <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
@@ -481,3 +482,4 @@
     </div>
 
 </body>
+

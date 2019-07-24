@@ -1,6 +1,7 @@
 ﻿namespace Revature_Project2API.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Security.Claims;
@@ -25,7 +26,7 @@
         [AllowAnonymous]
         [Route("api/token")]
         [HttpPost]
-        public async Task<IActionResult> Authenicate([FromBody]Customer user)
+        public async Task<IActionResult> Authenticate([FromBody]Customer user)
         {
             System.Diagnostics.Debug.WriteLine("TokenController TokenMethod");
             Console.WriteLine("TokenController TokenMethod");
@@ -39,11 +40,14 @@
             user = userIdentified;
 
             //Add Claims
-            var claims = new[]
+            var claims = new List<Claim>
             {
             new Claim(JwtRegisteredClaimNames.UniqueName, "data"),
             new Claim(JwtRegisteredClaimNames.Sub, "data"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            //new Claim(JwtRegisteredClaimNames.Email, user.CustomerEmail ),
+            //new Claim(JwtRegisteredClaimNames.GivenName, userIdentified.CustomerFirstName),
+            //new Claim(JwtRegisteredClaimNames.FamilyName, userIdentified.CustomerLastName)
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
@@ -59,8 +63,13 @@
             {
                 access_token = new JwtSecurityTokenHandler().WriteToken(token),
                 expires_in = DateTime.Now.AddMinutes(30),
-                token_type = "bearer"
-            });
+                token_type = "bearer",
+                firstName = userIdentified.CustomerFirstName,
+                lastName = userIdentified.CustomerLastName,
+                customerID = userIdentified.CustomerID,
+                email = userIdentified.CustomerEmail
+
+            }); ;
         }
 
         [AllowAnonymous]

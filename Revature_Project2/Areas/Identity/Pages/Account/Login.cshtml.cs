@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Revature_Project2.Models;
 
 namespace Revature_Project2.Areas.Identity.Pages.Account
 {
@@ -80,8 +81,11 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
 
                 returnUrl = returnUrl ?? Url.Content("~/");
 
+                Customer cust = new Customer();
+                cust.CustomerEmail = Input.CustomerEmail;
+                cust.Password = Input.Password;
                 var httpClient = _clientFactory.CreateClient("API");
-                var response = await httpClient.PostAsJsonAsync("https://localhost:5002/authenticate", Input);
+                var response = await httpClient.PostAsJsonAsync("https://localhost:44376/api/token", cust);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
@@ -89,7 +93,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
                     Dictionary<string, string> tokenDictionary =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
 
-                    var token = tokenDictionary["token"];
+                    var access_token = tokenDictionary["access_token"];
                     var Email = tokenDictionary["email"];
                     var firstName = tokenDictionary["firstName"];
                     var lastName = tokenDictionary["lastName"];
@@ -104,7 +108,12 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
                     };
                     var iden = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(iden);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    await _signInManager
+                    var result = await _signInManager.PasswordSignInAsync(Input.CustomerEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+
+
                     return LocalRedirect(returnUrl);
 
                 }

@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Revature_Project2
 {
@@ -47,27 +48,14 @@ namespace Revature_Project2
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            // move to env variables
-            var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef"));
-            const string TokenAudience = "Myself";
-            const string TokenIssuer = "MyProject";
+            //move to env variables
+            //var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef"));
+            //const string TokenAudience = "Myself";
+            //const string TokenIssuer = "MyProject";
 
-            services.AddAuthentication(options =>
-            {
-                // This causes the default authentication scheme to be JWT.
-                // Without this, the Authorization header is not checked and
-                // you'll get no results. However, this also means that if
-                // you're already using cookies in your app, they won't be 
-                // checked by default.
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters.ValidateIssuerSigningKey = true;
-        options.TokenValidationParameters.IssuerSigningKey = symmetricKey;
-        options.TokenValidationParameters.ValidAudience = TokenAudience;
-        options.TokenValidationParameters.ValidIssuer = TokenIssuer;
-    });
+            services.AddAuthentication();
+
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
         }

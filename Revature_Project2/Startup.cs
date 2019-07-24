@@ -38,26 +38,36 @@ namespace Revature_Project2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Default  Identity
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            // move to env variables
-            var sharedKey = new SymmetricSecurityKey(
-    Encoding.UTF8.GetBytes("1234567890abcdef"));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(options =>
-{
-    options.Authority = "https://localhost/api/token";
-    options.Audience = "me";
-    options.TokenValidationParameters = new TokenValidationParameters
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            // move to env variables
+            var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef"));
+            const string TokenAudience = "Myself";
+            const string TokenIssuer = "MyProject";
+
+            services.AddAuthentication(options =>
+            {
+                // This causes the default authentication scheme to be JWT.
+                // Without this, the Authorization header is not checked and
+                // you'll get no results. However, this also means that if
+                // you're already using cookies in your app, they won't be 
+                // checked by default.
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+    .AddJwtBearer(options =>
     {
-        // Specify the key used to sign the token:
-        IssuerSigningKey = sharedKey,
-        RequireSignedTokens = true,
-        // Other options...
-    };
-});
+        options.TokenValidationParameters.ValidateIssuerSigningKey = true;
+        options.TokenValidationParameters.IssuerSigningKey = symmetricKey;
+        options.TokenValidationParameters.ValidAudience = TokenAudience;
+        options.TokenValidationParameters.ValidIssuer = TokenIssuer;
+    });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
         }

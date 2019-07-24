@@ -13,6 +13,8 @@ using Revature_Project2.Data;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Revature_Project2.Areas.Identity.Pages.Account
 {
@@ -75,59 +77,64 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+
                 returnUrl = returnUrl ?? Url.Content("~/");
-                using (var client = new HttpClient())
+
+                var httpClient = _clientFactory.CreateClient("API");
+                var response = await httpClient.PostAsJsonAsync("https://localhost:5002/authenticate", Input);
+                if (response.IsSuccessStatusCode)
                 {
-                    var response =
-                        client.PostAsJsonAsync(
-                        "https://localhost:44376/api/token",
-                        Input).Result;
-                    if (response != null)
-                    {
-                        var result = response.Content.ReadAsStringAsync().Result;
+                    var result = response.Content.ReadAsStringAsync().Result;
 
-                        // Deserialize the JSON into a Dictionary<string, string>
-                        Dictionary<string, string> tokenDictionary =
+                    Dictionary<string, string> tokenDictionary =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-                        /*foreach (KeyValuePair<string,string> s in tokenDictionary)
-                        {
-                            ModelState.AddModelError(string.Empty, s.Key + s.Value);
-                        }*/
-                        //_signInManager.SignInAsync();
-                        var token = tokenDictionary["token"];
 
-                        return Page();
-                    }
+                    var token = tokenDictionary["token"];
+                    var Email = tokenDictionary["email"];
+                    var firstName = tokenDictionary["firstName"];
+                    var lastName = tokenDictionary["lastName"];
+
+                   
+                    var claims = new List<Claim>
+                    {  
+                        new Claim(ClaimTypes.Email, Email ),
+                        new Claim("firstName", firstName),
+                        new Claim("lastName", lastName)
+                        // add other claimsas you want ...
+                    };
+                    var iden = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(iden);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    return LocalRedirect(returnUrl);
+
                 }
+                else
+                {
+                    ModelState.AddModelError("Password", "Invalid password");
+                    return Page();
+                }
+
+                //return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
 
-                
 
 
 
 
-            /*returnUrl = returnUrl ?? Url.Content("~/");
+
+            returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.CustomerEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
                 }
                 else
                 {
@@ -137,7 +144,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();*/
+            return Page();
         }
     }
 }

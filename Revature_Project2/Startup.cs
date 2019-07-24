@@ -14,6 +14,8 @@ using Revature_Project2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Revature_Project2
 {
@@ -36,14 +38,26 @@ namespace Revature_Project2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            // move to env variables
+            var sharedKey = new SymmetricSecurityKey(
+    Encoding.UTF8.GetBytes("1234567890abcdef"));
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.Authority = "https://localhost/api/token";
+    options.Audience = "me";
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        // Specify the key used to sign the token:
+        IssuerSigningKey = sharedKey,
+        RequireSignedTokens = true,
+        // Other options...
+    };
+});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
         }

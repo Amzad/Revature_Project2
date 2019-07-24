@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Revature_Project2.Data;
 using System.Net.Http;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Revature_Project2.Areas.Identity.Pages.Account
 {
@@ -73,22 +75,31 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                //var result = await _signInManager.
+                returnUrl = returnUrl ?? Url.Content("~/");
                 using (var client = new HttpClient())
                 {
                     var response =
                         client.PostAsJsonAsync(
                         "https://localhost:44376/api/token",
                         Input).Result;
-                    //System.Diagnostics.Debug.WriteLine(response.StatusCode.ToString());
                     if (response != null)
                     {
-                        ModelState.AddModelError(string.Empty, response.StatusCode.ToString() + response.Content.ReadAsStringAsync().Result);
+                        var result = response.Content.ReadAsStringAsync().Result;
+
+                        // Deserialize the JSON into a Dictionary<string, string>
+                        Dictionary<string, string> tokenDictionary =
+                            JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+                        /*foreach (KeyValuePair<string,string> s in tokenDictionary)
+                        {
+                            ModelState.AddModelError(string.Empty, s.Key + s.Value);
+                        }*/
+                        //_signInManager.SignInAsync();
+                        var token = tokenDictionary["token"];
+
                         return Page();
                     }
                 }
             }
-            //System.Diagnostics.Debug.WriteLine("HELLO");
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
 

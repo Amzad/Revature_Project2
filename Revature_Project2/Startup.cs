@@ -13,6 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Revature_Project2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Revature_Project2
 {
@@ -35,13 +39,25 @@ namespace Revature_Project2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Default  Identity
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //move to env variables
+            //var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef"));
+            //const string TokenAudience = "Myself";
+            //const string TokenIssuer = "MyProject";
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(o => {
+            o.LoginPath = "/Identity/Account/Login";
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
@@ -67,6 +83,7 @@ namespace Revature_Project2
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

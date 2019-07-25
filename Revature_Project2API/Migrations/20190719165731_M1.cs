@@ -60,6 +60,7 @@ namespace Revature_Project2API.Migrations
                     CustomerLastName = table.Column<string>(nullable: true),
                     CustomerAddress = table.Column<string>(nullable: true),
                     CustomerPhoneNumber = table.Column<string>(nullable: true),
+                    CustomerEmail = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },

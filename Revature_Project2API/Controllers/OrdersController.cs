@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Revature_Project2API.Data;
 using Revature_Project2API.Models;
 
@@ -30,16 +33,20 @@ namespace Revature_Project2API.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult> GetOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            string custID = id.ToString();
+            //IEnumerable<Order> order = await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
+            //IEnumerable<Order> order = await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
+            Order order = _context.Orders.Where(x => x.CustomerID == custID).First();
+            string var2 = JsonConvert.SerializeObject(order);
+            var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
+            //if (order == null)
+            //{
+            //    return NotFound();
+            //}
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return order;
+            return httpContent;
         }
 
         // PUT: api/Orders/5

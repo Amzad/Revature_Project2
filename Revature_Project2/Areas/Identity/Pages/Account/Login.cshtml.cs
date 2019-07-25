@@ -81,9 +81,11 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
 
                 returnUrl = returnUrl ?? Url.Content("~/");
 
-                Customer cust = new Customer();
-                cust.CustomerEmail = Input.CustomerEmail;
-                cust.Password = Input.Password;
+                Customer cust = new Customer()
+                {
+                    CustomerEmail = Input.CustomerEmail,
+                    Password = Input.Password
+                };
                 var httpClient = _clientFactory.CreateClient("API");
                 var response = await httpClient.PostAsJsonAsync("https://localhost:44376/api/token", cust);
                 if (response.IsSuccessStatusCode)
@@ -98,20 +100,44 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
                     var firstName = tokenDictionary["firstName"];
                     var lastName = tokenDictionary["lastName"];
 
-                   
+
                     var claims = new List<Claim>
-                    {  
+                    {
                         new Claim(ClaimTypes.Email, Email ),
                         new Claim("firstName", firstName),
-                        new Claim("lastName", lastName)
-                        // add other claimsas you want ...
+                        new Claim("lastName", lastName),
+                        new Claim("access_token", access_token)
+                        // add other claims as you want ...
                     };
                     var iden = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        AllowRefresh = true,
+                        // Refreshing the authentication session should be allowed.
+
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(29),
+                        // The time at which the authentication ticket expires. A 
+                        // value set here overrides the ExpireTimeSpan option of 
+                        // CookieAuthenticationOptions set with AddCookie.
+
+                        IsPersistent = true
+                        // Whether the authentication session is persisted across 
+                        // multiple requests. When used with cookies, controls
+                        // whether the cookie's lifetime is absolute (matching the
+                        // lifetime of the authentication ticket) or session-based.
+
+                        //IssuedUtc = <DateTimeOffset>,
+                        // The time at which the authentication ticket was issued.
+
+                        //RedirectUri = <string>
+                        // The full path or absolute URI to be used as an http 
+                        // redirect response value.
+                    };
                     var principal = new ClaimsPrincipal(iden);
 
-                    await _signInManager
-                    var result = await _signInManager.PasswordSignInAsync(Input.CustomerEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
+                    //var result = await _signInManager.PasswordSignInAsync(Input.CustomerEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
 
                     return LocalRedirect(returnUrl);

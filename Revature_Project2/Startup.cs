@@ -53,9 +53,12 @@ namespace Revature_Project2
             //const string TokenAudience = "Myself";
             //const string TokenIssuer = "MyProject";
 
-            services.AddAuthentication();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(o => {
+            o.LoginPath = "/Identity/Account/Login";
+            });
 
-           
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
         }
@@ -80,6 +83,7 @@ namespace Revature_Project2
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

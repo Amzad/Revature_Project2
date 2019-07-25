@@ -9,7 +9,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Revature_Project2API.Data;
     using Revature_Project2API.Models;
@@ -44,10 +43,7 @@
             {
             new Claim(JwtRegisteredClaimNames.UniqueName, "data"),
             new Claim(JwtRegisteredClaimNames.Sub, "data"),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            //new Claim(JwtRegisteredClaimNames.Email, user.CustomerEmail ),
-            //new Claim(JwtRegisteredClaimNames.GivenName, userIdentified.CustomerFirstName),
-            //new Claim(JwtRegisteredClaimNames.FamilyName, userIdentified.CustomerLastName)
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
@@ -79,56 +75,59 @@
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            // Check if username exsits
-            var userIdentified = _context.Customers.FirstOrDefault(u => u.Username == user.Username);
+            var userIdentified = _context.Customers.FirstOrDefault(u => u.CustomerEmail == user.CustomerEmail);
             if (userIdentified != null)
             {
                 return Unauthorized("Username already exists");
             }
-            var emailIdentified = _context.Customers.FirstOrDefault(u => u.CustomerEmail == user.CustomerEmail);
-            if (emailIdentified != null)
+            else 
             {
-                return Unauthorized("Email already exists");
-            }
-
-            Customer cust = new Customer()
-            {
-                Username = user.Username,
-                Password = user.Password,
-                CustomerFirstName = user.CustomerFirstName,
-                CustomerLastName = user.CustomerLastName,
-                CustomerEmail = user.CustomerEmail,
-                CustomerAddress = user.CustomerAddress,
-                CustomerPhoneNumber = user.CustomerPhoneNumber,
-                CustomerID = 0
-            };
-            _context.Customers.Add(cust);
-            _context.SaveChanges();
+                Customer cust = new Customer()
+                {
+                    Username = user.Username,
+                    Password = user.Password,
+                    CustomerFirstName = user.CustomerFirstName,
+                    CustomerLastName = user.CustomerLastName,
+                    CustomerEmail = user.CustomerEmail,
+                    CustomerAddress = user.CustomerAddress,
+                    CustomerPhoneNumber = user.CustomerPhoneNumber,
+                    CustomerID = 0
+                };
+                _context.Customers.Add(cust);
+                _context.SaveChanges();
 
 
-            //Add Claims
-            var claims = new[]
-            {
+                //Add Claims
+                var claims = new[]
+                {
             new Claim(JwtRegisteredClaimNames.UniqueName, "data"),
             new Claim(JwtRegisteredClaimNames.Sub, "data"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890abcdef")); //Secret
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken("me",
-                "you",
-                claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
-            System.Diagnostics.Debug.WriteLine("TokenController TokenMethod3");
-            return Ok(new
-            {
-                access_token = new JwtSecurityTokenHandler().WriteToken(token),
-                expires_in = DateTime.Now.AddMinutes(30),
-                token_type = "bearer"
-            });
+                var token = new JwtSecurityToken("me",
+                    "you",
+                    claims,
+                    expires: DateTime.Now.AddMinutes(30),
+                    signingCredentials: creds);
+                System.Diagnostics.Debug.WriteLine("TokenController TokenMethod3");
+                var accesstoken = new JwtSecurityTokenHandler().WriteToken(token);
+
+                return Ok(new
+                {
+                    access_token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expires_in = DateTime.Now.AddMinutes(30),
+                    token_type = "bearer",
+                    firstName = user.CustomerFirstName,
+                    lastName = user.CustomerLastName,
+                    customerID = user.CustomerID,
+                    email = user.CustomerEmail
+                });
+
+            }
         }
 
 

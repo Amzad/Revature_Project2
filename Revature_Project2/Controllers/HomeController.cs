@@ -50,12 +50,14 @@ namespace Revature_Project2.Controllers
                 new Topping() { ToppingName = "Potter", ToppingPrice = 25 },
                 new Topping() { ToppingName = "Ron", ToppingPrice = 30 }
             };
+            
             fPizza.Toppings = fTopping;
             fPizza.PizzaBread = "Cheesy";
             fPizza.PizzaSauce = "BBQ";
             fDetail.OrderDetailPrice = 90;
             fDetail.Pizzas.Add(fPizza);
             fakeOrder.PizzaDetails.Add(fDetail);
+            fakeOrder.OrderPrice = 100;
             fakeOrder.CustomerID = User.FindFirstValue("customerID");
 
 

@@ -10,7 +10,7 @@ using Revature_Project2API.Data;
 namespace Revature_Project2API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190718144035_M1")]
+    [Migration("20190719165731_M1")]
     partial class M1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -195,6 +195,8 @@ namespace Revature_Project2API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CustomerAddress");
+
+                    b.Property<string>("CustomerEmail");
 
                     b.Property<string>("CustomerFirstName");
 

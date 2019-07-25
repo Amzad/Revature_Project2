@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Menu";
 }
 
@@ -8,21 +7,18 @@
 <script>
     var slideIndex = 1;
     showDivs(slideIndex);
-
     function plusDivs(n) {
-        showDivs(slideIndex += n);
+      showDivs(slideIndex += n);
     }
-
     function showDivs(n) {
         var i;
         var x = document.getElementsByClassName("pizza-form-part");
-        if (n > x.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = x.length };
+        if (n > x.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = x.length} ;
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
         x[slideIndex - 1].style.display = "block";
-
         if (slideIndex == 1) {
             document.getElementById("btn-prev").style.display = "none";
             document.getElementById("btn-next").style.display = "inline";
@@ -38,31 +34,26 @@
             document.getElementById("btn-prev").style.display = "inline";
             document.getElementById("btn-addToOrder").style.display = "inline";
         }
-
     }
-
     function pop(div) {
         slideIndex = 1;
         showDivs(slideIndex);
         document.getElementById(div).style.display = "block";
         document.getElementById("container-shoppingCart").style.display = "none";
     }
-
     function hide(div) {
         document.getElementById(div).style.display = "none";
         document.getElementById("container-shoppingCart").style.display = "block";
         document.getElementById("pizza-form").reset();
-        document.getElementById('items-specialityPizza').scrollTop = 0;
+        document.getElementById('items-specialityPizza').scrollTop =0;
 
     }
-
     function addToCart(div) {
         alert("Added");
         document.getElementById(div).style.display = "none";
         document.getElementById("container-shoppingCart").style.display = "block";
         document.getElementById("pizza-form").reset();
     }
-
 </script>
 
 <style>
@@ -273,7 +264,6 @@
         margin-bottom: 10px;
     }
 
-
     #items-drinks::-webkit-scrollbar-track, #items-specialityPizza::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
@@ -379,11 +369,11 @@
                             <input id="check-topping12" type="checkbox" name="TypeTopping">
                             <label for="check-topping12">Topping12</label><br>
                         </div>
-                        <input type="button" id="btn-prev" onclick="plusDivs(-1)" style="display:none" value="Prev" />
-                        <input type="button" id="btn-next" onclick="plusDivs(1)" value="Next" />
-                        <input type="button" id="btn-close" onclick="hide('popmenu-buildOwnPizza')" value="Cancel" />
-                        <input type="submit" id="btn-addToOrder" onclick="addToCart('popmenu-buildOwnPizza')" value="Add to Order" />
                     </form>
+                    <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
+                    <button id="btn-next" onclick="plusDivs(1)">Next</button>
+                    <button id="btn-close" onclick="hide('popmenu-buildOwnPizza')"> Cancel </button>
+                    <button id="btn-addToOrder" onclick="addToCart('popmenu-buildOwnPizza')">Add to Order</button>
                 </div>
             </div>
 

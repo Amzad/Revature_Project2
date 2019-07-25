@@ -12,46 +12,46 @@ namespace Revature_Project2API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzasController : ControllerBase
+    public class DrinksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public PizzasController(ApplicationDbContext context)
+        public DrinksController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Pizzas
+        // GET: api/Drinks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pizza>>> GetPizzas()
+        public async Task<ActionResult<IEnumerable<Drink>>> GetDrinks()
         {
-            return await _context.Pizzas.ToListAsync();
+            return await _context.Drinks.ToListAsync();
         }
 
-        // GET: api/Pizzas/5
+        // GET: api/Drinks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pizza>> GetPizza(int id)
+        public async Task<ActionResult<Drink>> GetDrink(int id)
         {
-            var pizza = await _context.Pizzas.FindAsync(id);
+            var drink = await _context.Drinks.FindAsync(id);
 
-            if (pizza == null)
+            if (drink == null)
             {
                 return NotFound();
             }
 
-            return pizza;
+            return drink;
         }
 
-        // PUT: api/Pizzas/5
+        // PUT: api/Drinks/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizza(int id, Pizza pizza)
+        public async Task<IActionResult> PutDrink(int id, Drink drink)
         {
-            if (id != pizza.PizzaID)
+            if (id != drink.DrinkID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizza).State = EntityState.Modified;
+            _context.Entry(drink).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace Revature_Project2API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaExists(id))
+                if (!DrinkExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +72,35 @@ namespace Revature_Project2API.Controllers
             return NoContent();
         }
 
-        // POST: api/Pizzas
+        // POST: api/Drinks
         [HttpPost]
-        public async Task<ActionResult<Pizza>> PostPizza(Pizza pizza)
+        public async Task<ActionResult<Drink>> PostDrink(Drink drink)
         {
-            _context.Pizzas.Add(pizza);
+            _context.Drinks.Add(drink);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizza", new { id = pizza.PizzaID }, pizza);
+            return CreatedAtAction("GetDrink", new { id = drink.DrinkID }, drink);
         }
 
-        // DELETE: api/Pizzas/5
+        // DELETE: api/Drinks/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Pizza>> DeletePizza(int id)
+        public async Task<ActionResult<Drink>> DeleteDrink(int id)
         {
-            var pizza = await _context.Pizzas.FindAsync(id);
-            if (pizza == null)
+            var drink = await _context.Drinks.FindAsync(id);
+            if (drink == null)
             {
                 return NotFound();
             }
 
-            _context.Pizzas.Remove(pizza);
+            _context.Drinks.Remove(drink);
             await _context.SaveChangesAsync();
 
-            return pizza;
+            return drink;
         }
 
-        private bool PizzaExists(int id)
+        private bool DrinkExists(int id)
         {
-            return _context.Pizzas.Any(e => e.PizzaID == id);
+            return _context.Drinks.Any(e => e.DrinkID == id);
         }
     }
 }

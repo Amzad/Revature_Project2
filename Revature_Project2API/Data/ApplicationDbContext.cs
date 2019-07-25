@@ -28,9 +28,10 @@ namespace Revature_Project2API.Data
                            .OnDelete(DeleteBehavior.Cascade)
                            .IsRequired();*/
         }
-        public DbSet<Revature_Project2API.Models.Order> Order { get; set; }
-        public DbSet<Revature_Project2API.Models.OrderDetail> OrderDetail { get; set; }
-        public DbSet<Revature_Project2API.Models.Pizza> Pizza { get; set; }
-        public DbSet<Revature_Project2API.Models.Topping> Topping { get; set; }
+        public DbSet<Revature_Project2API.Models.Order> Orders { get; set; }
+        public DbSet<Revature_Project2API.Models.PizzaDetail> PizzaDetails { get; set; }
+        public DbSet<Revature_Project2API.Models.Pizza> Pizzas { get; set; }
+        public DbSet<Revature_Project2API.Models.Topping> Toppings { get; set; }
+        public DbSet<Revature_Project2API.Models.Drink> Drinks { get; set; }
     }
 }

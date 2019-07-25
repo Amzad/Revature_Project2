@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ using Revature_Project2API.Models;
 namespace Revature_Project2API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -25,16 +23,16 @@ namespace Revature_Project2API.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Order.ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var order = await _context.Order.FindAsync(id);
+            var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
             {
@@ -78,7 +76,7 @@ namespace Revature_Project2API.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.Order.Add(order);
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
@@ -88,13 +86,13 @@ namespace Revature_Project2API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Order>> DeleteOrder(int id)
         {
-            var order = await _context.Order.FindAsync(id);
+            var order = await _context.Orders.FindAsync(id);
             if (order == null)
             {
                 return NotFound();
             }
 
-            _context.Order.Remove(order);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
             return order;
@@ -102,7 +100,7 @@ namespace Revature_Project2API.Controllers
 
         private bool OrderExists(int id)
         {
-            return _context.Order.Any(e => e.OrderID == id);
+            return _context.Orders.Any(e => e.OrderID == id);
         }
     }
 }

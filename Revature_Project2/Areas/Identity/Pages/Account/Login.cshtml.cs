@@ -161,7 +161,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
 
 
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+           /* returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
             {
@@ -181,7 +181,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return Page();*/
         }
     }
 }

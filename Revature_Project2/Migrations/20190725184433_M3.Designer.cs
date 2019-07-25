@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Revature_Project2API.Data;
+using Revature_Project2.Data;
 
-namespace Revature_Project2API.Migrations
+namespace Revature_Project2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190719165731_M1")]
-    partial class M1
+    [Migration("20190725184433_M3")]
+    partial class M3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,9 +87,11 @@ namespace Revature_Project2API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -120,9 +122,11 @@ namespace Revature_Project2API.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
@@ -131,7 +135,7 @@ namespace Revature_Project2API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Data.ApplicationUser", b =>
+            modelBuilder.Entity("Revature_Project2.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -188,7 +192,7 @@ namespace Revature_Project2API.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Customer", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerID")
                         .ValueGeneratedOnAdd()
@@ -210,14 +214,35 @@ namespace Revature_Project2API.Migrations
 
                     b.HasKey("CustomerID");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Order", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Drink", b =>
+                {
+                    b.Property<int>("DrinkID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DrinkType");
+
+                    b.Property<int>("OrderID");
+
+                    b.Property<decimal>("Price");
+
+                    b.HasKey("DrinkID");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("Drink");
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Order", b =>
                 {
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("CustomerID");
 
@@ -229,12 +254,39 @@ namespace Revature_Project2API.Migrations
 
                     b.HasKey("OrderID");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("CustomerID1");
 
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.OrderDetail", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Pizza", b =>
+                {
+                    b.Property<int>("PizzaID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderDetailID");
+
+                    b.Property<string>("PizzaBread");
+
+                    b.Property<bool>("PizzaCheese");
+
+                    b.Property<string>("PizzaSauce");
+
+                    b.Property<string>("PizzaSize");
+
+                    b.Property<string>("PizzaType");
+
+                    b.HasKey("PizzaID");
+
+                    b.HasIndex("OrderDetailID");
+
+                    b.ToTable("Pizza");
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.PizzaDetail", b =>
                 {
                     b.Property<int>("OrderDetailID")
                         .ValueGeneratedOnAdd()
@@ -248,31 +300,10 @@ namespace Revature_Project2API.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("PizzaDetail");
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Pizza", b =>
-                {
-                    b.Property<int>("PizzaID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderDetailID");
-
-                    b.Property<string>("PizzaBread");
-
-                    b.Property<string>("PizzaSauce");
-
-                    b.Property<string>("PizzaType");
-
-                    b.HasKey("PizzaID");
-
-                    b.HasIndex("OrderDetailID");
-
-                    b.ToTable("Pizza");
-                });
-
-            modelBuilder.Entity("Revature_Project2API.Models.Topping", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Topping", b =>
                 {
                     b.Property<int>("ToppingID")
                         .ValueGeneratedOnAdd()
@@ -303,7 +334,7 @@ namespace Revature_Project2API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Revature_Project2API.Data.ApplicationUser")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -311,7 +342,7 @@ namespace Revature_Project2API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Revature_Project2API.Data.ApplicationUser")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -324,7 +355,7 @@ namespace Revature_Project2API.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Revature_Project2API.Data.ApplicationUser")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -332,38 +363,50 @@ namespace Revature_Project2API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Revature_Project2API.Data.ApplicationUser")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Order", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Drink", b =>
                 {
-                    b.HasOne("Revature_Project2API.Models.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerID1");
-                });
-
-            modelBuilder.Entity("Revature_Project2API.Models.OrderDetail", b =>
-                {
-                    b.HasOne("Revature_Project2API.Models.Order", "Order")
-                        .WithMany("OrderDetails")
+                    b.HasOne("Revature_Project2.Models.Order", "Order")
+                        .WithMany("Drinks")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Pizza", b =>
+            modelBuilder.Entity("Revature_Project2.Models.Order", b =>
                 {
-                    b.HasOne("Revature_Project2API.Models.OrderDetail", "OrderDetail")
+                    b.HasOne("Revature_Project2.Data.ApplicationUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Revature_Project2.Models.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerID1");
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Pizza", b =>
+                {
+                    b.HasOne("Revature_Project2.Models.PizzaDetail", "PizzaDetail")
                         .WithMany("Pizzas")
                         .HasForeignKey("OrderDetailID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Revature_Project2API.Models.Topping", b =>
+            modelBuilder.Entity("Revature_Project2.Models.PizzaDetail", b =>
                 {
-                    b.HasOne("Revature_Project2API.Models.Pizza", "Pizza")
+                    b.HasOne("Revature_Project2.Models.Order", "Order")
+                        .WithMany("PizzaDetails")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revature_Project2.Models.Topping", b =>
+                {
+                    b.HasOne("Revature_Project2.Models.Pizza", "Pizza")
                         .WithMany("Toppings")
                         .HasForeignKey("PizzaID")
                         .OnDelete(DeleteBehavior.Cascade);

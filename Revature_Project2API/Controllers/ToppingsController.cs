@@ -23,16 +23,16 @@ namespace Revature_Project2API.Controllers
 
         // GET: api/Toppings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Topping>>> GetTopping()
+        public async Task<ActionResult<IEnumerable<Topping>>> GetToppings()
         {
-            return await _context.Topping.ToListAsync();
+            return await _context.Toppings.ToListAsync();
         }
 
         // GET: api/Toppings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Topping>> GetTopping(int id)
         {
-            var topping = await _context.Topping.FindAsync(id);
+            var topping = await _context.Toppings.FindAsync(id);
 
             if (topping == null)
             {
@@ -76,7 +76,7 @@ namespace Revature_Project2API.Controllers
         [HttpPost]
         public async Task<ActionResult<Topping>> PostTopping(Topping topping)
         {
-            _context.Topping.Add(topping);
+            _context.Toppings.Add(topping);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTopping", new { id = topping.ToppingID }, topping);
@@ -86,13 +86,13 @@ namespace Revature_Project2API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Topping>> DeleteTopping(int id)
         {
-            var topping = await _context.Topping.FindAsync(id);
+            var topping = await _context.Toppings.FindAsync(id);
             if (topping == null)
             {
                 return NotFound();
             }
 
-            _context.Topping.Remove(topping);
+            _context.Toppings.Remove(topping);
             await _context.SaveChangesAsync();
 
             return topping;
@@ -100,7 +100,7 @@ namespace Revature_Project2API.Controllers
 
         private bool ToppingExists(int id)
         {
-            return _context.Topping.Any(e => e.ToppingID == id);
+            return _context.Toppings.Any(e => e.ToppingID == id);
         }
     }
 }

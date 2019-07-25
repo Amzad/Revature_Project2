@@ -19,10 +19,12 @@ namespace Revature_Project2API.Models
         public virtual string CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
- 
-       // public virtual RegisterModel.InputModel Customer { get; set; }
-            
+        public virtual ICollection<PizzaDetail> PizzaDetails { get; set; }
+       
+        public virtual ICollection<Drink> Drinks { get; set; }
+
+        // public virtual RegisterModel.InputModel Customer { get; set; }
+
 
 
 

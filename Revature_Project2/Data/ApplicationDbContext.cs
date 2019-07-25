@@ -18,11 +18,11 @@ namespace Revature_Project2.Data
         }
 
 
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            /*base.OnModelCreating(builder);
-            builder.Entity<Order>()
+            base.OnModelCreating(builder);
+            /*builder.Entity<Order>()
                            .HasOne(u => u.Customer)
                            .WithMany(a => a.Orders)
                            .HasForeignKey(k => k.CustomerID)
@@ -30,5 +30,12 @@ namespace Revature_Project2.Data
                            .OnDelete(DeleteBehavior.Cascade)
                            .IsRequired();*/
         }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<PizzaDetail> PizzaDetails { get; set; }
+        public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<Topping> Toppings { get; set; }
+    
+    
     }
 }

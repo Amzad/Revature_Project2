@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Revature_Project2API.Models
 {
-    public class OrderDetail
+    public class Drink
     {
         [Key]
-        public int OrderDetailID { get; set; }
+        public int DrinkID { get; set; }
+        public string DrinkType { get; set; }
 
-
-        public virtual int OrderID { get; set; }
-        public decimal OrderDetailPrice { get; set; }
+        public int OrderID { get; set; }
         public virtual Order Order { get; set; }
 
-        public virtual ICollection<Pizza> Pizzas { get; set; }
+        public decimal Price { get; set; }
+
     }
 }

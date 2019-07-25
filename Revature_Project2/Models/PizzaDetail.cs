@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Revature_Project2.Models
 {
-    public class OrderDetail
+    public class PizzaDetail
     {
         [Key]
         public int OrderDetailID { get; set; }

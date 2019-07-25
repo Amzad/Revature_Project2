@@ -10,8 +10,12 @@ namespace Revature_Project2.Models
     {
         [Key]
         public int DrinkID { get; set; }
-        public string Drinks { get; set; }
-        public virtual int OrderDetailsId { get; set; }
-        public virtual OrderDetail OrderDetail { get; set; }
+        public string DrinkType { get; set; }
+
+        public int OrderID { get; set; }
+        public virtual Order Order { get; set; }
+
+        public decimal Price { get; set; }
+
     }
 }

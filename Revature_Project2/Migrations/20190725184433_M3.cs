@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Revature_Project2.Migrations
 {
-    public partial class M1 : Migration
+    public partial class M3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,25 @@ namespace Revature_Project2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customer",
+                columns: table => new
+                {
+                    CustomerID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomerFirstName = table.Column<string>(nullable: true),
+                    CustomerLastName = table.Column<string>(nullable: true),
+                    CustomerAddress = table.Column<string>(nullable: true),
+                    CustomerPhoneNumber = table.Column<string>(nullable: true),
+                    CustomerEmail = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customer", x => x.CustomerID);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,28 +176,57 @@ namespace Revature_Project2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Order",
                 columns: table => new
                 {
                     OrderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderDateTime = table.Column<DateTime>(nullable: false),
                     OrderPrice = table.Column<decimal>(nullable: false),
-                    CustomerID = table.Column<string>(nullable: false)
+                    CustomerID = table.Column<string>(nullable: true),
+                    CustomerID1 = table.Column<int>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderID);
+                    table.PrimaryKey("PK_Order", x => x.OrderID);
                     table.ForeignKey(
-                        name: "CustomerID",
-                        column: x => x.CustomerID,
+                        name: "FK_Order_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_Customer_CustomerID1",
+                        column: x => x.CustomerID1,
+                        principalTable: "Customer",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drink",
+                columns: table => new
+                {
+                    DrinkID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DrinkType = table.Column<string>(nullable: true),
+                    OrderID = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drink", x => x.DrinkID);
+                    table.ForeignKey(
+                        name: "FK_Drink_Order_OrderID",
+                        column: x => x.OrderID,
+                        principalTable: "Order",
+                        principalColumn: "OrderID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetail",
+                name: "PizzaDetail",
                 columns: table => new
                 {
                     OrderDetailID = table.Column<int>(nullable: false)
@@ -188,11 +236,11 @@ namespace Revature_Project2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetail", x => x.OrderDetailID);
+                    table.PrimaryKey("PK_PizzaDetail", x => x.OrderDetailID);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Orders_OrderID",
+                        name: "FK_PizzaDetail_Order_OrderID",
                         column: x => x.OrderID,
-                        principalTable: "Orders",
+                        principalTable: "Order",
                         principalColumn: "OrderID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -204,17 +252,19 @@ namespace Revature_Project2.Migrations
                     PizzaID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PizzaType = table.Column<string>(nullable: true),
+                    PizzaSize = table.Column<string>(nullable: true),
                     PizzaSauce = table.Column<string>(nullable: true),
                     PizzaBread = table.Column<string>(nullable: true),
+                    PizzaCheese = table.Column<bool>(nullable: false),
                     OrderDetailID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pizza", x => x.PizzaID);
                     table.ForeignKey(
-                        name: "FK_Pizza_OrderDetail_OrderDetailID",
+                        name: "FK_Pizza_PizzaDetail_OrderDetailID",
                         column: x => x.OrderDetailID,
-                        principalTable: "OrderDetail",
+                        principalTable: "PizzaDetail",
                         principalColumn: "OrderDetailID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -281,19 +331,29 @@ namespace Revature_Project2.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_OrderID",
-                table: "OrderDetail",
+                name: "IX_Drink_OrderID",
+                table: "Drink",
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerID",
-                table: "Orders",
-                column: "CustomerID");
+                name: "IX_Order_ApplicationUserId",
+                table: "Order",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_CustomerID1",
+                table: "Order",
+                column: "CustomerID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pizza_OrderDetailID",
                 table: "Pizza",
                 column: "OrderDetailID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PizzaDetail_OrderID",
+                table: "PizzaDetail",
+                column: "OrderID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topping_PizzaID",
@@ -319,6 +379,9 @@ namespace Revature_Project2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Drink");
+
+            migrationBuilder.DropTable(
                 name: "Topping");
 
             migrationBuilder.DropTable(
@@ -328,13 +391,16 @@ namespace Revature_Project2.Migrations
                 name: "Pizza");
 
             migrationBuilder.DropTable(
-                name: "OrderDetail");
+                name: "PizzaDetail");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
         }
     }
 }

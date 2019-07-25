@@ -1,6 +1,11 @@
-﻿@{
+﻿@model IEnumerable<Customer>
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+@foreach (var cust in Model) {
+    @cust.CustomerFirstName @cust.CustomerLastName
+}

@@ -96,6 +96,8 @@
                 _context.Customers.Add(cust);
                 _context.SaveChanges();
 
+                user.CustomerID = _context.Customers.FirstOrDefault(u => u.CustomerEmail == user.CustomerEmail).CustomerID;
+
 
                 //Add Claims
                 var claims = new[]

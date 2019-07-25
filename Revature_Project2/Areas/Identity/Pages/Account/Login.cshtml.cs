@@ -99,6 +99,7 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
                     var Email = tokenDictionary["email"];
                     var firstName = tokenDictionary["firstName"];
                     var lastName = tokenDictionary["lastName"];
+                    var customerID = tokenDictionary["customerID"];
 
 
                     var claims = new List<Claim>
@@ -106,7 +107,8 @@ namespace Revature_Project2.Areas.Identity.Pages.Account
                         new Claim(ClaimTypes.Email, Email ),
                         new Claim("firstName", firstName),
                         new Claim("lastName", lastName),
-                        new Claim("access_token", access_token)
+                        new Claim("access_token", access_token),
+                        new Claim("customerID", customerID)
                         // add other claims as you want ...
                     };
                     var iden = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -19,7 +19,7 @@ namespace Revature_Project2.Models
 
         public decimal OrderPrice { get; set; }
         public virtual string CustomerID { get; set; }
-        public virtual ApplicationUser Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
  

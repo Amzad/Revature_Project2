@@ -80,9 +80,7 @@ namespace Revature_Project2.Controllers
         {
             // Create fake order
             Order fakeOrder = new Order();
-            fakeOrder.PizzaDetails = new List<PizzaDetail>();
-            PizzaDetail fDetail = new PizzaDetail();
-            fDetail.Pizzas = new List<Pizza>();
+            fakeOrder.Pizzas = new List<Pizza>();
             Pizza fPizza = new Pizza();
             List<Topping> fTopping = new List<Topping>
             {
@@ -94,11 +92,9 @@ namespace Revature_Project2.Controllers
             fPizza.Toppings = fTopping;
             fPizza.PizzaBread = "Cheesy";
             fPizza.PizzaSauce = "BBQ";
-            fDetail.PizzaDetailPrice = 90;
-            fDetail.Pizzas.Add(fPizza);
-            fakeOrder.PizzaDetails.Add(fDetail);
+            fPizza.PizzaPrice = 90;;
             fakeOrder.OrderPrice = 100;
-            fakeOrder.CustomerID = User.FindFirstValue("customerID");
+            //fakeOrder.CustomerID = User.FindFirstValue("customerID");
             var request = new HttpRequestMessage(HttpMethod.Get,
                 "https://localhost:44376/api/customers/" + User.FindFirstValue("customerID"));
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));

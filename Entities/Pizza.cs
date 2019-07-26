@@ -18,8 +18,9 @@ namespace Entities.Models
         public string PizzaBread { get; set; }
         public bool PizzaCheese { get; set; }
 
+        public decimal PizzaPrice { get; set; }
         public int PizzaDetailID { get; set; }
-        public virtual PizzaDetail PizzaDetail { get; set; }
+        public virtual Order Order { get; set; }
 
         public virtual ICollection<Topping> Toppings { get; set; }
         

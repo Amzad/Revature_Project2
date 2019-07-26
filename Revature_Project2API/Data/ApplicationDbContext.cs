@@ -30,7 +30,6 @@ namespace Revature_Project2API.Data
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<PizzaDetail> PizzaDetails { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<Drink> Drinks { get; set; }

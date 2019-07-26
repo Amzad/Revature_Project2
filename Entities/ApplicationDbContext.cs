@@ -25,7 +25,6 @@ namespace Entities.Data
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<PizzaDetail> PizzaDetails { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Topping> Toppings { get; set; }
     

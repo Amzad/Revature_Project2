@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Entities.Data;
 using Entities.Models;
+using Revature_Project2API.Data;
 
-namespace Entities.Controllers
+namespace Revature_Project2API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,29 +25,21 @@ namespace Entities.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.Include(i => i.PizzaDetails)
-                .ThenInclude(i => i.Pizzas)
-                .ThenInclude(i => i.Toppings).ToListAsync();
-
-           //return await _context.Orders.ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetOrder(int id)
+        public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            string custID = id.ToString();
-            //IEnumerable<Order> order = await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
-            //return await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
-            //Order order = _context.Orders.Where(x => x.CustomerID == custID).First();
-            //string var2 = JsonConvert.SerializeObject(order);
-            //var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
-            //if (order == null)
-            //{
-                return NotFound();
-            //}
+            var order = await _context.Orders.FindAsync(id);
 
-            ///return Ok(httpContent);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
         }
 
         // PUT: api/Orders/5

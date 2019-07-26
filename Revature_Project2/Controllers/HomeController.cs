@@ -102,7 +102,7 @@ namespace Revature_Project2.Controllers
             string var2 = JsonConvert.SerializeObject(fakeOrder);
             var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
             string uid = User.FindFirstValue("customerID");
-            var response = await client.PutAsync("https://localhost:44376/api/Orders/1", httpContent);
+            var response = await client.PutAsync("https://localhost:44376/api/Orders/2", httpContent);
 
 
             if (response.IsSuccessStatusCode)

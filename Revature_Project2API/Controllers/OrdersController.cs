@@ -46,12 +46,11 @@ namespace Revature_Project2API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != order.OrderID)
-            {
-                return BadRequest();
-            }
+            order.CustomerID = id;
+            _context.Orders.Add(order);
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(order).State = EntityState.Added;
+            _context.SaveChanges();
 
             try
             {

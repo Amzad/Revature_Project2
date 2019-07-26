@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Revature_Project2.Models;
 
 namespace Revature_Project2.Controllers
 {
@@ -86,11 +86,6 @@ namespace Revature_Project2.Controllers
             }
         }
 
-        //// GET: Reorder/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
 
         // POST: Reorder/Create
         [HttpPost]
@@ -109,28 +104,28 @@ namespace Revature_Project2.Controllers
             }
         }
 
-        // GET: Reorder/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: Reorder/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Reorder/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// POST: Reorder/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Reorder/Delete/5
         public ActionResult Delete(int id)

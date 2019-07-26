@@ -50,7 +50,7 @@ namespace Entities.Controllers
 
             //var order = await _context.Order.FindAsync(id);
             //string custid = id.ToString();
-            var item = await _context.Pizzas.Where(x => x.OrderDetailID == id).ToListAsync();
+            var item = await _context.Pizzas.Where(x => x.OrderID == id).ToListAsync();
             if (item == null)
             {
                 return null;

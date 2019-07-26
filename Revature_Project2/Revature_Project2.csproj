@@ -7,18 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190717151147_M1.cs" />
-    <Compile Remove="Migrations\20190717151147_M1.Designer.cs" />
-    <Compile Remove="Migrations\20190717151259_M1.cs" />
-    <Compile Remove="Migrations\20190717151259_M1.Designer.cs" />
-    <Compile Remove="Migrations\20190717153211_M1.cs" />
-    <Compile Remove="Migrations\20190717153211_M1.Designer.cs" />
-    <Compile Remove="Migrations\20190717170216_M1.cs" />
-    <Compile Remove="Migrations\20190717170216_M1.Designer.cs" />
-    <Compile Remove="Migrations\20190717171137_M1.cs" />
-    <Compile Remove="Migrations\20190717171137_M1.Designer.cs" />
-    <Compile Remove="Migrations\20190717174946_M3.cs" />
-    <Compile Remove="Migrations\20190717174946_M3.Designer.cs" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Data\**" />
+    <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,8 +66,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Models\" />
   </ItemGroup>
 

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Entities.Data;
 using Entities.Models;
-using Revature_Project2API.Data;
 
 namespace Revature_Project2API.Controllers
 {
@@ -46,16 +46,14 @@ namespace Revature_Project2API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != order.OrderID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(order).State = EntityState.Modified;
-
+           
             try
             {
+                order.CustomerID = id;
+                _context.Orders.Add(order);
+                _context.Entry(order).State = EntityState.Added;
                 await _context.SaveChangesAsync();
+                return Ok(order);
             }
             catch (DbUpdateConcurrencyException)
             {

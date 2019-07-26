@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

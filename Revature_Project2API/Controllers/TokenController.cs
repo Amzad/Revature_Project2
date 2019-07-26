@@ -1,4 +1,4 @@
-﻿namespace Revature_Project2API.Controllers
+﻿namespace Entities.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;
-    using Revature_Project2API.Data;
-    using Revature_Project2API.Models;
+    using Entities.Data;
+    using Entities.Models;
 
     public class TokenController : Controller
     {

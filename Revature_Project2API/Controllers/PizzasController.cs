@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Entities.Models;
 using Revature_Project2API.Data;
-using Revature_Project2API.Models;
 
 namespace Revature_Project2API.Controllers
 {

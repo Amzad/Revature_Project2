@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -9,15 +10,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Revature_Project2API.Data;
+using Newtonsoft.Json;
+using Entities.Data;
+using Newtonsoft.Json.Serialization;
 
-namespace Revature_Project2API
+namespace Entities
 {
     public class Startup
     {
@@ -35,6 +39,7 @@ namespace Revature_Project2API
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+             
 
             services.AddCors(options => options.AddPolicy("Cors", builder =>
             {
@@ -66,7 +71,13 @@ namespace Revature_Project2API
                     };
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+    .AddJsonOptions(
+        options => options.SerializerSettings.ReferenceLoopHandling =
+        Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

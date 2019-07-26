@@ -16,9 +16,7 @@ namespace Entities.Models
         public decimal ToppingPrice { get; set; }
         public string ToppingType { get; set; }
 
-        //public int PizzaID { get; set; }
-        //[JsonIgnore]
-        //[IgnoreDataMember]
+        public int PizzaID { get; set; }
         public virtual Pizza Pizza { get; set; }
     }
 }

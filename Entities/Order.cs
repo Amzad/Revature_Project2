@@ -17,22 +17,13 @@ namespace Entities.Models
         public DateTime OrderDateTime { get; set; }
 
         public decimal OrderPrice { get; set; }
-        //public string CustomerID { get; set; }
 
-        //[JsonIgnore]
-        //[IgnoreDataMember]
+        public string CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
 
-        //[JsonIgnore]
-        //[IgnoreDataMember]
         public virtual ICollection<PizzaDetail> PizzaDetails { get; set; }
 
-        //[JsonIgnore]
-        //[IgnoreDataMember]
         public virtual ICollection<Drink> Drinks { get; set; }
-
-        // public virtual RegisterModel.InputModel Customer { get; set; }
-
 
 
 

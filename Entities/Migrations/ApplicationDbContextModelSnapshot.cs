@@ -69,7 +69,9 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerID");
+                    b.Property<string>("CustomerID");
+
+                    b.Property<int?>("CustomerID1");
 
                     b.Property<DateTime>("OrderDateTime");
 
@@ -77,7 +79,7 @@ namespace Entities.Migrations
 
                     b.HasKey("OrderID");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerID1");
 
                     b.ToTable("Orders");
                 });
@@ -92,7 +94,7 @@ namespace Entities.Migrations
 
                     b.Property<bool>("PizzaCheese");
 
-                    b.Property<int?>("PizzaDetailID");
+                    b.Property<int>("PizzaDetailID");
 
                     b.Property<string>("PizzaSauce");
 
@@ -117,6 +119,8 @@ namespace Entities.Migrations
 
                     b.Property<decimal>("PizzaDetailPrice");
 
+                    b.Property<int>("PizzaID");
+
                     b.HasKey("PizzaDetailID");
 
                     b.HasIndex("OrderID");
@@ -130,7 +134,7 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PizzaID");
+                    b.Property<int>("PizzaID");
 
                     b.Property<string>("ToppingName");
 
@@ -156,14 +160,15 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerID");
+                        .HasForeignKey("CustomerID1");
                 });
 
             modelBuilder.Entity("Entities.Models.Pizza", b =>
                 {
                     b.HasOne("Entities.Models.PizzaDetail", "PizzaDetail")
                         .WithMany("Pizzas")
-                        .HasForeignKey("PizzaDetailID");
+                        .HasForeignKey("PizzaDetailID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Entities.Models.PizzaDetail", b =>
@@ -177,7 +182,8 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Pizza", "Pizza")
                         .WithMany("Toppings")
-                        .HasForeignKey("PizzaID");
+                        .HasForeignKey("PizzaID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

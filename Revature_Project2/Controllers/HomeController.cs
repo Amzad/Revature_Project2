@@ -98,17 +98,37 @@ namespace Revature_Project2.Controllers
             fDetail.Pizzas.Add(fPizza);
             fakeOrder.PizzaDetails.Add(fDetail);
             fakeOrder.OrderPrice = 100;
-            fakeOrder.Customer.CustomerID = int.Parse(User.FindFirstValue("customerID"));
+            fakeOrder.CustomerID = User.FindFirstValue("customerID");
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/customers/" + User.FindFirstValue("customerID"));
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+
+            var res = await _clientFactory.CreateClient().SendAsync(request);
+            Customer customer = await res.Content.ReadAsAsync<Customer>();
+            customer.Orders = new List<Order>();
+            customer.Orders.Add(fakeOrder);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
             // Sample POST Requestion
-            
+
             var client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             string var2 = JsonConvert.SerializeObject(fakeOrder);
             var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:44376/api/Orders", httpContent);
+            var response = await client.PutAsync("https://localhost:44376/api/Customers/ + User.FindFirstValue('customerID')", httpContent);
 
 
             if (response.IsSuccessStatusCode)

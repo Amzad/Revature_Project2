@@ -13,15 +13,10 @@ namespace Entities.Models
         [Key]
         public int PizzaDetailID { get; set; }
 
-
-        //public virtual int OrderID { get; set; }
         public decimal PizzaDetailPrice { get; set; }
-
-        //[JsonIgnore]
-        //[IgnoreDataMember]
         public virtual Order Order { get; set; }
 
-
+        public int PizzaID { get; set; }
         public virtual ICollection<Pizza> Pizzas { get; set; }
     }
 }

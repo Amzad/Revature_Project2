@@ -18,13 +18,9 @@ namespace Entities.Models
         public string PizzaBread { get; set; }
         public bool PizzaCheese { get; set; }
 
-        //public int OrderDetailID { get; set; }
-        //[JsonIgnore]
-        //[IgnoreDataMember]
+        public int PizzaDetailID { get; set; }
         public virtual PizzaDetail PizzaDetail { get; set; }
 
-        //[JsonIgnore]
-        //[IgnoreDataMember]
         public virtual ICollection<Topping> Toppings { get; set; }
         
         

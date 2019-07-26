@@ -14,9 +14,6 @@ namespace Entities.Models
         public int DrinkID { get; set; }
         public string DrinkType { get; set; }
 
-        //public int OrderID { get; set; }
-        //[JsonIgnore]
-        //[IgnoreDataMember]
         public virtual Order Order { get; set; }
 
         public decimal Price { get; set; }

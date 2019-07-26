@@ -35,14 +35,15 @@ namespace Entities.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderDateTime = table.Column<DateTime>(nullable: false),
                     OrderPrice = table.Column<decimal>(nullable: false),
-                    CustomerID = table.Column<int>(nullable: true)
+                    CustomerID = table.Column<string>(nullable: true),
+                    CustomerID1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerID",
-                        column: x => x.CustomerID,
+                        name: "FK_Orders_Customers_CustomerID1",
+                        column: x => x.CustomerID1,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
                         onDelete: ReferentialAction.Restrict);
@@ -76,7 +77,8 @@ namespace Entities.Migrations
                     PizzaDetailID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PizzaDetailPrice = table.Column<decimal>(nullable: false),
-                    OrderID = table.Column<int>(nullable: true)
+                    OrderID = table.Column<int>(nullable: true),
+                    PizzaID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,7 +102,7 @@ namespace Entities.Migrations
                     PizzaSauce = table.Column<string>(nullable: true),
                     PizzaBread = table.Column<string>(nullable: true),
                     PizzaCheese = table.Column<bool>(nullable: false),
-                    PizzaDetailID = table.Column<int>(nullable: true)
+                    PizzaDetailID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,7 +112,7 @@ namespace Entities.Migrations
                         column: x => x.PizzaDetailID,
                         principalTable: "PizzaDetails",
                         principalColumn: "PizzaDetailID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -122,7 +124,7 @@ namespace Entities.Migrations
                     ToppingName = table.Column<string>(nullable: true),
                     ToppingPrice = table.Column<decimal>(nullable: false),
                     ToppingType = table.Column<string>(nullable: true),
-                    PizzaID = table.Column<int>(nullable: true)
+                    PizzaID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,7 +134,7 @@ namespace Entities.Migrations
                         column: x => x.PizzaID,
                         principalTable: "Pizzas",
                         principalColumn: "PizzaID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -141,9 +143,9 @@ namespace Entities.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerID",
+                name: "IX_Orders_CustomerID1",
                 table: "Orders",
-                column: "CustomerID");
+                column: "CustomerID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PizzaDetails_OrderID",

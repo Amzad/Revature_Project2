@@ -18,10 +18,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Entities.Data;
+using Revature_Project2API.Data;
 using Newtonsoft.Json.Serialization;
 
-namespace Entities
+namespace Revature_Project2API
 {
     public class Startup
     {

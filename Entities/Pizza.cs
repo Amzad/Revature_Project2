@@ -19,7 +19,7 @@ namespace Entities.Models
         public bool PizzaCheese { get; set; }
 
         public decimal PizzaPrice { get; set; }
-        public int PizzaDetailID { get; set; }
+        public int OrderID { get; set; }
         public virtual Order Order { get; set; }
 
         public virtual ICollection<Topping> Toppings { get; set; }

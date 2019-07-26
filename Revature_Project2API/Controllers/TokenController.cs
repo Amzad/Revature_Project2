@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;
-    using Entities.Data;
+    using Revature_Project2API.Data;
     using Entities.Models;
 
     public class TokenController : Controller
@@ -91,7 +91,7 @@
                     CustomerEmail = user.CustomerEmail,
                     CustomerAddress = user.CustomerAddress,
                     CustomerPhoneNumber = user.CustomerPhoneNumber,
-                    CustomerID = 0
+                    //CustomerID = 0
                 };
                 _context.Customers.Add(cust);
                 _context.SaveChanges();

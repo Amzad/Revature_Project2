@@ -54,7 +54,13 @@ namespace Revature_Project2API.Controllers
 
             try
             {
+                order.CustomerID = id;
+                _context.Orders.Add(order);
+
+                _context.Entry(order).State = EntityState.Added;
+                _context.SaveChanges();
                 await _context.SaveChangesAsync();
+                return Ok(order);
             }
             catch (DbUpdateConcurrencyException)
             {

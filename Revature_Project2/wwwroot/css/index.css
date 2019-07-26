@@ -26,16 +26,16 @@
     opacity: 0.7;
     transition-duration: 2s;
     background-color: transparent;
-    color: hotpink;
+    color: orange;
     border: none;
     transform: scale(7);
     /*animation: saleAni 3s infinite;*/
 }
 
-    #sale:focus {
-        box-shadow: none;
-        outline: none;
-    }
+#sale:focus {
+    box-shadow: none;
+    outline: none;
+}
 
 /*
 @keyframes saleAni{

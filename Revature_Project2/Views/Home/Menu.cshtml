@@ -66,25 +66,27 @@
 
     .container-itemlist {
         width: 620px;
-        float: left;
     }
 
     .container-shoppingCart {
-        background-color: black;
-        color: white;
+        border-radius: 15px;
+        background-color: white;
+        color: black;
         padding: 10px;
-        min-height: 300px;
+        height: 500px;
         width: 500px;
-        float: left;
         margin-top: 180px;
-        opacity: 0.85;
+        opacity: 0.9;
         user-select: none;
         text-align: center;
+        position: relative;
+        bottom: 605px;
+        left: 70%;
     }
 
-        .container-shoppingCart:hover {
-            opacity: 0.95;
-        }
+    .container-shoppingCart:hover {
+        opacity: 0.95;
+    }
 
     .pop-menu {
         display: none;
@@ -96,9 +98,10 @@
         left: 0;
         right: 0;
         width: 1300px;
-        height: 650px;
+        height: 700px;
         background-color: white;
         border: 2px solid cadetblue;
+        border-radius: 10px;
     }
 
     #btn-item {
@@ -112,10 +115,10 @@
         transition-duration: 1s;
     }
 
-        #btn-item:hover {
-            transform: scale(1.1);
-            transition-duration: 1s;
-        }
+    #btn-item:hover {
+        transform: scale(1.1);
+        transition-duration: 1s;
+    }
 
     #btn-next, #btn-prev, #btn-close, #btn-addToOrder {
         background-color: cadetblue;
@@ -125,6 +128,7 @@
         padding: 10px;
         padding-left: 20px;
         padding-right: 20px;
+        border-radius: 5px;
     }
 
     #btn-addToOrder {
@@ -133,11 +137,12 @@
         padding-left: 50px;
         background-color: orange;
         color: black;
+        border-radius: 5px;
     }
 
-        #btn-next:hover, #btn-prev:hover, #btn-close:hover, #btn-addToOrder:hover {
-            opacity: 1;
-        }
+    #btn-next:hover, #btn-prev:hover, #btn-close:hover, #btn-addToOrder:hover {
+        opacity: 1;
+    }
 
     #btn-checkout {
         border: none;
@@ -147,10 +152,9 @@
         opacity: 0.8;
     }
 
-        #btn-checkout:hover {
-            opacity: 1;
-            cursor: url("http://www.rw-designer.com/cursor-preview/124275.png"), auto;
-        }
+    #btn-checkout:hover {
+        opacity: 1;
+    }
 
     #nav-menu {
         list-style-type: none;
@@ -159,39 +163,41 @@
         margin-top: 180px;
     }
 
-        #nav-menu > li {
-            padding: 0px;
-            width: 480px;
-            margin-top: 20px;
-            transition-duration: 1s;
-            user-select: none;
-        }
+    #nav-menu > li {
+        padding: 0px;
+        width: 480px;
+        margin-top: 20px;
+        transition-duration: 1s;
+        user-select: none;
+    }
 
-        #nav-menu img {
-            transform: scale(0.5);
-        }
+    #nav-menu img {
+        transform: scale(0.5);
+    }
 
     #li-ownPizza {
         opacity: 0.95;
         font-size: 25px;
         color: white;
         background-color: orange;
+        border-radius: 5px;
     }
 
-        #li-ownPizza:hover {
-        }
+    #li-ownPizza:hover {
+    }
 
     #li-drink {
         opacity: 0.8;
         background-color: white;
         font-size: 35px;
+        border-radius: 5px;
     }
 
-        #li-drink:hover {
-            transition-duration: 1s;
-            color: cadetblue;
-            background-color: black;
-        }
+    #li-drink:hover {
+        transition-duration: 1s;
+        color: cadetblue;
+        background-color: black;
+    }
 
     #li-spPizza {
         color: cadetblue;
@@ -199,6 +205,7 @@
         transform: scale(1.315);
         background-color: white;
         font-size: 35px;
+        border-radius: 10px;
     }
 
     button:focus {
@@ -206,13 +213,13 @@
     }
 
     .pizza-form-part {
-        height: 390px;
+        height: 480px;
         font-family: sans-serif;
     }
 
-        .pizza-form-part input {
-            transform: scale(1.4);
-        }
+    .pizza-form-part input {
+        transform: scale(1.4);
+    }
 
     #label-title {
         font-family: 'Shadows Into Light', cursive;
@@ -230,11 +237,11 @@
         font-size: 15px;
     }
 
-        table tr th {
-            color: cadetblue;
-        }
+    table tr th {
+        color: cadetblue;
+    }
 
-    .btn {
+    .btn-item {
         padding: 5px;
         padding-right: 50px;
         padding-left: 50px;
@@ -242,12 +249,14 @@
         border-radius: 0;
         background-color: orange;
         opacity: 0.55;
+        border-radius: 5px;
     }
 
-        .btn:hover {
-            opacity: 0.9;
-            background-color: orange;
-        }
+    .btn-item:hover {
+        opacity: 0.9;
+        text-decoration: none;
+        background-color: orange;
+    }
 
     .card {
         width: 260px;
@@ -258,7 +267,7 @@
     }
 
     .items-drinks, .items-specialityPizza {
-        height: 500px;
+        height: 550px;
         overflow: scroll;
         overflow-x: hidden;
         margin-bottom: 10px;
@@ -387,7 +396,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Pizza Name</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Add to Order</a>
+                                    <a href="#" class="btn-item btn-primary">Add to Order</a>
                                 </div>
                             </div>
                         }
@@ -406,7 +415,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Drink Name</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Add to Order</a>
+                                    <a href="#" class="btn-item btn-primary">Add to Order</a>
                                 </div>
                             </div>
                         }
@@ -424,36 +433,128 @@
                 <span style="font-size: 29px; color: orange"> SHOPPING CART</span>
             </div>
             <hr />
-            <div id="shoppingCart-items">
+            <div id="shoppingCart-items" style="height: 235px; overflow: scroll; overflow-x: hidden">
                 <table>
                     <tr>
                         <th> Pizza </th>
                         <th> Topping1 </th>
                         <th> Topping2 </th>
                         <th> Price </th>
+                        <th> </th>
                     </tr>
                     <tr>
                         <td>Pizza1</td>
                         <td>Topping1</td>
                         <td>Topping2</td>
                         <td>$20</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
                     </tr>
                     <tr>
                         <td>Pizza2</td>
                         <td>Topping1</td>
                         <td>Topping2</td>
                         <td>$10</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Pizza2</td>
+                        <td>Pizza3</td>
                         <td>Topping1</td>
                         <td>Topping2</td>
                         <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza4</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza5</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza6</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza7</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza8</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza9</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza10</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza10</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pizza10</td>
+                        <td>Topping1</td>
+                        <td>Topping2</td>
+                        <td>$30</td>
+                        <td>
+                            <a href="#">Delete</a>
+                        </td>
                     </tr>
                 </table>
             </div>
             <hr />
-            <button id="btn-checkout" style="background-color:cadetblue">Checkout</button>
+            <p>Total price: $xxxxxx</p>
+            <button id="btn-checkout" style="background-color:cadetblue; border-radius:5px">Go Checkout</button>
         </div>
 
 

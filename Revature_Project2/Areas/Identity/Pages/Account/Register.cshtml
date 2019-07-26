@@ -4,51 +4,104 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    body {
+        background-image: url('https://img.taste.com.au/YfX0h9hC/taste/2017/10/mexican-taco-pizza-131640-1.jpg');
+        font-family: 'Shadows Into Light', cursive;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.LastName"></label>
-                <input asp-for="Input.LastName" class="form-control" />
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Address"></label>
-                <input asp-for="Input.Address" class="form-control" />
-                <span asp-validation-for="Input.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+    form {
+        width: 600px;
+    }
+
+    #btn-register {
+        width: 40%;
+        margin-left: 10%;
+        margin-top: 30px;
+        background-color: cadetblue;
+        border: none;
+        opacity: 0.85;
+    }
+
+    #btn-register:hover {
+        opacity: 1;
+    }
+
+    label, input{
+        font-family: sans-serif;
+        font-size: 14px;
+    }
+
+    .register-body{
+        border-radius: 5px;
+        padding: 50px;
+        opacity: 0.95;
+        background-color: white;
+    }
+
+    .register-body:hover{
+        opacity: 1;
+    }
+</style>
+
+
+<br />
+<br />
+<br />
+<div class="register-body">
+    <h1>@ViewData["Title"]</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Create a new account.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div style="width: 40%; float: left">
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" required />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" required />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Address"></label>
+                        <input asp-for="Input.Address" class="form-control" placeholder="11-11 Example Street" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PhoneNumber"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" placeholder="123-456-7890" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div style="width: 40%; float:left; margin-left: 10%;">
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control" placeholder="example@xxx.xxx" required />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control" required />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" required />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <button type="submit" id="btn-register" class="btn btn-primary">Register</button>
+            </form>
+        </div>
     </div>
 </div>
 

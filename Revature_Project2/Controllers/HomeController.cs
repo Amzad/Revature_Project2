@@ -92,29 +92,17 @@ namespace Revature_Project2.Controllers
             fPizza.Toppings = fTopping;
             fPizza.PizzaBread = "Cheesy";
             fPizza.PizzaSauce = "BBQ";
-            fPizza.PizzaPrice = 90;
-            fPizza.PizzaSize = "M";
-            fPizza.PizzaCheese = false;
+            fPizza.PizzaPrice = 90;;
             fakeOrder.OrderPrice = 100;
             fakeOrder.Pizzas.Add(fPizza);
-            //fakeOrder. = User.FindFirstValue("customerID");
-            //var request = new HttpRequestMessage(HttpMethod.Get,
-             //   "https://localhost:44376/api/customers/" + User.FindFirstValue("customerID"));
-            //request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
-
-            //var res = await _clientFactory.CreateClient().SendAsync(request);
-            //Customer customer = await res.Content.ReadAsAsync<Customer>();
-            //customer.Orders = new List<Order>();
-            //customer.Orders.Add(fakeOrder);
 
             // Sample POST Requestion
-            //put add parent class id
             var client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             string var2 = JsonConvert.SerializeObject(fakeOrder);
             var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
-            string id = User.FindFirstValue("customerID");
-            var response = await client.PutAsync("https://localhost:44376/api/Orders/1", httpContent);
+            string uid = User.FindFirstValue("customerID");
+            var response = await client.PutAsync("https://localhost:44376/api/Orders/2", httpContent);
 
 
             if (response.IsSuccessStatusCode)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Entities.Data
+namespace Revature_Project2API.Data
 {
     public class ApplicationUser : IdentityUser
     {

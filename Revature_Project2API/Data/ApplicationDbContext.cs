@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Entities.Data;
+using Revature_Project2API.Data;
 using Entities.Models;
 
 namespace Revature_Project2API.Data

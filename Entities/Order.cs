@@ -19,7 +19,6 @@ namespace Entities.Models
 
         public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
-
         public virtual ICollection<Pizza> Pizzas { get; set; }
         public virtual ICollection<Drink> Drinks { get; set; }
 

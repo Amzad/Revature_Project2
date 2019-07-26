@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -46,7 +46,7 @@ namespace Revature_Project2API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPizzaDetail(int id, PizzaDetail pizzaDetail)
         {
-            if (id != pizzaDetail.OrderDetailID)
+            if (id != pizzaDetail.PizzaDetailID)
             {
                 return BadRequest();
             }
@@ -79,7 +79,7 @@ namespace Revature_Project2API.Controllers
             _context.PizzaDetails.Add(pizzaDetail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaDetail", new { id = pizzaDetail.OrderDetailID }, pizzaDetail);
+            return CreatedAtAction("GetPizzaDetail", new { id = pizzaDetail.PizzaDetailID }, pizzaDetail);
         }
 
         // DELETE: api/PizzaDetails/5
@@ -100,7 +100,7 @@ namespace Revature_Project2API.Controllers
 
         private bool PizzaDetailExists(int id)
         {
-            return _context.PizzaDetails.Any(e => e.OrderDetailID == id);
+            return _context.PizzaDetails.Any(e => e.PizzaDetailID == id);
         }
     }
 }

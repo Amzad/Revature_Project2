@@ -6,11 +6,10 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Revature_Project2.Data;
-using Revature_Project2.Models;
 
 namespace Revature_Project2.Controllers
 {
@@ -35,17 +34,17 @@ namespace Revature_Project2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> P1Async()
+        public async Task<IActionResult> P1()
         {
             // Sample GET Request
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/Orders/" + 2);
+                "https://localhost:44376/api/customers");
                 // Must include these headers for GET
-            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
-            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            //request.Headers.Add("accept-encoding", "gzip, deflate");
             //request.Headers.Add("content-type", "application/json");
-            request.Headers.Add("user-agent",
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            //request.Headers.Add("user-agent",
+               // "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
 
             var client = _clientFactory.CreateClient();
 
@@ -53,17 +52,11 @@ namespace Revature_Project2.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                IEnumerable<Order> order = await response.Content.ReadAsAsync<IEnumerable<Order>>();
-                foreach (Order o in order)
-                {
-                    ICollection<PizzaDetail> x = o.PizzaDetails;
-                    foreach(PizzaDetail y in x)
-                    {
-                        System.Diagnostics.Debug.WriteLine(y.OrderDetailPrice);
-                    }
+                var order = await response.Content.ReadAsAsync<IEnumerable<Customer>>();
 
+                    
                     //System.Diagnostics.Debug.WriteLine(x.OrderDetailPrice);
-                }
+                
                /* Branches = await response.Content
                     .ReadAsAsync<IEnumerable<Customer>>();*/
                 return View(order);
@@ -101,11 +94,11 @@ namespace Revature_Project2.Controllers
             fPizza.Toppings = fTopping;
             fPizza.PizzaBread = "Cheesy";
             fPizza.PizzaSauce = "BBQ";
-            fDetail.OrderDetailPrice = 90;
+            fDetail.PizzaDetailPrice = 90;
             fDetail.Pizzas.Add(fPizza);
             fakeOrder.PizzaDetails.Add(fDetail);
             fakeOrder.OrderPrice = 100;
-            fakeOrder.CustomerID = User.FindFirstValue("customerID");
+            fakeOrder.Customer.CustomerID = int.Parse(User.FindFirstValue("customerID"));
 
 
 
@@ -164,10 +157,5 @@ namespace Revature_Project2.Controllers
 
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

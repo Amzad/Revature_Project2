@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

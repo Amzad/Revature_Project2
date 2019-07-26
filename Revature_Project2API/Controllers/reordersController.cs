@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace Revature_Project2API.Controllers
 
             //var order = await _context.Order.FindAsync(id);
             string custid = id.ToString();
-            var order = await _context.Orders.Where(x => x.CustomerID == custid).ToListAsync();
+            var order = await _context.Orders.Where(x => x.Customer.CustomerID == id).ToListAsync();
             if (order == null)
             {
                 return null;

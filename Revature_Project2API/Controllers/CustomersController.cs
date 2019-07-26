@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class CustomersController : ControllerBase
     {
@@ -27,7 +30,12 @@ namespace Revature_Project2API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            var test =  _context.Customers.Include(customers => customers.Orders).ToList();
+            //string var2 = JsonConvert.SerializeObject(test);
+            //var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
+            //return Ok(httpContent);
+            return test;
+            //return await _context.Customers.ToListAsync();
         }
 
         // GET: api/Customers/5

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Revature_Project2.Models;
 
 namespace Revature_Project2.Controllers
 {

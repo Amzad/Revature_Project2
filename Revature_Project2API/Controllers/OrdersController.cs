@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Data;
+using Entities.Models;
 
-namespace Revature_Project2API.Controllers
+namespace Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +28,11 @@ namespace Revature_Project2API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include(i => i.PizzaDetails)
+                .ThenInclude(i => i.Pizzas)
+                .ThenInclude(i => i.Toppings).ToListAsync();
+
+           //return await _context.Orders.ToListAsync();
         }
 
         // GET: api/Orders/5
@@ -37,16 +41,16 @@ namespace Revature_Project2API.Controllers
         {
             string custID = id.ToString();
             //IEnumerable<Order> order = await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
-            //IEnumerable<Order> order = await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
-            Order order = _context.Orders.Where(x => x.CustomerID == custID).First();
-            string var2 = JsonConvert.SerializeObject(order);
-            var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
+            //return await _context.Orders.Where(x => x.CustomerID == custID).ToListAsync();
+            //Order order = _context.Orders.Where(x => x.CustomerID == custID).First();
+            //string var2 = JsonConvert.SerializeObject(order);
+            //var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
             //if (order == null)
             //{
-            //    return NotFound();
+                return NotFound();
             //}
 
-            return httpContent;
+            ///return Ok(httpContent);
         }
 
         // PUT: api/Orders/5

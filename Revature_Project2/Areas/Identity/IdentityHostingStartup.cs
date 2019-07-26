@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Revature_Project2.Data;
 
 [assembly: HostingStartup(typeof(Revature_Project2.Areas.Identity.IdentityHostingStartup))]
 namespace Revature_Project2.Areas.Identity

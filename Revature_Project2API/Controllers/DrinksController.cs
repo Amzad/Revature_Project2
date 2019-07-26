@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Revature_Project2API.Data;
-using Revature_Project2API.Models;
+using Entities.Models;
 
 namespace Revature_Project2API.Controllers
 {

@@ -15,7 +15,7 @@ namespace Revature_Project2API.Models
         public string PizzaSauce { get; set; }
         public string PizzaBread { get; set; }
         public bool PizzaCheese { get; set; }
-
+        // we dont need orderdetail we can replace this with order id from ordertable.
         public int OrderDetailID { get; set; }
         public virtual PizzaDetail PizzaDetail { get; set; }
         public virtual ICollection<Topping> Toppings { get; set; }

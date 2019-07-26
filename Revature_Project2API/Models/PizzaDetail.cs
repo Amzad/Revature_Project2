@@ -11,7 +11,7 @@ namespace Revature_Project2API.Models
         [Key]
         public int OrderDetailID { get; set; }
 
-
+        //this table is extra. 
         public virtual int OrderID { get; set; }
         public decimal OrderDetailPrice { get; set; }
         public virtual Order Order { get; set; }

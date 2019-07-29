@@ -273,6 +273,21 @@
         margin-bottom: 10px;
     }
 
+    #addToCart-Pizza {
+        border: 0;
+        padding: 4px;
+        padding-left: 45px;
+        padding-right: 45px;
+        opacity: 0.8;
+        border-radius: 5px;
+    }
+
+    #addToCart-Pizza:hover {
+        opacity: 1;
+        background-color: cadetblue;
+        color: white;
+    }
+
     #shoppingCart-items::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #items-drinks::-webkit-scrollbar-track, #items-specialityPizza::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
@@ -355,30 +370,22 @@
                         <div class="pizza-form-part3 pizza-form-part" style="display:none">
                             <label id="label-title">Choose Toppings</label>
                             <br>
-                            <input id="check-topping1" type="checkbox" name="TypeTopping">
-                            <label for="check-topping1">Topping1</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping2" type="checkbox" name="TypeTopping">
-                            <label for="check-topping2">Topping2</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping3" type="checkbox" name="TypeTopping">
-                            <label for="check-topping3">Topping3</label><br>
-                            <input id="check-topping4" type="checkbox" name="TypeTopping">
-                            <label for="check-topping4">Topping4</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping5" type="checkbox" name="TypeTopping">
-                            <label for="check-topping5">Topping5</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping6" type="checkbox" name="TypeTopping">
-                            <label for="check-topping6">Topping6</label><br>
-                            <input id="check-topping7" type="checkbox" name="TypeTopping">
-                            <label for="check-topping7">Topping7</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping8" type="checkbox" name="TypeTopping">
-                            <label for="check-topping8">Topping8</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping9" type="checkbox" name="TypeTopping">
-                            <label for="check-topping9">Topping9</label><br>
-                            <input id="check-topping10" type="checkbox" name="TypeTopping">
-                            <label for="check-topping10">Topping10</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping11" type="checkbox" name="TypeTopping">
-                            <label for="check-topping11">Topping11</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping12" type="checkbox" name="TypeTopping">
-                            <label for="check-topping12">Topping12</label><br>
+                            <input id="check-topping1" type="checkbox" name="TypeTopping" value="Ham">
+                            <label for="check-topping1">Ham</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping2" type="checkbox" name="TypeTopping" value="Beef">
+                            <label for="check-topping2">Beef</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping3" type="checkbox" name="TypeTopping" value="Pepperoni">
+                            <label for="check-topping3">Pepperoni</label><br>
+                            <input id="check-topping4" type="checkbox" name="TypeTopping" value="Italian Sausage">
+                            <label for="check-topping4">Italian Sausage</label><br />
+                            <input id="check-topping5" type="checkbox" name="TypeTopping" value="Onions">
+                            <label for="check-topping5">Onions</label> &nbsp;&nbsp;&nbsp;
+                            <input id="check-topping6" type="checkbox" name="TypeTopping" value="Spinach">
+                            <label for="check-topping6">Spinach</label> <br>
+                            <input id="check-topping7" type="checkbox" name="TypeTopping" value="Mushrooms">
+                            <label for="check-topping7">Mushrooms</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping8" type="checkbox" name="TypeTopping" value="Tomato">
+                            <label for="check-topping8">Totamto</label>&nbsp;&nbsp;&nbsp;
                         </div>
 
                         <div>
@@ -392,31 +399,60 @@
                 </div>
             </div>
 
+            @{
+
+                List<string> PizzaList = new List<string>();
+                PizzaList.Add("Honolulu Hawaiian");
+                PizzaList.Add("Deluxe");
+                PizzaList.Add("Cali Chicken");
+                PizzaList.Add("Buffalo Chicken");
+
+                List<string> PizzaImgUrl = new List<string>();
+                PizzaImgUrl.Add("/images/pizzSpecialty/Honolulu_Hawaiian.jpg");
+                PizzaImgUrl.Add("/images/pizzSpecialty/Deluxe.jpg");
+                PizzaImgUrl.Add("/images/pizzSpecialty/Cali_chicken.jpg");
+                PizzaImgUrl.Add("/images/pizzSpecialty/Buffalo_chicken.jpg");
+
+                List<string> PizzaDescription = new List<string>();
+                PizzaDescription.Add("Sliced ham, smoked bacon, pineapple, roasted red peppers, provolone and cheese made with 100% real mozzarella.");
+                PizzaDescription.Add("Pepperoni, Italian sausage, fresh green peppers, fresh mushrooms, fresh onions and cheese made with 100% real mozzarella.");
+                PizzaDescription.Add("Grilled chicken breast, garlic Parmesan white sauce, smoked bacon, tomatoes, provolone and cheese made with 100% real mozzarella.");
+                PizzaDescription.Add("Grilled chicken breast, fresh onions, provolone, American cheese, cheddar, cheese made with 100% real mozzarella and drizzled with a hot sauce.");
+
+                List<double> PizzaPrice = new List<double>();
+                PizzaPrice.Add(18.99);
+                PizzaPrice.Add(20.99);
+                PizzaPrice.Add(21.99);
+                PizzaPrice.Add(18.99);
+            }
+
+
             <div class="box-item spPizza">
                 <div class="pop-menu" id="popmenu-specialityPizza">
                     <div class="items-specialityPizza" id="items-specialityPizza">
-                        @for (int i = 0; i < 8; i++)
+                        @for(int i = 0; i < PizzaList.Count; i++)
                         {
                             <div class="card">
-                                <img class="card-img-top" src="https://res.cloudinary.com/bnry/image/upload/f_auto/v1551361713/romans/pizza/grumbling/pizza-tangy-russian-pan" alt="Card image cap">
+                                <img class="card-img-top" src="@PizzaImgUrl[i]" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pizza Name</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn-item btn-primary">Add to Order</a>
+                                    <h5 class="card-title" style="font-weight:800;">@PizzaList[i]</h5>
+                                    <p class="card-text">@PizzaDescription[i]</p>
+                                    <p class="card-text" style="color: cadetblue; font-family: sans-serif; font-size: 14px"> Price: $@PizzaPrice[i]</p>
+                                    <button id="addToCart-Pizza" value="@PizzaList[i]" onclick="">Add to Cart</button>
                                 </div>
                             </div>
-                        }
+                            
+                            }
                     </div>
                     <button id="btn-close" onclick="hide('popmenu-specialityPizza')"> Cancel </button>
                 </div>
             </div>
 
-            
 
             <div class="box-item btnDrink">
                 <div class="pop-menu" id="popmenu-drinks">
                     <div class="items-drinks" id="items-drinks">
-                        @for (int i = 0; i < 8; i++)
+                        @for(int i=0; i<8; i++)
                         {
                             <div class="card">
                                 <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">

@@ -213,7 +213,7 @@
     }
 
     .pizza-form-part {
-        height: 480px;
+        height: 450px;
         font-family: sans-serif;
     }
 
@@ -273,20 +273,21 @@
         margin-bottom: 10px;
     }
 
-    #items-drinks::-webkit-scrollbar-track, #items-specialityPizza::-webkit-scrollbar-track {
+    #shoppingCart-items::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #items-drinks::-webkit-scrollbar-track, #items-specialityPizza::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
     }
 
-    #items-drinks::-webkit-scrollbar, #items-specialityPizza::-webkit-scrollbar {
+    #shoppingCart-items::-webkit-scrollbar, body::-webkit-scrollbar, #items-drinks::-webkit-scrollbar, #items-specialityPizza::-webkit-scrollbar {
         width: 10px;
         background-color: #F5F5F5;
     }
 
-    #items-drinks::-webkit-scrollbar-thumb, #items-specialityPizza::-webkit-scrollbar-thumb {
+    #shoppingCart-items::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, #items-drinks::-webkit-scrollbar-thumb, #items-specialityPizza::-webkit-scrollbar-thumb {
         background-color: cadetblue;
         background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent)
     }
+
 </style>
 
 <body>
@@ -299,6 +300,7 @@
             </ul>
             <div class="box-item ownPizza">
                 <div class="pop-menu" id="popmenu-buildOwnPizza">
+
                     <form id="pizza-form">
                         <h1 style="color:cadetblue; text-align:center">BUILDING YOUR OWN PIZZA</h1>
                         <hr />
@@ -377,6 +379,10 @@
                             <label for="check-topping11">Topping11</label>&nbsp;&nbsp;&nbsp;
                             <input id="check-topping12" type="checkbox" name="TypeTopping">
                             <label for="check-topping12">Topping12</label><br>
+                        </div>
+
+                        <div>
+                            <img src="" />
                         </div>
                     </form>
                     <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>

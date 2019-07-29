@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Revature_Project2.Controllers
 {
@@ -85,7 +87,30 @@ namespace Revature_Project2.Controllers
                 //Branches = Array.Empty<Customer>();
             }
         }
+        //not working 
+        public async Task<ActionResult> Reorder(Pizza Item)
+        {         
 
+                var client = _clientFactory.CreateClient();
+                client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+                string var = JsonConvert.SerializeObject(Item);
+                var httpContent = new StringContent(var, Encoding.UTF8, "application/json");
+                //string id = User.FindFirstValue("customerID");
+                var response2 = await client.PutAsync("https://localhost:44376/api/Orders/", httpContent);
+
+
+                if (response2.IsSuccessStatusCode)
+                {
+                    //Branches = await response.Content
+                    //    .ReadAsAsync<IEnumerable<Customer>>();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("DAMN");
+                    return RedirectToAction(nameof(Index));
+                }
+        }
 
         // POST: Reorder/Create
         [HttpPost]

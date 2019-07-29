@@ -37,31 +37,40 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaSauce)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaBread)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaCheese)
-                </td>
-                <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a>*@
-                    <a asp-action="Reorder" asp-route-id="@item.PizzaID">Reorder</a> @*|
-                    <a asp-action="Delete" asp-route-id="@item.PizzaID">Delete</a>*@
-                </td>
-            </tr>
-        }
-    </tbody>
+            <form  asp-controller="Reorder" asp-action="Reorder">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaType)
+                    </td>
+                    <input type="hidden" id="PizzaType" name="PizzaType" value="item.PizzaType">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaSize)
+                    </td>
+                    <input type="hidden" id="PizzaSize" name="PizzaSize" value="item.PizzaSize">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaSauce)
+                    </td>
+                    <input type="hidden" id="PizzaSauce" name="PizzaSauce" value="item.PizzaSauce">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaBread)
+                    </td>
+                    <input type="hidden" id="PizzaBread" name="PizzaBread" value="item.PizzaBread">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaCheese)
+                    </td>
+                    <input type="hidden" id="PizzaCheese" name="PizzaCheese" value="item.PizzaCheese">
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a>*@
+                        <a asp-controller="Reorder" asp-action="Reorder" asp-route-id="@item.OrderID">Reorder</a>
+                        <button type="submit">Order Again!</button>
+                        @*|
+        <a asp-action="Delete" asp-route-id="@item.PizzaID">Delete</a>*@
+                    </td>
+                </tr>
+             </form>  }
+        </tbody>
 </table>

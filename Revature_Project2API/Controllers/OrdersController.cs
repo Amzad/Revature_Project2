@@ -69,7 +69,33 @@ namespace Revature_Project2API.Controllers
 
             return NoContent();
         }
+        //// PUT: api/Orders/5
+        //[HttpPut("Checkout/{id}")]
+        //public async Task<IActionResult> CheckOutOrder(int id, Order order)
+        //{
 
+        //    try
+        //    {
+        //        order.CustomerID = id;
+        //        _context.Orders.Add(order);
+        //        _context.Entry(order).State = EntityState.Added;
+        //        await _context.SaveChangesAsync();
+        //        return Ok(order);
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!OrderExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
         // POST: api/Orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)

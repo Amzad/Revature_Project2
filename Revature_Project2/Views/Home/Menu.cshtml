@@ -56,25 +56,7 @@
         document.getElementById("pizza-form").reset();
     }
 </script>
-<script>
-     $("button").click(function(e) {
-                                e.preventDefault();
-                                $.ajax({
-                                type: "POST",
-                                url: "/pages/test/",
-                                data: {
-                                id: $(this).val(), // < note use of 'this' here
-                                access_token: $("#access_token").val()
-                                },
-                                success: function(result) {
-                                alert('ok');
-                                },
-                                error: function(result) {
-                                alert('error');
-                                }
-                                });
-                                });
-</script>
+
 <style>
     body {
         background-image: url('https://img.taste.com.au/YfX0h9hC/taste/2017/10/mexican-taco-pizza-131640-1.jpg');
@@ -429,41 +411,17 @@
             <div class="box-item btnDrink">
                 <div class="pop-menu" id="popmenu-drinks">
                     <div class="items-drinks" id="items-drinks">
-
-                        <div class="card">
-                            <img class="card-img-top" src="https://sc01.alicdn.com/kf/UTB8Df5tCOaMiuJk43PTq6ySmXXae/Coca-Cola-Soft-Drinks-330ml-1L-1.jpg_300x300.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Coca Cola</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <button onclick ="#" class="btn-item btn-primary">Add to Order</button>
-                               
+                        @for (int i = 0; i < 8; i++)
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Drink Name</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <a href="#" class="btn-item btn-primary">Add to Order</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/71Y5MLLmknL._SY355_.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Sprite</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn-item btn-primary">Add to Order</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/41iZt9j72TL._SY355_.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Sunkist</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn-item btn-primary">Add to Order</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="https://i5.walmartimages.com/asr/95a1f4d1-17bd-470b-a485-3459b88446f0_1.332541753ff32411fb54e629c906aecb.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Ramune</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn-item btn-primary">Add to Order</a>
-                            </div>
-                        </div>
-
+                        }
                     </div>
                     <button id="btn-close" onclick="hide('popmenu-drinks')"> Cancel </button>
                 </div>

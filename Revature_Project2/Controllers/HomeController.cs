@@ -39,12 +39,12 @@ namespace Revature_Project2.Controllers
             // Sample GET Request
             var request = new HttpRequestMessage(HttpMethod.Get,
                 "https://localhost:44376/api/customers");
-                // Must include these headers for GET
+            // Must include these headers for GET
             //request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             //request.Headers.Add("accept-encoding", "gzip, deflate");
             //request.Headers.Add("content-type", "application/json");
             //request.Headers.Add("user-agent",
-               // "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            // "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
 
             var client = _clientFactory.CreateClient();
 
@@ -54,11 +54,11 @@ namespace Revature_Project2.Controllers
             {
                 var order = await response.Content.ReadAsAsync<IEnumerable<Customer>>();
 
-                    
-                    //System.Diagnostics.Debug.WriteLine(x.OrderDetailPrice);
-                
-               /* Branches = await response.Content
-                    .ReadAsAsync<IEnumerable<Customer>>();*/
+
+                //System.Diagnostics.Debug.WriteLine(x.OrderDetailPrice);
+
+                /* Branches = await response.Content
+                     .ReadAsAsync<IEnumerable<Customer>>();*/
                 return View(order);
             }
             else
@@ -88,7 +88,7 @@ namespace Revature_Project2.Controllers
                 new Topping() { ToppingName = "Potter", ToppingPrice = 25 },
                 new Topping() { ToppingName = "Ron", ToppingPrice = 30 }
             };
-            
+
             fPizza.Toppings = fTopping;
             fPizza.PizzaBread = "Cheesy";
             fPizza.PizzaSauce = "BBQ";
@@ -99,7 +99,7 @@ namespace Revature_Project2.Controllers
             fakeOrder.Pizzas.Add(fPizza);
             //fakeOrder. = User.FindFirstValue("customerID");
             //var request = new HttpRequestMessage(HttpMethod.Get,
-             //   "https://localhost:44376/api/customers/" + User.FindFirstValue("customerID"));
+            //   "https://localhost:44376/api/customers/" + User.FindFirstValue("customerID"));
             //request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
 
             //var res = await _clientFactory.CreateClient().SendAsync(request);
@@ -125,7 +125,7 @@ namespace Revature_Project2.Controllers
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("DAMN");;
+                System.Diagnostics.Debug.WriteLine("DAMN"); ;
             }
 
 
@@ -163,5 +163,15 @@ namespace Revature_Project2.Controllers
 
         }
 
+       // [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Submit(string PizzaBread, string PizzaCheese, string PizzaSize, string PizzaSauce, int[] TypeTopping)
+        {
+            System.Diagnostics.Debug.WriteLine("TEST");
+
+
+
+            return View();
+        }
     }
 }

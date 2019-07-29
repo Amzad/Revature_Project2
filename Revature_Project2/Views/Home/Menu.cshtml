@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Menu";
+﻿@model Entities.Models.Pizza
+@{
+    ViewData["Title"] = "View";
 }
 
 <link href="https://fonts.googleapis.com/css?family=Bungee+Outline|Hanalei|Questrial|Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -8,13 +9,13 @@
     var slideIndex = 1;
     showDivs(slideIndex);
     function plusDivs(n) {
-      showDivs(slideIndex += n);
+        showDivs(slideIndex += n);
     }
     function showDivs(n) {
         var i;
         var x = document.getElementsByClassName("pizza-form-part");
-        if (n > x.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = x.length} ;
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length };
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
@@ -45,7 +46,7 @@
         document.getElementById(div).style.display = "none";
         document.getElementById("container-shoppingCart").style.display = "block";
         document.getElementById("pizza-form").reset();
-        document.getElementById('items-specialityPizza').scrollTop =0;
+        document.getElementById('items-specialityPizza').scrollTop = 0;
 
     }
     function addToCart(div) {
@@ -84,9 +85,9 @@
         left: 70%;
     }
 
-    .container-shoppingCart:hover {
-        opacity: 0.95;
-    }
+        .container-shoppingCart:hover {
+            opacity: 0.95;
+        }
 
     .pop-menu {
         display: none;
@@ -115,10 +116,10 @@
         transition-duration: 1s;
     }
 
-    #btn-item:hover {
-        transform: scale(1.1);
-        transition-duration: 1s;
-    }
+        #btn-item:hover {
+            transform: scale(1.1);
+            transition-duration: 1s;
+        }
 
     #btn-next, #btn-prev, #btn-close, #btn-addToOrder {
         background-color: cadetblue;
@@ -140,9 +141,9 @@
         border-radius: 5px;
     }
 
-    #btn-next:hover, #btn-prev:hover, #btn-close:hover, #btn-addToOrder:hover {
-        opacity: 1;
-    }
+        #btn-next:hover, #btn-prev:hover, #btn-close:hover, #btn-addToOrder:hover {
+            opacity: 1;
+        }
 
     #btn-checkout {
         border: none;
@@ -152,9 +153,9 @@
         opacity: 0.8;
     }
 
-    #btn-checkout:hover {
-        opacity: 1;
-    }
+        #btn-checkout:hover {
+            opacity: 1;
+        }
 
     #nav-menu {
         list-style-type: none;
@@ -163,17 +164,17 @@
         margin-top: 180px;
     }
 
-    #nav-menu > li {
-        padding: 0px;
-        width: 480px;
-        margin-top: 20px;
-        transition-duration: 1s;
-        user-select: none;
-    }
+        #nav-menu > li {
+            padding: 0px;
+            width: 480px;
+            margin-top: 20px;
+            transition-duration: 1s;
+            user-select: none;
+        }
 
-    #nav-menu img {
-        transform: scale(0.5);
-    }
+        #nav-menu img {
+            transform: scale(0.5);
+        }
 
     #li-ownPizza {
         opacity: 0.95;
@@ -183,8 +184,8 @@
         border-radius: 5px;
     }
 
-    #li-ownPizza:hover {
-    }
+        #li-ownPizza:hover {
+        }
 
     #li-drink {
         opacity: 0.8;
@@ -193,11 +194,11 @@
         border-radius: 5px;
     }
 
-    #li-drink:hover {
-        transition-duration: 1s;
-        color: cadetblue;
-        background-color: black;
-    }
+        #li-drink:hover {
+            transition-duration: 1s;
+            color: cadetblue;
+            background-color: black;
+        }
 
     #li-spPizza {
         color: cadetblue;
@@ -217,9 +218,9 @@
         font-family: sans-serif;
     }
 
-    .pizza-form-part input {
-        transform: scale(1.4);
-    }
+        .pizza-form-part input {
+            transform: scale(1.4);
+        }
 
     #label-title {
         font-family: 'Shadows Into Light', cursive;
@@ -237,9 +238,9 @@
         font-size: 15px;
     }
 
-    table tr th {
-        color: cadetblue;
-    }
+        table tr th {
+            color: cadetblue;
+        }
 
     .btn-item {
         padding: 5px;
@@ -252,11 +253,11 @@
         border-radius: 5px;
     }
 
-    .btn-item:hover {
-        opacity: 0.9;
-        text-decoration: none;
-        background-color: orange;
-    }
+        .btn-item:hover {
+            opacity: 0.9;
+            text-decoration: none;
+            background-color: orange;
+        }
 
     .card {
         width: 260px;
@@ -299,91 +300,93 @@
             </ul>
             <div class="box-item ownPizza">
                 <div class="pop-menu" id="popmenu-buildOwnPizza">
-                    <form id="pizza-form">
+                    @using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { @class = "form", role = "form", id = "pizza-form" }))
+                    {
                         <h1 style="color:cadetblue; text-align:center">BUILDING YOUR OWN PIZZA</h1>
                         <hr />
                         <div class="pizza-form-part1 pizza-form-part">
                             <label id="label-title">Choose Your Crust</label>
                             <br>
-                            <input id="radio-crust1" type="radio" name="TypeCrust" value="Brooklyn Style" checked>
+                            <input asp-for="PizzaBread" type="radio" name="PizzaBread" value="BrooklynStyle" checked>
                             <label for="radio-crust1">Brooklyn Style</label><br>
-                            <input id="radio-crust2" type="radio" name="TypeCrust" value="Hand Tossed">
+                            <input asp-for="PizzaBread" type="radio" name="PizzaBread" value="HandTossed">
                             <label for="radio-crust2">Hand Tossed</label><br>
-                            <input id="radio-crust3" type="radio" name="TypeCrust" value="Crunchy Thin Crust">
+                            <input asp-for="PizzaBread" type="radio" name="PizzaBread" value="CrunchyThinCrust">
                             <label for="radio-crust3">Crunchy Thin Crust</label><br>
-                            <input id="radio-crust4" type="radio" name="TypeCrust" value="Handmake Pan">
+                            <input asp-for="PizzaBread" type="radio" name="PizzaBread" value="HandmakePan">
                             <label for="radio-crust4">Handmake Pan</label>
                             <br><br>
                             <label id="label-title">Choose Your Size</label>
                             <br>
-                            <input id="radio-crustSize1" type="radio" name="SizeCrust" value=123 checked>
+                            <input asp-for="PizzaSize" type="radio" name="PizzaSize" value="Small" checked>
                             <label for="radio-crustSize1">10" Small</label>
-                            <input id="radio-crustSize2" type="radio" name="SizeCrust">
+                            <input asp-for="PizzaSize" type="radio" name="PizzaSize" value="Medium">
                             <label for="radio-crustSize2">12" Medium</label>
-                            <input id="radio-crustSize3" type="radio" name="SizeCrust">
+                            <input asp-for="PizzaSize" type="radio" name="PizzaSize" value="Large">
                             <label for="radio-crustSize3">14" Large</label>
-                            <input id="radio-crustSize4" type="radio" name="SizeCrust">
+                            <input asp-for="PizzaSize" type="radio" name="PizzaSize" value="X-Large">
                             <label for="radio-crustSize4">16" X-Large</label>
                         </div>
 
                         <div class="pizza-form-part2 pizza-form-part" style="display:none">
                             <label id="label-title">Do you want cheese?</label>
                             <br>
-                            <input id="radio-cheese-yes" type="radio" name="isCheese" checked>
+                            <input asp-for="PizzaCheese" type="radio" name="PizzaCheese" value=true checked>
                             <label for="radio-cheese-yes">Yes</label>
-                            <input id="radio-cheese-no" type="radio" name="isCheese">
+                            <input asp-for="PizzaCheese" type="radio" name="PizzaCheese" value=false>
                             <label for="radio-cheese-no">No</label>
                             <br><br>
                             <label id="label-title">Choose a Sauce</label>
                             <br>
-                            <input id="radio-sauce1" type="radio" name="TypeSause" value="BBQ Sauce" checked>
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="BBQSauce" checked>
                             <label for="radio-sauce1">BBQ Sauce</label><br>
-                            <input id="radio-sauce2" type="radio" name="TypeSause" value="Alfredo Sauce">
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="AlfredoSauce">
                             <label for="radio-sauce2">Alfredo Sauce</label><br>
-                            <input id="radio-sauce3" type="radio" name="TypeSause" value="Robust Inspired Tomato Sauce">
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="RobustInspiredTomatoSauce">
                             <label for="radio-sauce3">Robust Inspired Tomato Sauce</label><br>
-                            <input id="radio-sauce4" type="radio" name="TypeSause" value="Garlic Parmesan White Sauce">
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="GarlicParmesanWhiteSauce">
                             <label for="radio-sauce4">Garlic Parmesan White Sauce</label><br>
-                            <input id="radio-sauce5" type="radio" name="TypeSause" value="Hearty Marinara Sauce">
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="HeartyMarinaraSauce">
                             <label for="radio-sauce5">Hearty Marinara Sauce</label><br>
-                            <input id="radio-sauce6" type="radio" name="TypeSause">
+                            <input asp-for="PizzaSauce" type="radio" name="PizzaSauce" value="None">
                             <label for="radio-sauce6">None</label>
                         </div>
 
                         <div class="pizza-form-part3 pizza-form-part" style="display:none">
                             <label id="label-title">Choose Toppings</label>
                             <br>
-                            <input id="check-topping1" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="1">
                             <label for="check-topping1">Topping1</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping2" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="2">
                             <label for="check-topping2">Topping2</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping3" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="3">
                             <label for="check-topping3">Topping3</label><br>
-                            <input id="check-topping4" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="4">
                             <label for="check-topping4">Topping4</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping5" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="5">
                             <label for="check-topping5">Topping5</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping6" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="6">
                             <label for="check-topping6">Topping6</label><br>
-                            <input id="check-topping7" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="7">
                             <label for="check-topping7">Topping7</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping8" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="8">
                             <label for="check-topping8">Topping8</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping9" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="9">
                             <label for="check-topping9">Topping9</label><br>
-                            <input id="check-topping10" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="10">
                             <label for="check-topping10">Topping10</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping11" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="11">
                             <label for="check-topping11">Topping11</label>&nbsp;&nbsp;&nbsp;
-                            <input id="check-topping12" type="checkbox" name="TypeTopping">
+                            <input type="checkbox" name="TypeTopping" value="12">
                             <label for="check-topping12">Topping12</label><br>
                         </div>
-                    </form>
-                    <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
-                    <button id="btn-next" onclick="plusDivs(1)">Next</button>
-                    <button id="btn-close" onclick="hide('popmenu-buildOwnPizza')"> Cancel </button>
-                    <button id="btn-addToOrder" onclick="addToCart('popmenu-buildOwnPizza')">Add to Order</button>
-                </div>
+
+                        <button class="btn" type="submit" id="btn-addToOrder" onclick="Submit">Add to Order</button>
+                    }
+                        <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
+                        <button id="btn-next" onclick="plusDivs(1)">Next</button>
+                        <button id="btn-close" onclick="hide('popmenu-buildOwnPizza')"> Cancel </button>
+                    </div>
             </div>
 
             <div class="box-item spPizza">

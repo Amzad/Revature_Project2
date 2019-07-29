@@ -34,6 +34,12 @@ namespace Revature_Project2.Controllers
             return View();
         }
 
+        //[Authorize]
+        public IActionResult Payment()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> P1()
         {
             // Sample GET Request

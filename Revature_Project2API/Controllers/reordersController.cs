@@ -43,7 +43,21 @@ namespace Revature_Project2API.Controllers
 
             return order;
         }
+       
+        [HttpGet("Detail/{id}")]
+        public async Task<ICollection<Pizza>> PizzaDetail(int id)
+        {
 
+            //var order = await _context.Order.FindAsync(id);
+            //string custid = id.ToString();
+            var item = await _context.Pizzas.Where(x => x.OrderID == id).ToListAsync();
+            if (item == null)
+            {
+                return null;
+            }
+
+            return item;
+        }
         // PUT: api/reorders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)

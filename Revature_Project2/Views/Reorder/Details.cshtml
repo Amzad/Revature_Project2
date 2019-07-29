@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<Entities.Models.Pizza>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaSauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaBread)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaCheese)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <form  asp-controller="Reorder" asp-action="Reorder">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaType)
+                    </td>
+                    <input type="hidden" id="PizzaType" name="PizzaType" value="item.PizzaType">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaSize)
+                    </td>
+                    <input type="hidden" id="PizzaSize" name="PizzaSize" value="item.PizzaSize">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaSauce)
+                    </td>
+                    <input type="hidden" id="PizzaSauce" name="PizzaSauce" value="item.PizzaSauce">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaBread)
+                    </td>
+                    <input type="hidden" id="PizzaBread" name="PizzaBread" value="item.PizzaBread">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PizzaCheese)
+                    </td>
+                    <input type="hidden" id="PizzaCheese" name="PizzaCheese" value="item.PizzaCheese">
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a>*@
+                        <a asp-controller="Reorder" asp-action="Reorder" asp-route-id="@item.OrderID">Reorder</a>
+                        <button type="submit">Order Again!</button>
+                        @*|
+        <a asp-action="Delete" asp-route-id="@item.PizzaID">Delete</a>*@
+                    </td>
+                </tr>
+             </form>  }
+        </tbody>
+</table>

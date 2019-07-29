@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Entities.Data;
 using Entities.Models;
-using Revature_Project2API.Data;
 
 namespace Revature_Project2API.Controllers
 {
@@ -46,19 +46,12 @@ namespace Revature_Project2API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            order.CustomerID = id;
-            _context.Orders.Add(order);
-
-            _context.Entry(order).State = EntityState.Added;
-            _context.SaveChanges();
-
+           
             try
             {
                 order.CustomerID = id;
                 _context.Orders.Add(order);
-
                 _context.Entry(order).State = EntityState.Added;
-                _context.SaveChanges();
                 await _context.SaveChangesAsync();
                 return Ok(order);
             }
@@ -76,7 +69,33 @@ namespace Revature_Project2API.Controllers
 
             return NoContent();
         }
+        //// PUT: api/Orders/5
+        //[HttpPut("Checkout/{id}")]
+        //public async Task<IActionResult> CheckOutOrder(int id, Order order)
+        //{
 
+        //    try
+        //    {
+        //        order.CustomerID = id;
+        //        _context.Orders.Add(order);
+        //        _context.Entry(order).State = EntityState.Added;
+        //        await _context.SaveChangesAsync();
+        //        return Ok(order);
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!OrderExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
         // POST: api/Orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)

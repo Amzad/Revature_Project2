@@ -214,7 +214,7 @@
     }
 
     .pizza-form-part {
-        height: 480px;
+        height: 450px;
         font-family: sans-serif;
     }
 
@@ -300,7 +300,7 @@
             </ul>
             <div class="box-item ownPizza">
                 <div class="pop-menu" id="popmenu-buildOwnPizza">
-                    @using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { @class = "form", role = "form", id = "pizza-form" }))
+                    @using (Html.BeginForm("AddtoOrder", "CheckOut", FormMethod.Post, new { @class = "form", role = "form", id = "pizza-form" }))
                     {
                         <h1 style="color:cadetblue; text-align:center">BUILDING YOUR OWN PIZZA</h1>
                         <hr />
@@ -356,29 +356,29 @@
                             <label id="label-title">Choose Toppings</label>
                             <br>
                             <input type="checkbox" name="TypeTopping" value="1">
-                            <label for="check-topping1">Topping1</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping1">Pepperoni</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="2">
-                            <label for="check-topping2">Topping2</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping2">Sausage</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="3">
-                            <label for="check-topping3">Topping3</label><br>
+                            <label for="check-topping3">Ham</label><br>
                             <input type="checkbox" name="TypeTopping" value="4">
-                            <label for="check-topping4">Topping4</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping4">Bacon</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="5">
-                            <label for="check-topping5">Topping5</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping5">Beef</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="6">
-                            <label for="check-topping6">Topping6</label><br>
+                            <label for="check-topping6">Pineapple</label><br>
                             <input type="checkbox" name="TypeTopping" value="7">
-                            <label for="check-topping7">Topping7</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping7">Spinich</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="8">
-                            <label for="check-topping8">Topping8</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping8">Onion</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="9">
-                            <label for="check-topping9">Topping9</label><br>
+                            <label for="check-topping9">Olives</label><br>
                             <input type="checkbox" name="TypeTopping" value="10">
-                            <label for="check-topping10">Topping10</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping10">Garlic</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="11">
-                            <label for="check-topping11">Topping11</label>&nbsp;&nbsp;&nbsp;
+                            <label for="check-topping11">Green Pepper</label>&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" name="TypeTopping" value="12">
-                            <label for="check-topping12">Topping12</label><br>
+                            <label for="check-topping12">Sun Dried Tomatoes</label><br>
                         </div>
 
                         <button class="btn" type="submit" id="btn-addToOrder" onclick="Submit">Add to Order</button>

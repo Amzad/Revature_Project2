@@ -20,6 +20,13 @@ namespace Entities.Models
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public string CreditCardNumber { get; set; }
+        public string ExpMonth { get; set; }
+        public string ExpYear { get; set; }
+        public string SecurityCode { get; set; }
+
+
+
         public virtual ICollection<Order> Orders { get; set; }
 
     }

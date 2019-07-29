@@ -1,8 +1,8 @@
 
-<ul class="navbar-nav">
+<ul class="navbar-nav" onmouseout="customer_nav_display_out()">
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <li class="nav-item">
+    <li class="nav-item" onmouseover="customer_nav_display_over()" >
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
             Hello @Context.User.FindFirst("firstName").Value!
         </a>
@@ -23,3 +23,34 @@ else
     </li>
 }
 </ul>
+
+<ul class="nav-customer" id="nav-customer" onmouseover="customer_nav_display_over()" onmouseout="customer_nav_display_out()">
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Payment">Payment</a>
+    </li>
+</ul>
+
+<style>
+    .nav-customer {
+        list-style: none;
+        padding: 0;
+        background-color: white;
+        opacity: 0.95;
+        position: relative;
+        top: 55px;
+        left: 90px;
+        display: none;
+    }
+</style>
+
+<script>
+
+    function customer_nav_display_over() {
+        document.getElementById("nav-customer").style.display = "block";
+        }
+
+    function customer_nav_display_out() {
+        document.getElementById("nav-customer").style.display = "none";
+    }
+
+</script>

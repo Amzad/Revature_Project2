@@ -173,10 +173,9 @@ namespace Revature_Project2.Controllers
         [HttpPost]
         public async Task<IActionResult> Submit(string PizzaBread, string PizzaCheese, string PizzaSize, string PizzaSauce, int[] TypeTopping)
         {
+
+
             System.Diagnostics.Debug.WriteLine("TEST");
-
-
-
             return View();
         }
     }

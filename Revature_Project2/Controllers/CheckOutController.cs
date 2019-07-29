@@ -8,16 +8,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Revature_Project2.Controllers
 {
+    
     public class CheckOutController : Controller
     {
-        public static List<Order> CustomerOrder;
-        public void AddToList(Order Item)
+        public static List<Order> TempOrder { get; set; }
+        public void AddToPizza(string PizzaBread, bool PizzaCheese, string PizzaSize, string PizzaSauce, string[] TypeTopping)
         {
-            CustomerOrder.Add(Item);
+   
+            Pizza TempPizza = new Pizza();
+            List<Topping> fTopping = new List<Topping>
+            {
+                new Topping() { ToppingName = TypeTopping[0]},
+                new Topping() { ToppingName = TypeTopping[1]},
+                new Topping() { ToppingName = TypeTopping[2]}
+            };
+            TempPizza.Toppings = fTopping;
+            TempPizza.PizzaBread = PizzaBread;
+            TempPizza.PizzaSauce = PizzaSauce;
+            TempPizza.PizzaPrice = 90;
+            TempPizza.PizzaSize = PizzaSize;
+            TempPizza.PizzaCheese = PizzaCheese;
+            //TempOrder.Add();
         }
         public void CheckOut(Order Item)
         {
-            CustomerOrder.RemoveAll(s => s.CustomerID == Item.CustomerID);
+            TempOrder.RemoveAll(s => s.CustomerID == Item.CustomerID);
         }
         // GET: CheckOut
         public ActionResult Index()

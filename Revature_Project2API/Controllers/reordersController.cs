@@ -43,14 +43,18 @@ namespace Revature_Project2API.Controllers
 
             return order;
         }
-       
+
+
         [HttpGet("Detail/{id}")]
-        public async Task<ICollection<Pizza>> PizzaDetail(int id)
+        public async Task<Order> PizzaDetail(int id)
         {
 
             //var order = await _context.Order.FindAsync(id);
             //string custid = id.ToString();
-            var item = await _context.Pizzas.Where(x => x.OrderID == id).ToListAsync();
+            Order item = new Order();
+            item.Pizzas = await _context.Pizzas.Where(o => o.OrderID == id).Include(o => o.Toppings).ToListAsync();
+            item.Drinks = await _context.Drinks.Where(d => d.OrderID == id).ToListAsync();
+            //.ThenInclude(c => c.Toppings)
             if (item == null)
             {
                 return null;
@@ -58,6 +62,7 @@ namespace Revature_Project2API.Controllers
 
             return item;
         }
+
         // PUT: api/reorders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)

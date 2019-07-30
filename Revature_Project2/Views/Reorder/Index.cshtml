@@ -3,52 +3,98 @@
 @{
     ViewData["Title"] = "View";
 }
+<style>
+    body {
+        background-image: url('https://img.taste.com.au/YfX0h9hC/taste/2017/10/mexican-taco-pizza-131640-1.jpg');
+        font-family: 'Shadows Into Light', cursive;
+        font-size: 20px;
+        user-select: none;
+    }
 
+    .container-shoppingCart {
+        border-radius: 15px;
+        background-color: white;
+        color: black;
+        padding: 10px;
+        height: 500px;
+        width: 900px;
+        margin-top: 600px;
+        opacity: 0.9;
+        user-select: none;
+        text-align: center;
+        position: relative;
+        bottom: 605px;
+        left: 0%;
+    }
+
+        .container-shoppingCart:hover {
+            opacity: 0.95;
+        }
+</style>
 <h1>View</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerID)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerID)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a>*@
-                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="container-shoppingCart" id="container-shoppingCart">
+    <br>
+    <div id="shoppingCart-header">
+        <img src="https://images.vexels.com/media/users/3/132114/isolated/lists/5367202ad4dd11725544cb3008049f96-shoppingcart-flat-icon.png" width="32" height="32" />
+        <span style="font-size: 29px; color: orange"> PAST ORDER</span>
+    </div>
+    <hr />
+    <div id="shoppingCart-items" style="height: 235px; overflow: scroll; overflow-x: hidden">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDateTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CustomerID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Pizzas.Count)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pizzas.Count)
+                        </td>
+                        <td>
+
+                            <a asp-action="Details" asp-route-id="@item.OrderID">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <hr />
+    @*<p>Total price: @(Model != null ? Model.OrderPrice : 0)</p>*@
+    <button id="btn-checkout" onclick="location.href='@Url.Action("Menu", "Home")'" style="background-color:cadetblue; border-radius:5px">Go Menu!</button>
+</div>
+
+
+

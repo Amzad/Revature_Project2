@@ -1,0 +1,43 @@
+﻿@using Entities.Models
+@model Order
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="~/css/index.css" />
+<link href="https://fonts.googleapis.com/css?family=Bungee+Outline|Hanalei|Questrial|Shadows+Into+Light&display=swap" rel="stylesheet">
+
+<body>
+    <div class="login-body">
+        <h1 class="text-white">@ViewData["Title"]</h1>
+        <div class="row">
+            <div class="col-md-4">
+                @if (Model != null)
+                {
+                    @foreach (Pizza pie in Model.Pizzas)
+                    {
+                        <div class="card" style="width: 40em;">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Type: @pie.PizzaType</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Price: @pie.PizzaPrice</h6>
+                                <p class="card-text">Crust: @pie.PizzaBread</p>
+                                <p class="card-text">Sauce: @pie.PizzaSauce</p>
+                                <p class="card-text">Cheese: @pie.PizzaCheese</p>
+                                <p class="card-text">Size: @pie.PizzaSize</p>
+                                @foreach (Topping top in pie.Toppings)
+                                {
+                                    <p class="card-text">Toppings: @top.ToppingName</p>
+                                }
+
+                            </div>
+                        </div>
+                    }
+                }
+                </div>
+
+        </div>
+    </div>
+</body>
+

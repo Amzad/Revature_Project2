@@ -54,7 +54,7 @@ namespace Revature_Project2
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(o => {
-            o.LoginPath = "/Identity/Account/Login";
+            o.LoginPath = "/Account/Login";
             });
 
 

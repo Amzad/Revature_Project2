@@ -27,10 +27,13 @@ namespace Revature_Project2.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Menu()
         {
             //Test
-            return View();
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            Order orderList = CheckOutController.CustomerOrder.Find(c => c.CustomerID == custID);
+            return View(orderList);
         }
 
         //[Authorize]

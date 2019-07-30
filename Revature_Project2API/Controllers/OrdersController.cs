@@ -99,8 +99,9 @@ namespace Revature_Project2API.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-
+            order.OrderDateTime = DateTime.Now;
             _context.Orders.Add(order);
+            
             /*List<Customer> custList = _context.Customers.Include(o => o.Orders).ToList();
             Customer cust = custList.Find(c => c.CustomerID == order.CustomerID);
             cust.Orders.Add(order);*/

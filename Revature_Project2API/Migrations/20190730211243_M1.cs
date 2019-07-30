@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Revature_Project2API.Migrations
 {
-    public partial class M3 : Migration
+    public partial class M1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,7 +62,11 @@ namespace Revature_Project2API.Migrations
                     CustomerPhoneNumber = table.Column<string>(nullable: true),
                     CustomerEmail = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: true),
+                    CreditCardNumber = table.Column<string>(nullable: true),
+                    ExpMonth = table.Column<string>(nullable: true),
+                    ExpYear = table.Column<string>(nullable: true),
+                    SecurityCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,18 +187,17 @@ namespace Revature_Project2API.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderDateTime = table.Column<DateTime>(nullable: false),
                     OrderPrice = table.Column<decimal>(nullable: false),
-                    CustomerID = table.Column<string>(nullable: true),
-                    CustomerID1 = table.Column<int>(nullable: true)
+                    CustomerID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerID1",
-                        column: x => x.CustomerID1,
+                        name: "FK_Orders_Customers_CustomerID",
+                        column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -310,9 +313,9 @@ namespace Revature_Project2API.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerID1",
+                name: "IX_Orders_CustomerID",
                 table: "Orders",
-                column: "CustomerID1");
+                column: "CustomerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pizzas_OrderID",

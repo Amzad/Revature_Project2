@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Revature_Project2.Controllers
 {
@@ -103,7 +105,7 @@ namespace Revature_Project2.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost]      
         public void AddDrink([FromBody] string drink)
         {
 
@@ -152,12 +154,38 @@ namespace Revature_Project2.Controllers
             }
 
         }
-
-        public void CheckOut(Order Item)
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
         {
-            CustomerOrder.RemoveAll(s => s.CustomerID == Item.CustomerID);
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                Order order = CustomerOrder.Find(c => c.CustomerID == custID);
+                cust.Orders = new List<Order>();
+                cust.Orders.Add(order);
+
+                return View(cust);
+            }
+            else
+            {
+                return View(string.Empty, "User not found");
+            }
+
         }
+
         // GET: CheckOut
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             int custID = int.Parse(User.FindFirst("customerID").Value);
@@ -176,7 +204,10 @@ namespace Revature_Project2.Controllers
                 Customer cust = await response.Content.ReadAsAsync<Customer>();
                 if (cust.CreditCardNumber == null)
                 {
-                    return RedirectToAction("CreditCard", "Account");
+                    return RedirectToAction("UpdateCreditCard", "Account");
+                } else
+                {
+                    return RedirectToAction("Checkout", "CheckOut");
                 }
 
 
@@ -186,7 +217,34 @@ namespace Revature_Project2.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Finalize()
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            Order order = CustomerOrder.Find(c => c.CustomerID == custID);
 
+            var client = _clientFactory.CreateClient();
+            client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            string var2 = JsonConvert.SerializeObject(order);
+            var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
+            string url = "https://localhost:44376/api/Orders/";
+            var response = await client.PostAsync(url, httpContent);
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                CustomerOrder.Remove(order);
+                return View();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("DAMN"); ;
+            }
+
+            return View();
+
+        }
 
         [Authorize]
         [HttpPost]

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature_Project2API", "Rev
 		{7E40B870-78E5-456A-8AB5-AA0806D3A466} = {7E40B870-78E5-456A-8AB5-AA0806D3A466}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{7E40B870-78E5-456A-8AB5-AA0806D3A466}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{7E40B870-78E5-456A-8AB5-AA0806D3A466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,7 +30,6 @@ Global
 		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6861E7A-4421-4E5E-90BF-237C9165FA7A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E40B870-78E5-456A-8AB5-AA0806D3A466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E40B870-78E5-456A-8AB5-AA0806D3A466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E40B870-78E5-456A-8AB5-AA0806D3A466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E40B870-78E5-456A-8AB5-AA0806D3A466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Revature_Project2API.Data;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Revature_Project2API.Controllers
 {
@@ -46,7 +47,7 @@ namespace Revature_Project2API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
-           
+
             try
             {
                 order.CustomerID = id;
@@ -68,40 +69,45 @@ namespace Revature_Project2API.Controllers
             }
         }
         //// PUT: api/Orders/5
-        //[HttpPut("Checkout/{id}")]
-        //public async Task<IActionResult> CheckOutOrder(int id, Order order)
-        //{
+        [HttpPut("Checkout/{id}")]
+        public async Task<IActionResult> CheckOutOrder(int id, Order order)
+        {
 
-        //    try
-        //    {
-        //        order.CustomerID = id;
-        //        _context.Orders.Add(order);
-        //        _context.Entry(order).State = EntityState.Added;
-        //        await _context.SaveChangesAsync();
-        //        return Ok(order);
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!OrderExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                order.CustomerID = id;
+                _context.Orders.Add(order);
+                _context.Entry(order).State = EntityState.Added;
+                await _context.SaveChangesAsync();
+                return Ok(order);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return NoContent();
-        //}
-        // POST: api/Orders
+            return NoContent();
+        }
+        //POST: api/Orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
+
             _context.Orders.Add(order);
+            /*List<Customer> custList = _context.Customers.Include(o => o.Orders).ToList();
+            Customer cust = custList.Find(c => c.CustomerID == order.CustomerID);
+            cust.Orders.Add(order);*/
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+            return Ok();
+            //return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
         }
 
         // DELETE: api/Orders/5

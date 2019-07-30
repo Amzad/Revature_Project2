@@ -22,16 +22,57 @@ namespace Revature_Project2.Controllers
             _clientFactory = clientFactory;
         }
 
-        public IActionResult CreditCard()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult UpdateCreditCard()
+        {
+            return View("CreditCard");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCreditCard(string cardnumber, string expmonth, string securitycode)
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                cust.CreditCardNumber = cardnumber;
+                cust.ExpMonth = expmonth;
+                cust.SecurityCode = securitycode;
+
+                // Update Customer Object
+                httpClient = _clientFactory.CreateClient("API");
+                response = await httpClient.PutAsJsonAsync("https://localhost:44376/api/Customers/" + custID, cust);
+                if (response.IsSuccessStatusCode)
+                {
+                    return View();
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                return View();
+            }
+
+        }
+
 
         [HttpGet]
         public IActionResult Register()

@@ -24,6 +24,9 @@ namespace Entities.Models
         public string ExpMonth { get; set; }
         public string ExpYear { get; set; }
         public string SecurityCode { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+
 
 
 

@@ -57,47 +57,48 @@
     <h1>@ViewData["Title"]</h1>
     <div class="row">
         <div class="col-md-4">
-            <form method="post" class="credit-form">
-                <h4>To save your credit card for payment.</h4>
-                <hr />
+                @using (Html.BeginForm("UpdateCreditCard", "Account", FormMethod.Post, new { @class = "credit-form", role = "form"}))
+                {
+                    <h4>To save your credit card for payment.</h4>
+                    <hr />
 
-                <div class="form-group">
-                    <label style="font-weight: 800; color: cadetblue" for="card-type">Type of Credit Card</label>
-                    <select required>
-                        <option disabled selected style="font-family:sans-serif;">------</option>
-                        <option>VISA</option>
-                        <option>Master</option>
-                        <option>Discover</option>
-                        <option>American Express</option>
-                        <option>UnionPay</option>
-                        <option>Other</option>
-                    </select>
-                    <span class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="card-name">Name on card</label>
-                    <input id="card-name" onkeypress="return isLetter(event)" class="form-control" style="width: 250px" required />
-                    <span class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="card-number">Card number</label>
-                    <input id="card-number" type="number" onkeypress="return isNumber(event) " class="form-control" style="width: 350px" placeholder="" maxlength="16"/>
-                    <span class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="card-expiration">Expiration date</label>
-                    <input id="card-expiration" class="form-control" style="width: 180px" type="month" />
-                    <span class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="card-cvv">CVV</label>
-                    <input id="card-cvv" class="form-control" onkeypress="return isNumber(event)" style="width: 100px" type="text"  maxlength="4" />
-                    <span class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label style="font-weight: 800; color: cadetblue" for="card-type">Type of Credit Card</label>
+                        <select required>
+                            <option disabled selected style="font-family:sans-serif;">------</option>
+                            <option>Visa</option>
+                            <option>Mastercard</option>
+                            <option>Discover</option>
+                            <option>American Express</option>
+                            <option>UnionPay</option>
+                            <option>Other</option>
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-name">Name on card</label>
+                        <input id="card-name" name="cardname" onkeypress="return isLetter(event)" class="form-control" style="width: 250px" required />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number">Card number</label>
+                        <input id="card-number" name ="cardnumber" type="number" onkeypress="return isNumber(event) " class="form-control" style="width: 350px" placeholder="" maxlength="16" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-expiration">Expiration date</label>
+                        <input id="card-expiration" name="expmonth" class="form-control" style="width: 180px" type="month" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-cvv">CVV</label>
+                        <input id="card-cvv" name="securitycode" class="form-control" onkeypress="return isNumber(event)" style="width: 100px" type="text" maxlength="4" />
+                        <span class="text-danger"></span>
+                    </div>
 
-                <br>
-                <button type="submit" id="btn-save" class="btn btn-primary">Save</button>
-            </form>
+                    <br>
+                    <button type="submit" id="btn-save" class="btn btn-primary">Save</button>
+                }
         </div>
     </div>
 </div>

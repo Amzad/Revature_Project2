@@ -40,6 +40,7 @@ namespace Revature_Project2.Controllers
                     CustomerID = int.Parse(User.FindFirst("customerID").Value)
                 };
                 order.Pizzas = new List<Pizza>();
+                order.Drinks = new List<Drink>();
                 order.Pizzas.Add(Item);
                 order.OrderPrice = Item.PizzaPrice;
                 CustomerOrder.Add(order);

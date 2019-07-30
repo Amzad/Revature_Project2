@@ -36,6 +36,11 @@
                 return Unauthorized();
             }
             System.Diagnostics.Debug.WriteLine("TokenController TokenMethod1");
+            if (userIdentified.Password != user.Password)
+            {
+                return BadRequest(ModelState);
+            }
+
             user = userIdentified;
 
             //Add Claims

@@ -66,8 +66,6 @@ namespace Revature_Project2API.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
         //// PUT: api/Orders/5
         //[HttpPut("Checkout/{id}")]

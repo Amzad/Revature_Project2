@@ -1,32 +1,32 @@
 
-<ul class="navbar-nav" onmouseout="customer_nav_display_out()">
-@if (Context.User.Identity.IsAuthenticated)
-{
-    <li class="nav-item" onmouseover="customer_nav_display_over()" >
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            Hello @Context.User.FindFirst("firstName").Value!
-        </a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+    <ul class="navbar-nav" onmouseout="customer_nav_display_out()">
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item" onmouseover="customer_nav_display_over()">
+                <a class="nav-link text-dark" asp-area=""asp-controller="Account" asp-action="Profile" title="Manage">
+                    Hello @Context.User.FindFirst("firstName").Value!
+                </a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+            </li>
+        }
+    </ul>
 
 <ul class="nav-customer" id="nav-customer" onmouseover="customer_nav_display_over()" onmouseout="customer_nav_display_out()">
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Payment">Payment</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Payment" onmouseover="">Payment</a>
     </li>
 </ul>
 
@@ -34,11 +34,13 @@ else
     .nav-customer {
         list-style: none;
         padding: 0;
+        padding-right: 20px;
+        padding-left: 20px;
         background-color: white;
         opacity: 0.95;
         position: relative;
-        top: 55px;
-        left: 90px;
+        top: 53px;
+        left: 258px;
         display: none;
     }
 </style>
@@ -47,10 +49,12 @@ else
 
     function customer_nav_display_over() {
         document.getElementById("nav-customer").style.display = "block";
-        }
+    }
 
     function customer_nav_display_out() {
         document.getElementById("nav-customer").style.display = "none";
-    }
+        }
+
+
 
 </script>

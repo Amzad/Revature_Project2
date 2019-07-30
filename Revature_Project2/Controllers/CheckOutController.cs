@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,104 +14,188 @@ namespace Revature_Project2.Controllers
     public class CheckOutController : Controller
     {
         public static List<Order> CustomerOrder = new List<Order>();
+        private readonly IHttpClientFactory _clientFactory;
 
-        public void AddToList(Order Item)
+        public CheckOutController(IHttpClientFactory clientFactory)
         {
-            CustomerOrder.Add(Item);
+            _clientFactory = clientFactory;
         }
+
+        [Authorize]
+        public void AddToList(Pizza Item)
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            bool hasCust = CustomerOrder.Exists(c => c.CustomerID == custID);
+            if (hasCust)
+            {
+                Order order = CustomerOrder.Find(c => c.CustomerID == custID);
+                order.Pizzas.Add(Item);
+                order.OrderPrice += Item.PizzaPrice;
+
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    CustomerID = int.Parse(User.FindFirst("customerID").Value)
+                };
+                order.Pizzas = new List<Pizza>();
+                order.Pizzas.Add(Item);
+                order.OrderPrice = Item.PizzaPrice;
+                CustomerOrder.Add(order);
+            }
+            
+        }
+        [Authorize]
+        [HttpPost]
+        public void AddSpecialized([FromBody] string pizza)
+        {
+
+            Pizza pie = new Pizza();
+            if (pizza == "DeepDish")
+            {
+                pie.PizzaType = "Deep Dish";
+                pie.PizzaPrice = 15;
+            }
+            if (pizza == "Neapolitan")
+            {
+                pie.PizzaType = "Neapolitan";
+                pie.PizzaPrice = 12;
+            }
+            if (pizza == "Sicilian")
+            {
+                pie.PizzaType = "Sicilian";
+                pie.PizzaPrice = 10;
+            }
+            if (pizza == "StLouis")
+            {
+                pie.PizzaType = "St. Louis";
+                pie.PizzaPrice = 12;
+            }
+
+            pie.Toppings = new List<Topping>();
+
+
+
+
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            bool hasCust = CustomerOrder.Exists(c => c.CustomerID == custID);
+            if (hasCust)
+            {
+                Order order = CustomerOrder.Find(c => c.CustomerID == custID);
+                order.Pizzas.Add(pie);
+                order.OrderPrice += pie.PizzaPrice;
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    CustomerID = int.Parse(User.FindFirst("customerID").Value)
+                };
+                order.Pizzas = new List<Pizza>();
+                order.Drinks = new List<Drink>();
+                order.Pizzas.Add(pie);
+                order.OrderPrice = pie.PizzaPrice;
+                CustomerOrder.Add(order);
+            }
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public void AddDrink([FromBody] string drink)
+        {
+
+            Drink pie = new Drink();
+            if (drink == "Cola")
+            {
+                pie.DrinkType = "Cola Cola ";
+                pie.Price = 2;
+            }
+            if (drink == "Sprite")
+            {
+                pie.DrinkType = "Sprite";
+                pie.Price = 2;
+            }
+            if (drink == "Fanta")
+            {
+                pie.DrinkType = "Fanta";
+                pie.Price = 2;
+            }
+            if (drink == "Ramune")
+            {
+                pie.DrinkType = "Ramune";
+                pie.Price = 4;
+            }
+
+
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            bool hasCust = CustomerOrder.Exists(c => c.CustomerID == custID);
+            if (hasCust)
+            {
+                Order order = CustomerOrder.Find(c => c.CustomerID == custID);
+                order.Drinks.Add(pie);
+                order.OrderPrice += pie.Price;
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    CustomerID = int.Parse(User.FindFirst("customerID").Value)
+                };
+                order.Pizzas = new List<Pizza>();
+                order.Drinks = new List<Drink>();
+                order.Drinks.Add(pie);
+                order.OrderPrice = pie.Price;
+                CustomerOrder.Add(order);
+            }
+
+        }
+
         public void CheckOut(Order Item)
         {
             CustomerOrder.RemoveAll(s => s.CustomerID == Item.CustomerID);
         }
         // GET: CheckOut
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
-        }
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
 
-        // GET: CheckOut/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/customers/" + custID);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
 
-        // GET: CheckOut/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            var response = await client.SendAsync(request);
 
-        // POST: CheckOut/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if (response.IsSuccessStatusCode)
             {
-                // TODO: Add insert logic here
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                if (cust.CreditCardNumber == null)
+                {
+                    return RedirectToAction("CreditCard", "Account");
+                }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+
+
                 return View();
             }
-        }
-
-        // GET: CheckOut/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
 
-        // POST: CheckOut/Edit/5
+
+
+        [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CheckOut/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CheckOut/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddToOrder(string PizzaBread, bool PizzaCheese, string PizzaSize, string PizzaSauce, int[] TypeTopping)
+        public IActionResult AddToOrder(string PizzaBread, bool PizzaCheese, string PizzaSize, string PizzaSauce, int[] TypeTopping)
         {
             System.Diagnostics.Debug.WriteLine("TEST");
-            Order order = new Order()
+            /*Order order = new Order()
             {
                 CustomerID = int.Parse(User.FindFirst("customerID").Value)
-            };
+            };*/
             Pizza pizza = new Pizza()
             {
                 PizzaBread = PizzaBread,
@@ -130,7 +217,7 @@ namespace Revature_Project2.Controllers
                             ToppingPrice = 3,
                             ToppingType = "Meat"
                         });
-                        
+
                     }
                     else
                         if (TypeTopping[i] == 2)
@@ -238,13 +325,52 @@ namespace Revature_Project2.Controllers
 
                 }
             }
-            order.Pizzas = new List<Pizza>();
-            order.Pizzas.Add(pizza);
-            AddToList(order);
-            
+            //order.Pizzas = new List<Pizza>();
+            pizza.PizzaType = "Custom";
+            pizza.PizzaPrice = CalculatePrice(pizza);
+            //order.Pizzas.Add(pizza);
+            AddToList(pizza);
 
 
-            return View();
+            return RedirectToAction("Menu", "Home");
+            //return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ShoppingCart()
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            Order orderList = CustomerOrder.Find(c => c.CustomerID == custID);
+            return View(orderList);
+        }
+
+        [Authorize]
+        public decimal CalculatePrice(Pizza pizza)
+        {
+            decimal price = 0;
+            if (pizza.PizzaBread == "Brooklyn Style") price += 8;
+            else if (pizza.PizzaBread == "Hand Tossed") price += 6;
+            else if (pizza.PizzaBread == "Crunchy Thin Crust") price += 10;
+            else if (pizza.PizzaBread == "Handmade Pan") price += 9;
+
+            if (pizza.PizzaSize == "Small") price += 0;
+            else if (pizza.PizzaSize == "Medium") price += 2;
+            else if (pizza.PizzaSize == "Large") price += 3;
+            else if (pizza.PizzaSize == "X-Large") price += 5;
+
+            if (pizza.PizzaCheese) price += 1;
+
+            if (pizza.PizzaSauce == "BBQ Sauce") price += 1;
+            else if (pizza.PizzaSauce == "Alfredo Sauce") price += 2;
+            else if (pizza.PizzaSauce == "Robust Inspired Tomato Sauce") price += 1;
+            else if (pizza.PizzaSauce == "Garlic Parmesan White Sauce") price += 3;
+            else if (pizza.PizzaSauce == "Hearty Marinara Sauce") price += 4;
+            else if (pizza.PizzaSauce == "None") price += 0;
+
+            foreach (Topping t in pizza.Toppings) price = price + t.ToppingPrice;
+
+            return price;
         }
     }
 }

@@ -165,6 +165,16 @@
         border-radius: 10px;
     }
 
+    table{
+        width: 75%;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
     #btn-item {
         background-color: white;
         border: none;
@@ -305,13 +315,15 @@
 
     table tr th {
         color: cadetblue;
+        position: sticky;
+        top: 0px;
+        background-color: white;
     }
 
     table tr td {
         border-bottom: 1px solid cadetblue;
-        padding-right: 50px;
-        padding-bottom: 10px;
-        padding-top: 10px;
+        padding-bottom: 15px;
+        padding-top: 15px;
     }
 
     .btn-item {
@@ -404,6 +416,7 @@
         color: black; 
         text-decoration: none;
         transition-duration: 2s;
+        border: 1px solid gray;
     }
 
     #btn-shoppingCart:hover {
@@ -698,7 +711,7 @@
                                     <span>$@pie.PizzaPrice</span>
                                 </td>
 
-                                <td>
+                                <td style="width: 450px">
                                     
                                     @if (pie.PizzaBread != null)
                                     {
@@ -728,7 +741,7 @@
                                         }
                                         @foreach (Topping top in pie.Toppings)
                                         {
-                                            <span>@top.ToppingName ,</span>
+                                            <span>@top.ToppingName,</span>
                                         }
                                     }
                                 </td>
@@ -751,14 +764,14 @@
                                     {
                                         <td>
                                             <span style="color: cadetblue">Size: </span>
-                                            <span>20oz</span>
+                                            <span>200g</span>
                                         </td> 
                                     }
                                     else
                                     {
                                         <td>
                                             <span style="color: cadetblue">Size: </span>
-                                            <span>200g</span>
+                                            <span>20oz</span>
                                         </td>
                                     }
                                 }
@@ -769,7 +782,7 @@
                 </table>
             </div>
             <hr />
-            <p>Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
+            <p style="font-size: 25px">Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
             <div>
                 <a style="cursor: pointer" id="btn-goback" onclick="hideCart()">Go Back</a>
                 <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Go Checkout</button>

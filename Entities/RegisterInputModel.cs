@@ -18,6 +18,12 @@ namespace Entities.Models
         [Required]
         [Display(Name = "Address")]
         public string Address { get; set; }
+        [Required]
+        [Display(Name = "State")]
+        public string State { get; set; }
+        [Required]
+        [Display(Name = "Zip Code")]
+        public string ZipCode { get; set; }
 
         [Required]
         [Phone]

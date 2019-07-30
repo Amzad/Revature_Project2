@@ -216,10 +216,15 @@ namespace Revature_Project2.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public ActionResult Finalize()
+        {
+            return View();
+        }
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Finalize()
+        public async Task<ActionResult> Finalize(int? test)
         {
             int custID = int.Parse(User.FindFirst("customerID").Value);
             Order order = CustomerOrder.Find(c => c.CustomerID == custID);

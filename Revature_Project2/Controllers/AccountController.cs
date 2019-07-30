@@ -164,7 +164,7 @@ namespace Revature_Project2.Controllers
             //returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                Customer user = new Customer { Username = Input.Email, CustomerEmail = Input.Email, CustomerFirstName = Input.FirstName, CustomerLastName = Input.LastName, CustomerPhoneNumber = Input.PhoneNumber, CustomerAddress = Input.Address, Password = Input.Password };
+                Customer user = new Customer { Username = Input.Email, CustomerEmail = Input.Email, CustomerFirstName = Input.FirstName, CustomerLastName = Input.LastName, CustomerPhoneNumber = Input.PhoneNumber, CustomerAddress = Input.Address, State = Input.State, ZipCode = Input.ZipCode ,Password = Input.Password };
 
                 var httpClient = _clientFactory.CreateClient("API");
                 var response = await httpClient.PostAsJsonAsync("https://localhost:44376/api/create", user);

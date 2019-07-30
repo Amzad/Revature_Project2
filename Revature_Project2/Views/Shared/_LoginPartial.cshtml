@@ -26,7 +26,7 @@ else
 
 <ul class="nav-customer" id="nav-customer" onmouseover="customer_nav_display_over()" onmouseout="customer_nav_display_out()">
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Payment">Payment</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Payment" onmouseover="">Payment</a>
     </li>
 </ul>
 
@@ -34,11 +34,13 @@ else
     .nav-customer {
         list-style: none;
         padding: 0;
+        padding-right: 20px;
+        padding-left: 20px;
         background-color: white;
         opacity: 0.95;
         position: relative;
-        top: 55px;
-        left: 90px;
+        top: 53px;
+        left: 108px;
         display: none;
     }
 </style>
@@ -47,10 +49,12 @@ else
 
     function customer_nav_display_over() {
         document.getElementById("nav-customer").style.display = "block";
-        }
+    }
 
     function customer_nav_display_out() {
         document.getElementById("nav-customer").style.display = "none";
-    }
+        }
+
+
 
 </script>

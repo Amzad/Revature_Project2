@@ -62,28 +62,59 @@
                 <hr />
 
                 <div class="form-group">
-                    <label>Name on card</label>
-                    <input class="form-control" style="width: 250px" required />
+                    <label style="font-weight: 800; color: cadetblue" for="card-type">Type of Credit Card</label>
+                    <select required>
+                        <option disabled selected style="font-family:sans-serif;">------</option>
+                        <option>VISA</option>
+                        <option>Master</option>
+                        <option>Discover</option>
+                        <option>American Express</option>
+                        <option>UnionPay</option>
+                        <option>Other</option>
+                    </select>
                     <span class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>Card number</label>
-                    <input class="form-control" style="width: 350px" placeholder="" />
+                    <label for="card-name">Name on card</label>
+                    <input id="card-name" onkeypress="return isLetter(event)" class="form-control" style="width: 250px" required />
                     <span class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>Expiration date</label>
-                    <input class="form-control" style="width: 180px" type="month" />
+                    <label for="card-number">Card number</label>
+                    <input id="card-number" type="number" onkeypress="return isNumber(event) " class="form-control" style="width: 350px" placeholder="" />
                     <span class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>CVV</label>
-                    <input class="form-control" style="width: 100px" type="text" pattern="[0-9]{3}" maxlength="3"  />
+                    <label for="card-expiration">Expiration date</label>
+                    <input id="card-expiration" class="form-control" style="width: 180px" type="month" />
                     <span class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label for="card-cvv">CVV</label>
+                    <input id="card-cvv" class="form-control" onkeypress="return isNumber(event)" style="width: 100px" type="text" pattern="[0-9]{3}" maxlength="4" />
+                    <span class="text-danger"></span>
+                </div>
+
                 <br>
                 <button type="submit" id="btn-save" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function isNumber(event) {
+        var keycode = event.keyCode;
+        if(keycode > 48 && keycode < 57){
+            return event;
+        }
+            return false;
+        }
+    function isLetter(event) {
+        var keycode = event.keyCode;
+        if ((keycode >= 65 && key <= 90) || keycode == 32) {
+            return event;
+        }
+        return false;
+    }
+</script>

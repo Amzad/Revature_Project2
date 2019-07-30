@@ -22,11 +22,11 @@ namespace Revature_Project2API.Controllers
         }
 
         // GET: api/reorders
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
-        {
-            return await _context.Orders.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        //{
+        //    return await _context.Orders.ToListAsync();
+        //}
 
         // GET: api/reorders/5
         [HttpGet("{id}")]
@@ -93,31 +93,31 @@ namespace Revature_Project2API.Controllers
             return NoContent();
         }
 
-        // POST: api/reorders
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
-        {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+        //// POST: api/reorders
+        //[HttpPost]
+        //public async Task<ActionResult<Order>> PostOrder(Order order)
+        //{
+        //    _context.Orders.Add(order);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
-        }
+        //    return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+        //}
 
         // DELETE: api/reorders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<Order>> DeleteOrder(int id)
+        //{
+        //    var order = await _context.Orders.FindAsync(id);
+        //    if (order == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+        //    _context.Orders.Remove(order);
+        //    await _context.SaveChangesAsync();
 
-            return order;
-        }
+        //    return order;
+        //}
 
         private bool OrderExists(int id)
         {

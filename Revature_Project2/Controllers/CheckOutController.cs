@@ -216,11 +216,11 @@ namespace Revature_Project2.Controllers
             }
             return View();
         }
-        [HttpGet]
-        public ActionResult Finalize()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Finalize()
+        //{
+        //    return View();
+        //}
 
         [Authorize]
         [HttpPost]

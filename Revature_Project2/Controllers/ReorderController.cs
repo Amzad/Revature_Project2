@@ -129,7 +129,76 @@ namespace Revature_Project2.Controllers
                     }
                 }
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Menu", "Home");
+        }
+
+        public async Task<ActionResult> AddComponentPizza( int OrderID, int PizzaID)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/reorders/Detail/" + OrderID);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                //System.Diagnostics.Debug.WriteLine(response.Content);
+                var item = await response.Content
+                    .ReadAsAsync<Order>();
+                //inporgress ask amzad for the nonlazzy loading 
+                if (item.Pizzas != null)
+                {
+                    foreach (var x in item.Pizzas)
+                    {
+                        if(x.PizzaID == PizzaID)
+                        {
+                            x.OrderID = 0;
+                            x.PizzaID = 0;
+                            AddToList(x);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Menu", "Home");
+        }
+        public async Task<ActionResult> AddComponentDrink(int OrderID, int DrinkID)
+        {
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+               "https://localhost:44376/api/reorders/Detail/" + OrderID);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                //System.Diagnostics.Debug.WriteLine(response.Content);
+                var item = await response.Content
+                    .ReadAsAsync<Order>();
+                //inporgress ask amzad for the nonlazzy loading 
+                if (item.Drinks != null)
+                {
+                    foreach (var x in item.Drinks)
+                    {
+                        if (x.DrinkID == DrinkID)
+                        {
+                            x.OrderID = 0;
+                            x.DrinkID = 0;
+                            AddDrink(x);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Menu","Home");
+
         }
 
         [Authorize]

@@ -44,7 +44,7 @@ namespace Revature_Project2API.Controllers
             return order;
         }
 
-
+        //this id is orderID
         [HttpGet("Detail/{id}")]
         public async Task<Order> PizzaDetail(int id)
         {

@@ -96,7 +96,8 @@
                     CustomerEmail = user.CustomerEmail,
                     CustomerAddress = user.CustomerAddress,
                     CustomerPhoneNumber = user.CustomerPhoneNumber,
-                    //CustomerID = 0
+                    State = user.State,
+                    ZipCode = user.ZipCode
                 };
                 _context.Customers.Add(cust);
                 _context.SaveChanges();

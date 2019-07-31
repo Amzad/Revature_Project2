@@ -154,43 +154,6 @@ namespace Revature_Project2.Controllers
             }
 
         }
-
-        [Authorize]
-        public async Task<ActionResult> Index()
-        {
-            int custID = int.Parse(User.FindFirst("customerID").Value);
-            var httpClient = _clientFactory.CreateClient("API");
-
-            bool orderExist = CustomerOrder.Exists(c => c.CustomerID == custID);
-            if (orderExist == false) return RedirectToAction("Menu", "Home");
-
-            var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/customers/" + custID);
-            // Must include these headers for GET
-            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
-            var client = _clientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Customer cust = await response.Content.ReadAsAsync<Customer>();
-                if (cust.CreditCardNumber == null)
-                {
-                    return RedirectToAction("UpdateCreditCard", "Account");
-                }
-                else
-                {
-                    return RedirectToAction("Checkout", "CheckOut");
-                }
-
-
-
-                return View();
-            }
-            return View();
-        }
-
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Checkout()
@@ -222,12 +185,42 @@ namespace Revature_Project2.Controllers
         }
 
         // GET: CheckOut
-        
-        [HttpGet]
-        public ActionResult Finalize()
+        [Authorize]
+        public async Task<ActionResult> Index()
         {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/customers/" + custID);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                if (cust.CreditCardNumber == null)
+                {
+                    return RedirectToAction("UpdateCreditCard", "Account");
+                } else
+                {
+                    return RedirectToAction("Checkout", "CheckOut");
+                }
+
+
+
+                return View();
+            }
             return View();
         }
+        //[HttpGet]
+        //public ActionResult Finalize()
+        //{
+        //    return View();
+        //}
 
         [Authorize]
         [HttpPost]
@@ -246,9 +239,8 @@ namespace Revature_Project2.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                Order newOrder = await response.Content.ReadAsAsync<Order>();
                 CustomerOrder.Remove(order);
-                return View("OrderConfirmed",newOrder);
+                return View();
             }
             else
             {
@@ -443,11 +435,6 @@ namespace Revature_Project2.Controllers
             foreach (Topping t in pizza.Toppings) price = price + t.ToppingPrice;
 
             return price;
-        }
-
-        public IActionResult ConfirmationPage()
-        {
-            return View();
         }
     }
 }

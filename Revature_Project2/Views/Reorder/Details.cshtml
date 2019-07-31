@@ -126,7 +126,7 @@
                             }
                         </td>
                         <td>
-                            <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                            <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentPizza", "Reorder", new { OrderID = pie.OrderID, PizzaID = pie.PizzaID})'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
                         </td>
                     </tr>
                 }
@@ -160,7 +160,7 @@
                             }
                         }
                         <td>
-                             <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                             <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentDrink", "Reorder", new { OrderID = pie.OrderID, DrinkID = pie.DrinkID})'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
                         </td>
                     </tr>
                 }

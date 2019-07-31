@@ -162,7 +162,7 @@ namespace Revature_Project2.Controllers
             var httpClient = _clientFactory.CreateClient("API");
 
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/customers/" + custID);
+                Program.API + "customers/" + custID);
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             var client = _clientFactory.CreateClient();
 
@@ -192,7 +192,7 @@ namespace Revature_Project2.Controllers
             var httpClient = _clientFactory.CreateClient("API");
 
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/customers/" + custID);
+                Program.API + "customers/" + custID);
             // Must include these headers for GET
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             var client = _clientFactory.CreateClient();
@@ -233,7 +233,7 @@ namespace Revature_Project2.Controllers
             client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             string var2 = JsonConvert.SerializeObject(order);
             var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
-            string url = "https://localhost:44376/api/Orders/";
+            string url = Program.API + "Orders/";
             var response = await client.PostAsync(url, httpContent);
 
 

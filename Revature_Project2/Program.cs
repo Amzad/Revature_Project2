@@ -12,6 +12,9 @@ namespace Revature_Project2
 {
     public class Program
     {
+        //public static string API = "https://localhost:44376/api/";
+        public static string API = "https://masterteamapi.azurewebsites.net/api/";
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();

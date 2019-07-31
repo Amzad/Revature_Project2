@@ -46,7 +46,7 @@ namespace Revature_Project2.Controllers
         {
             // Sample GET Request
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/customers");
+                Program.API + "customers");
             // Must include these headers for GET
             //request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             //request.Headers.Add("accept-encoding", "gzip, deflate");
@@ -111,7 +111,7 @@ namespace Revature_Project2.Controllers
             string var2 = JsonConvert.SerializeObject(fakeOrder);
             var httpContent = new StringContent(var2, Encoding.UTF8, "application/json");
             string id = User.FindFirstValue("customerID");
-            var response = await client.PutAsync("https://localhost:44376/api/Orders/1", httpContent);
+            var response = await client.PutAsync(Program.API + "Orders/1", httpContent);
 
 
             if (response.IsSuccessStatusCode)

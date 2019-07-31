@@ -41,7 +41,7 @@ namespace Revature_Project2.Controllers
             var httpClient = _clientFactory.CreateClient("API");
 
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://localhost:44376/api/customers/" + custID);
+                Program.API + "customers/" + custID);
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
@@ -54,7 +54,7 @@ namespace Revature_Project2.Controllers
 
                 // Update Customer Object
                 httpClient = _clientFactory.CreateClient("API");
-                response = await httpClient.PutAsJsonAsync("https://localhost:44376/api/Customers/" + custID, cust);
+                response = await httpClient.PutAsJsonAsync(Program.API + "Customers/" + custID, cust);
                 if (response.IsSuccessStatusCode)
                 {
                     return View();
@@ -95,7 +95,7 @@ namespace Revature_Project2.Controllers
                     Password = model.Password
                 };
                 var httpClient = _clientFactory.CreateClient("API");
-                var response = await httpClient.PostAsJsonAsync("https://localhost:44376/api/token", cust);
+                var response = await httpClient.PostAsJsonAsync(Program.API + "token", cust);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
@@ -167,7 +167,7 @@ namespace Revature_Project2.Controllers
                 Customer user = new Customer { Username = Input.Email, CustomerEmail = Input.Email, CustomerFirstName = Input.FirstName, CustomerLastName = Input.LastName, CustomerPhoneNumber = Input.PhoneNumber, CustomerAddress = Input.Address, State = Input.State, ZipCode = Input.ZipCode ,Password = Input.Password };
 
                 var httpClient = _clientFactory.CreateClient("API");
-                var response = await httpClient.PostAsJsonAsync("https://localhost:44376/api/create", user);
+                var response = await httpClient.PostAsJsonAsync(Program.API + "create", user);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;

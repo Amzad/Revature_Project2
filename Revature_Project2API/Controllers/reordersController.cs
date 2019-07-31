@@ -21,13 +21,6 @@ namespace Revature_Project2API.Controllers
             _context = context;
         }
 
-        // GET: api/reorders
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
-        //{
-        //    return await _context.Orders.ToListAsync();
-        //}
-
         // GET: api/reorders/5
         [HttpGet("{id}")]
         public async Task<ICollection<Order>> GetOrder(int id)

@@ -54,7 +54,7 @@ namespace Revature_Project2API.Controllers
                 _context.Orders.Add(order);
                 _context.Entry(order).State = EntityState.Added;
                 await _context.SaveChangesAsync();
-                return Ok(order);
+                return Ok();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,7 +79,9 @@ namespace Revature_Project2API.Controllers
                 _context.Orders.Add(order);
                 _context.Entry(order).State = EntityState.Added;
                 await _context.SaveChangesAsync();
-                return Ok(order);
+                Order returnOrder = _context.Orders.LastOrDefault(c => c.CustomerID == order.CustomerID);
+                return CreatedAtAction("GetOrder", new { id = order.OrderID }, returnOrder);
+                //return Ok(order);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -93,7 +95,6 @@ namespace Revature_Project2API.Controllers
                 }
             }
 
-            return NoContent();
         }
         //POST: api/Orders
         [HttpPost]
@@ -101,13 +102,11 @@ namespace Revature_Project2API.Controllers
         {
             order.OrderDateTime = DateTime.Now;
             _context.Orders.Add(order);
-            
-            /*List<Customer> custList = _context.Customers.Include(o => o.Orders).ToList();
-            Customer cust = custList.Find(c => c.CustomerID == order.CustomerID);
-            cust.Orders.Add(order);*/
             await _context.SaveChangesAsync();
 
-            return Ok();
+            Order returnOrder = _context.Orders.LastOrDefault(c => c.CustomerID == order.CustomerID);
+            return CreatedAtAction("GetOrder", new { id = order.OrderID }, returnOrder);
+            //return Ok();
             //return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
         }
 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Entities.Models
+@model Order
+@{
     ViewData["Title"] = "ConfirmationPage";
 }
 
@@ -30,7 +32,8 @@
 <body>
     <div class="confirm-body">
         <p> The order has been confirmed! </p>
-        <p> Your Order number is <a href="" style="text-decoration: underline; color: cadetblue">#123456789</a></p>
+        <p> Your Order number is <a style="text-decoration: underline; color: cadetblue">#@Model.OrderID</a></p>
+        <p> Order Total is $@Model.OrderPrice</a></p>
         <p> Please wait 45-60 minutes for delivery.</p>
         <br />
         <a asp-controller="Home" asp-action="Index" style="background-color: cadetblue; color: white; padding: 5px; padding-left: 20px; padding-right: 20px; border-radius:5px; ">Go Back to Home Page</a>

@@ -216,6 +216,7 @@
             opacity: 1;
         }
 
+
     #btn-checkout {
         border: none;
         padding: 5px;
@@ -223,10 +224,6 @@
         padding-right: 60px;
         opacity: 0.8;
     }
-
-        #btn-checkout:hover {
-            opacity: 1;
-        }
 
     #nav-menu {
         list-style-type: none;
@@ -785,7 +782,7 @@
             <p style="font-size: 25px">Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
             <div>
                 <a style="cursor: pointer" id="btn-goback" onclick="hideCart()">Go Back</a>
-                <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Go Checkout</button>
+                <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px" @(Model == null ? "disabled": "")>Go Checkout</button>
             </div>
             <br />
             

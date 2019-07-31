@@ -57,7 +57,7 @@ namespace Revature_Project2.Controllers
                 response = await httpClient.PutAsJsonAsync(Program.API + "Customers/" + custID, cust);
                 if (response.IsSuccessStatusCode)
                 {
-                    return View();
+                    return RedirectToAction("Checkout", "CheckOut");
                 }
                 else
                 {

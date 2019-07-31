@@ -66,7 +66,9 @@ namespace Revature_Project2API.Migrations
                     CreditCardNumber = table.Column<string>(nullable: true),
                     ExpMonth = table.Column<string>(nullable: true),
                     ExpYear = table.Column<string>(nullable: true),
-                    SecurityCode = table.Column<string>(nullable: true)
+                    SecurityCode = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,7 +209,7 @@ namespace Revature_Project2API.Migrations
                     DrinkID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DrinkType = table.Column<string>(nullable: true),
-                    OrderID = table.Column<int>(nullable: true),
+                    OrderID = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -218,7 +220,7 @@ namespace Revature_Project2API.Migrations
                         column: x => x.OrderID,
                         principalTable: "Orders",
                         principalColumn: "OrderID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

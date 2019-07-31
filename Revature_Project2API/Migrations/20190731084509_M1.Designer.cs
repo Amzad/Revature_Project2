@@ -10,7 +10,7 @@ using Revature_Project2API.Data;
 namespace Revature_Project2API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190730211243_M1")]
+    [Migration("20190731084509_M1")]
     partial class M1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,11 @@ namespace Revature_Project2API.Migrations
 
                     b.Property<string>("SecurityCode");
 
+                    b.Property<string>("State");
+
                     b.Property<string>("Username");
+
+                    b.Property<string>("ZipCode");
 
                     b.HasKey("CustomerID");
 
@@ -62,7 +66,7 @@ namespace Revature_Project2API.Migrations
 
                     b.Property<string>("DrinkType");
 
-                    b.Property<int?>("OrderID");
+                    b.Property<int>("OrderID");
 
                     b.Property<decimal>("Price");
 
@@ -311,7 +315,8 @@ namespace Revature_Project2API.Migrations
                 {
                     b.HasOne("Entities.Models.Order", "Order")
                         .WithMany("Drinks")
-                        .HasForeignKey("OrderID");
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Entities.Models.Order", b =>

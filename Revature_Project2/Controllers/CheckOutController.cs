@@ -436,5 +436,10 @@ namespace Revature_Project2.Controllers
 
             return price;
         }
+
+        public IActionResult ConfirmationPage()
+        {
+            return View();
+        }
     }
 }

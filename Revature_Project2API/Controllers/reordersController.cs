@@ -52,6 +52,7 @@ namespace Revature_Project2API.Controllers
             //var order = await _context.Order.FindAsync(id);
             //string custid = id.ToString();
             Order item = new Order();
+            item = _context.Orders.FirstOrDefault(u => u.OrderID == id);
             item.Pizzas = await _context.Pizzas.Where(o => o.OrderID == id).Include(o => o.Toppings).ToListAsync();
             item.Drinks = await _context.Drinks.Where(d => d.OrderID == id).ToListAsync();
             //.ThenInclude(c => c.Toppings)

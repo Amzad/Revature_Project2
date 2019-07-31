@@ -1,3 +1,4 @@
+
 @using Entities.Models
 @model Order
 
@@ -48,7 +49,10 @@
         document.getElementById(div).style.display = "none";
         document.getElementById("container-shoppingCartBtn").style.display = "block";
         document.getElementById("pizza-form").reset();
-        document.getElementById('items-specialityPizza').scrollTop = 0;
+        document.getElementById('items-specialityPizza').scrollTop = 0
+        document.ownPizzaImg.src = "/images/pizzaCrustType/brookyln_style.jpg";
+        var element = document.getElementById("ownPizza-size");
+        element.innerHTML = " 10&quot Small ";
 
     }
     function addToCart(div) {
@@ -58,14 +62,34 @@
         document.getElementById("pizza-form").reset();
     }
 
+
     function popCart() {
-        document.getElementById("container-shoppingCart").style.display = "block";
+        //document.getElementById("container-shoppingCart").style.display = "block";
+        document.getElementById("container-shoppingCart").style.visibility = "visible";
+        document.getElementById("container-shoppingCart").style.opacity = "1";
+        document.getElementById("container-shoppingCartBtn").style.display = "none";
+        document.getElementById("li-spPizza").style.display = "none";
+        document.getElementById("li-ownPizza").style.display = "none";
+        document.getElementById("li-drink").style.display = "none";
     }
     function hideCart() {
-        document.getElementById("container-shoppingCart").style.display = "none";
+        //document.getElementById("container-shoppingCart").style.display = "none";
+        document.getElementById("container-shoppingCart").style.visibility = "hidden";
+        document.getElementById("container-shoppingCart").style.opacity = "0";
+        document.getElementById("container-shoppingCartBtn").style.display = "block";
+        document.getElementById("li-spPizza").style.display = "block";
+        document.getElementById("li-ownPizza").style.display = "block";
+        document.getElementById("li-drink").style.display = "block";
     }
 
+    function changePizzaImg(crustPath) {
+        document.ownPizzaImg.src = crustPath;
+    }
 
+    function changePizzaSize(crustSize) {
+        var element = document.getElementById("ownPizza-size");
+        element.innerHTML = crustSize;
+    }
 
     function PostSpecializedPizza(pizza) {
         $.ajax({
@@ -121,9 +145,10 @@
         position: absolute;
         top: 0%;
         left: 20%;
-        display: none;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 1s, opacity 0.5s ease-in-out;
     }
-
 
     .pop-menu {
         display: none;
@@ -139,6 +164,16 @@
         background-color: white;
         border: 2px solid cadetblue;
         border-radius: 10px;
+    }
+
+    table {
+        width: 75%;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
     }
 
     #btn-item {
@@ -170,7 +205,7 @@
 
     #btn-addToOrder {
         margin-left: 820px;
-        margin-top: 355px;
+        margin-top: 155px;
         padding-right: 50px;
         padding-left: 50px;
         background-color: orange;
@@ -232,9 +267,10 @@
     }
 
         #li-drink:hover {
+            opacity: 0.95;
             transition-duration: 1s;
             color: cadetblue;
-            background-color: black;
+            background-color: wheat;
         }
 
     #li-spPizza {
@@ -253,6 +289,7 @@
 
     .pizza-form-part {
         height: 550px;
+        padding-top: 50px;
         font-family: sans-serif;
     }
 
@@ -278,6 +315,15 @@
 
         table tr th {
             color: cadetblue;
+            position: sticky;
+            top: 0px;
+            background-color: white;
+        }
+
+        table tr td {
+            border-bottom: 1px solid cadetblue;
+            padding-bottom: 15px;
+            padding-top: 15px;
         }
 
     .btn-item {
@@ -336,11 +382,11 @@
         border-radius: 5px;
     }
 
-    #addToCart-Pizza:hover {
-        opacity: 1;
-        background-color: cadetblue;
-        color: white;
-    }
+        #addToCart-Pizza:hover {
+            opacity: 1;
+            background-color: cadetblue;
+            color: white;
+        }
 
     #shoppingCart-items::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #items-drinks::-webkit-scrollbar-track, #items-specialityPizza::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -362,35 +408,31 @@
         font-size: 25px;
         padding: 10px;
         padding-left: 40px;
-        padding-right: 40px;
-        opacity: 0.95;
+        padding-right: 20px;
+        opacity: 1;
         position: relative;
         top: 80px;
-        background-color: white; 
-        border-radius: 70px; 
-        color: black; 
+        background-color: white;
+        color: black;
         text-decoration: none;
         transition-duration: 2s;
-        border: 1px solid black;
+        border: 1px solid gray;
     }
 
+        #btn-shoppingCart:hover {
+            opacity: 1;
+            padding-right: 100px;
+            color: black;
+            transition-duration: 1s;
+        }
 
-    #btn-shoppingCart:hover {
-        opacity: 1;
-        padding-left: 135px;
-        padding-right: 135px;
-        background-color: cadetblue;
-        color: black;
-        transition-duration: 1s;
-    }
-
-    #btn-checkout, #btn-goback{
+    #btn-checkout, #btn-goback {
         padding: 3px;
-        padding-left: 80px; 
-        padding-right: 80px; 
-        background-color: cadetblue; 
+        padding-left: 80px;
+        padding-right: 80px;
+        background-color: cadetblue;
         color: white;
-        border: none; 
+        border: none;
         border-radius: 5px;
         opacity: 0.85;
         text-decoration: none;
@@ -400,10 +442,18 @@
         background-color: orange;
     }
 
-    #btn-checkout:hover, #btn-goback:hover{
-        opacity: 1;
+        #btn-checkout:hover, #btn-goback:hover {
+            opacity: 1;
+        }
+
+    .card-title {
+        font-weight: 800;
+        color: cadetblue;
     }
 
+    .card-text-cart {
+        color: cadetblue;
+    }
 </style>
 
 <body>
@@ -423,87 +473,94 @@
                         <div class="pizza-form-part1 pizza-form-part">
                             <label id="label-title">Choose Your Crust</label>
                             <br>
-                            <input type="radio" name="PizzaBread" value="Brooklyn Style" checked>
+                            <input id="radio-crust1" type="radio" name="PizzaBread" value="Brooklyn Style" onclick="changePizzaImg('/images/pizzaCrustType/brookyln_style.jpg')" checked>
                             <label for="radio-crust1">Brooklyn Style</label><br>
-                            <input type="radio" name="PizzaBread" value="Hand Tossed">
+                            <input id="radio-crust2" type="radio" name="PizzaBread" value="Hand Tossed" onclick="changePizzaImg('/images/pizzaCrustType/hand_tossed.jpg')">
                             <label for="radio-crust2">Hand Tossed</label><br>
-                            <input type="radio" name="PizzaBread" value="Crunchy Thin Crust">
+                            <input id="radio-crust3" type="radio" name="PizzaBread" value="Crunchy Thin Crust" onclick="changePizzaImg('/images/pizzaCrustType/crunchy_thin_crust.jpg')">
                             <label for="radio-crust3">Crunchy Thin Crust</label><br>
-                            <input type="radio" name="PizzaBread" value="Handmade Pan">
+                            <input id="radio-crust4" type="radio" name="PizzaBread" value="Handmade Pan" onclick="changePizzaImg('/images/pizzaCrustType/handmade_pan.jpg')">
                             <label for="radio-crust4">Handmade Pan</label>
                             <br><br>
                             <label id="label-title">Choose Your Size</label>
                             <br>
-                            <input type="radio" name="PizzaSize" value="Small" checked>
-                            <label for="radio-crustSize1">10" Small</label>
-                            <input type="radio" name="PizzaSize" value="Medium">
-                            <label for="radio-crustSize2">12" Medium</label>
-                            <input type="radio" name="PizzaSize" value="Large">
-                            <label for="radio-crustSize3">14" Large</label>
-                            <input type="radio" name="PizzaSize" value="X-Large">
+                            <input id="radio-crustSize1" type="radio" name="PizzaSize" value="Small" onclick="changePizzaSize(' 10&quot Small ')" checked>
+                            <label for="radio-crustSize1">10" Small</label><br />
+                            <input id="radio-crustSize2" type="radio" name="PizzaSize" value="Medium" onclick="changePizzaSize(' 12&quot Medium ')">
+                            <label for="radio-crustSize2">12" Medium</label><br />
+                            <input id="radio-crustSize3" type="radio" name="PizzaSize" value="Large" onclick="changePizzaSize(' 14&quot Large ')">
+                            <label for="radio-crustSize3">14" Large</label><br />
+                            <input id="radio-crustSize4" type="radio" name="PizzaSize" value="X-Large" onclick="changePizzaSize(' 16&quot X-Large ')">
                             <label for="radio-crustSize4">16" X-Large</label>
                         </div>
 
                         <div class="pizza-form-part2 pizza-form-part" style="display:none">
                             <label id="label-title">Do you want cheese?</label>
                             <br>
-                            <input type="radio" name="PizzaCheese" value=true checked>
-                            <label for="radio-cheese-yes">Yes</label>
-                            <input type="radio" name="PizzaCheese" value=false>
+                            <input id="radio-cheese-yes" type="radio" name="PizzaCheese" value=true checked>
+                            <label for="radio-cheese-yes">Yes</label>&nbsp;&nbsp;
+                            <input id="radio-cheese-no" type="radio" name="PizzaCheese" value=false>
                             <label for="radio-cheese-no">No</label>
                             <br><br>
                             <label id="label-title">Choose a Sauce</label>
                             <br>
-                            <input type="radio" name="PizzaSauce" value="BBQ Sauce" checked>
+                            <input id="radio-sauce1" type="radio" name="PizzaSauce" value="BBQ Sauce" checked>
                             <label for="radio-sauce1">BBQ Sauce</label><br>
-                            <input type="radio" name="PizzaSauce" value="Alfredo Sauce">
+                            <input id="radio-sauce2" type="radio" name="PizzaSauce" value="Alfredo Sauce">
                             <label for="radio-sauce2">Alfredo Sauce</label><br>
-                            <input type="radio" name="PizzaSauce" value="Robust Inspired Tomato Sauce">
+                            <input id="radio-sauce3" type="radio" name="PizzaSauce" value="Robust Inspired Tomato Sauce">
                             <label for="radio-sauce3">Robust Inspired Tomato Sauce</label><br>
-                            <input type="radio" name="PizzaSauce" value="Garlic Parmesan White Sauce">
+                            <input id="radio-sauce4" type="radio" name="PizzaSauce" value="Garlic Parmesan White Sauce">
                             <label for="radio-sauce4">Garlic Parmesan White Sauce</label><br>
-                            <input type="radio" name="PizzaSauce" value="Hearty Marinara Sauce">
+                            <input id="radio-sauce5" type="radio" name="PizzaSauce" value="Hearty Marinara Sauce">
                             <label for="radio-sauce5">Hearty Marinara Sauce</label><br>
-                            <input type="radio" name="PizzaSauce" value="None">
+                            <input id="radio-sauce6" type="radio" name="PizzaSauce" value="None">
                             <label for="radio-sauce6">None</label>
                         </div>
 
                         <div class="pizza-form-part3 pizza-form-part" style="display:none">
+                            <br />
                             <label id="label-title">Choose Toppings</label>
                             <br>
-                            <input type="checkbox" name="TypeTopping" value="1">
+                            <input id="check-topping1" type="checkbox" name="TypeTopping" value="1">
                             <label for="check-topping1">Pepperoni</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="2">
-                            <label for="check-topping2">Sausage</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="3">
-                            <label for="check-topping3">Ham</label><br>
-                            <input type="checkbox" name="TypeTopping" value="4">
-                            <label for="check-topping4">Bacon</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="5">
+                            <input id="check-topping2" type="checkbox" name="TypeTopping" value="2">
+                            <label for="check-topping2">Sausage</label><br>
+                            <input id="check-topping3" type="checkbox" name="TypeTopping" value="3">
+                            <label for="check-topping3">Ham</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping4" type="checkbox" name="TypeTopping" value="4">
+                            <label for="check-topping4">Bacon</label><br />
+                            <input id="check-topping5" type="checkbox" name="TypeTopping" value="5">
                             <label for="check-topping5">Beef</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="6">
+                            <input id="check-topping6" type="checkbox" name="TypeTopping" value="6">
                             <label for="check-topping6">Pineapple</label><br>
-                            <input type="checkbox" name="TypeTopping" value="7">
+                            <input id="check-topping7" type="checkbox" name="TypeTopping" value="7">
                             <label for="check-topping7">Spinich</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="8">
-                            <label for="check-topping8">Onion</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="9">
-                            <label for="check-topping9">Olives</label><br>
-                            <input type="checkbox" name="TypeTopping" value="10">
-                            <label for="check-topping10">Garlic</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="11">
-                            <label for="check-topping11">Green Pepper</label>&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" name="TypeTopping" value="12">
+                            <input id="check-topping8" type="checkbox" name="TypeTopping" value="8">
+                            <label for="check-topping8">Onion</label><br />
+                            <input id="check-topping9" type="checkbox" name="TypeTopping" value="9">
+                            <label for="check-topping9">Olives</label>&nbsp;&nbsp;&nbsp;
+                            <input id="check-topping10" type="checkbox" name="TypeTopping" value="10">
+                            <label for="check-topping10">Garlic</label><br />
+                            <input id="check-topping11" type="checkbox" name="TypeTopping" value="11">
+                            <label for="check-topping11">Green Pepper</label><br />
+                            <input id="check-topping12" type="checkbox" name="TypeTopping" value="12">
                             <label for="check-topping12">Sun Dried Tomatoes</label><br>
 
                             <button class="btn" type="submit" id="btn-addToOrder" onclick="Submit">Add to Order</button>
                         </div>
-                       
+
                     }
 
-                    <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
                     <button id="btn-next" onclick="plusDivs(1)">Next</button>
+                    <button id="btn-prev" onclick="plusDivs(-1)" style="display:none">Prev</button>
                     <button id="btn-close" onclick="hide('popmenu-buildOwnPizza')"> Cancel </button>
+
+                    <div style="position: absolute; top: 230px; right: 30%; text-align: center">
+                        <img id="ownPizza-img" name="ownPizzaImg" src="~/images/pizzaCrustType/brookyln_style.jpg" />
+                        <h1 id="ownPizza-size" style="background-color: white; position: relative; bottom: 110px; opacity: 0.8; color: cadetblue; padding-top: 5px; padding-bottom: 5px"> 10" Small</h1>
+                    </div>
+
 
                 </div>
             </div>
@@ -526,6 +583,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Neapolitan Pizza</h5>
                                 <p class="card-text">Original Italian Pizza made with Italian marinara Sauce with sliced mozarella, basil and extra virgin olive oil.</p>
+                                <br />
                                 <hr />
                                 <p style="color: cadetblue">Price: $12</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostSpecializedPizza('Neapolitan')">Add to Order</a>
@@ -538,6 +596,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">Sicilian Pizza</h5>
                                 <p class="card-text">Thick square pizza with a crunchy crust, fluffy dough.</p>
+                                <br />
+                                <br />
+
                                 <hr />
                                 <p style="color: cadetblue">Price: $10</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostSpecializedPizza('Sicilian')">Add to Order</a>
@@ -564,34 +625,46 @@
                     <div class="items-drinks" id="items-drinks">
 
                         <div class="card">
-                            <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">
+                            <br />
+                            <img class="card-img-top" src="~/images/drinks/coca_cola.jpg" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Coca Cola</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">The authentic cola sensation that is a refreshing part of sharing life's enjoyable moments. 20 oZ Bottle.</p>
+                                <hr />
+                                <p style="color: cadetblue"> Price: $2</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostDrink('Cola')">Add to Order</a>
                             </div>
                         </div>
                         <div class="card">
-                            <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">
+                            <br />
+                            <img class="card-img-top" src="~/images/drinks/sprite.jpg" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Sprite</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">Unique Lymon (lemon-lime) flavor, clear, clean and crisp with no caffein. 20 oZ Bottle.</p>
+                                <hr />
+                                <p style="color: cadetblue"> Price: $2</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostDrink('Sprite')">Add to Order</a>
                             </div>
                         </div>
                         <div class="card">
-                            <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">
+                            <br />
+                            <img class="card-img-top" src="~/images/drinks/fanta.jpg" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Fanta</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">Exuberant tropical fun to release you from the everyday mundane. 20 oZ Bottle.</p>
+                                <hr />
+                                <p style="color: cadetblue"> Price: $2</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostDrink('Fanta')">Add to Order</a>
                             </div>
                         </div>
                         <div class="card">
-                            <img class="card-img-top" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/soda-1566311-1329584.png" alt="Card image cap">
+                            <br />
+                            <img class="card-img-top" src="~/images/drinks/ramune.jpg" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Ramune</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">Everyone's favorite Japanese Pop Soda, Ramue. It releases you and please enjoy it. 200g Bottle.</p>
+                                <hr />
+                                <p style="color: cadetblue"> Price: $4</p>
                                 <a href="#" class="btn-item btn-primary" onclick="PostDrink('Ramune')">Add to Order</a>
                             </div>
                         </div>
@@ -615,37 +688,61 @@
                 </div>
                 <hr />
             </div>
-            <div id="shoppingCart-items" style="height: 400px; overflow: scroll; overflow-x: hidden">
+            <div id="shoppingCart-items" style="height: 400px; overflow: scroll; overflow-x: hidden; text-align:left">
                 <table>
                     @if (Model != null)
                     {
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Details</th>
+                        </tr>
+
                         @foreach (Pizza pie in Model.Pizzas)
                         {
-
                             <tr>
                                 <td>
-                                    <div class="card" style="width: 40em;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Pizza Type: @pie.PizzaType</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">Price: @pie.PizzaPrice</h6>
-                                            @if (pie.PizzaBread != null)
-                                            {<p class="card-text">Crust: @pie.PizzaBread</p>}
-                                            @if (pie.PizzaSauce != null)
-                                            {<p class="card-text">Sauce: @pie.PizzaSauce</p>}
-                                            @if (pie.PizzaCheese == true)
-                                            {<p class="card-text">Cheese: Yes</p>}
-                                            @if (pie.PizzaSize != null)
-                                            {<p class="card-text">Size: @pie.PizzaSize</p>}
-                                            @if (Model != null)
-                                            {
-                                                @foreach (Topping top in pie.Toppings)
-                                                {
-                                                    <p class="card-text">Toppings: @top.ToppingName</p>
-                                                }
-                                            }
+                                    <span class="card-text-cart">Pizza: </span>
+                                    <span>@pie.PizzaType</span>
+                                </td>
 
-                                        </div>
-                                    </div>
+                                <td>
+                                    <span>$@pie.PizzaPrice</span>
+                                </td>
+
+                                <td style="width: 450px">
+
+                                    @if (pie.PizzaBread != null)
+                                    {
+                                        <span class="card-text-cart">Crust: </span>
+                                        <span>@pie.PizzaBread</span><br />
+                                    }
+                                    @if (pie.PizzaSauce != null)
+                                    {
+                                        <span class="card-text-cart">Sauce: </span>
+                                        <span>@pie.PizzaSauce</span><br />
+                                    }
+                                    @if (pie.PizzaCheese == true)
+                                    {
+                                        <span class="card-text-cart">Cheese: </span>
+                                        <span>Yes</span><br />
+                                    }
+                                    @if (pie.PizzaSize != null)
+                                    {
+                                        <span class="card-text-cart">Size: </span>
+                                        <span>@pie.PizzaSize</span><br />
+                                    }
+                                    @if (Model != null)
+                                    {
+                                        if (pie.Toppings.Count != 0)
+                                        {
+                                            <span class="card-text-cart">Toppings: </span>
+                                        }
+                                        @foreach (Topping top in pie.Toppings)
+                                        {
+                                            <span>@top.ToppingName,</span>
+                                        }
+                                    }
                                 </td>
                             </tr>
                         }
@@ -655,13 +752,28 @@
 
                             <tr>
                                 <td>
-                                    <div class="card" style="width: 40em;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Drink Type: @pie.DrinkType</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">Price: @pie.Price</h6>
-                                        </div>
-                                    </div>
+                                    <span class="card-text-cart">Drink: </span>
+                                    <span>@pie.DrinkType</span>
                                 </td>
+                                <td>
+                                    <span>$@pie.Price</span>
+                                </td>
+                                @{
+                                    if (pie.DrinkType == "Ramune")
+                                    {
+                                        <td>
+                                            <span style="color: cadetblue">Size: </span>
+                                            <span>200g</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <span style="color: cadetblue">Size: </span>
+                                            <span>20oz</span>
+                                        </td>
+                                    }
+                                }
                             </tr>
                         }
                     }
@@ -669,16 +781,16 @@
                 </table>
             </div>
             <hr />
-            <p>Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
+            <p style="font-size: 25px">Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
             <div>
                 <a style="cursor: pointer" id="btn-goback" onclick="hideCart()">Go Back</a>
                 <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Go Checkout</button>
             </div>
             <br />
-            
+
         </div>
 
 
-        </div>
+    </div>
 
 </body>

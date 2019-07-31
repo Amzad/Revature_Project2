@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Revature_Project2.Controllers
 {
+    [Authorize]
     public class ReorderController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -54,53 +55,82 @@ namespace Revature_Project2.Controllers
         }
 
         // GET: Reorder/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            //this controller should go to reorder/detail and fetech order with the same id
+            // Sample GET Request
+            //var usersessionid = _userManager.GetUserId();
+            //int id = Convert.ToInt32(User.FindFirstValue("customerID"));
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/reorders/Detail/" + id);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                System.Diagnostics.Debug.WriteLine(response.Content);
+                var orders = await response.Content.ReadAsAsync<Order>();
+                return View(orders);
+            }
+            else
+            {
+                //GetBranchesError = true;
+                System.Diagnostics.Debug.WriteLine("you didn't order anythin");
+                return View();
+                //Branches = Array.Empty<Customer>();
+            }
         }
 
-            //not working 
-            public async Task<ActionResult> Reorder(int id)
+            //not working error think it cuz i have the drink id and pizza id already need to remove them...
+        public async Task<ActionResult> Reorder(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/reorders/Detail/" + id);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
             {
-                var request = new HttpRequestMessage(HttpMethod.Get,
-                    "https://localhost:44376/api/reorders/Detail/" + id);
-                // Must include these headers for GET
-                request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
-                request.Headers.Add("accept-encoding", "gzip, deflate");
-                //request.Headers.Add("content-type", "application/json");
-                request.Headers.Add("user-agent",
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
-                var client = _clientFactory.CreateClient();
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
+                //System.Diagnostics.Debug.WriteLine(response.Content);
+                var item = await response.Content
+                    .ReadAsAsync<Order>();
+                //inporgress ask amzad for the nonlazzy loading 
+                if (item.Pizzas != null)
                 {
-                    //System.Diagnostics.Debug.WriteLine(response.Content);
-                    var item = await response.Content
-                        .ReadAsAsync<Order>();
-                    //inporgress ask amzad for the nonlazzy loading 
-                    if (item.Pizzas != null)
+                    foreach (var x in item.Pizzas)
                     {
-                        foreach (var x in item.Pizzas)
-                        {
-                            //var Pizz = new Pizza();
-                            //Pizz.PizzaBrsead = x.PizzaBread;
-                            //Pizz.PizzaCheese = x.PizzaCheese;
-                            //Pizz.PizzaSauce = x.PizzaSauce;
-                            //var Top = new List<Topping>();
+                        x.OrderID = 0;
+                        x.PizzaID = 0;
+                        //Pizz.PizzaBrsead = x.PizzaBread;
+                        //Pizz.PizzaCheese = x.PizzaCheese;
+                        //Pizz.PizzaSauce = x.PizzaSauce;
+                        //var Top = new List<Topping>();
 
-                            AddToList(x);
-                        }
-                    }
-                    if (item.Drinks != null)
-                    {
-                        foreach (var y in item.Drinks)
-                        {
-                            AddDrink(y);
-                        }
+                        AddToList(x);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (item.Drinks != null)
+                {
+                    foreach (var y in item.Drinks)
+                    {
+                        y.DrinkID = 0;
+                        y.OrderID = 0; 
+                        AddDrink(y);
+                    }
+                }
             }
+            return RedirectToAction(nameof(Index));
+        }
 
         [Authorize]
         public void AddToList(Pizza Item)

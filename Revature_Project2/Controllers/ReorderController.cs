@@ -62,7 +62,7 @@ namespace Revature_Project2.Controllers
             //var usersessionid = _userManager.GetUserId();
             //int id = Convert.ToInt32(User.FindFirstValue("customerID"));
             var request = new HttpRequestMessage(HttpMethod.Get,
-                Program.API + "Detail/" + id);
+                Program.API + "reorders/Detail/" + id);
             // Must include these headers for GET
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             request.Headers.Add("accept-encoding", "gzip, deflate");
@@ -90,7 +90,7 @@ namespace Revature_Project2.Controllers
         public async Task<ActionResult> Reorder(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                Program.API + "Detail/" + id);
+                Program.API + "reorders/Detail/" + id);
             // Must include these headers for GET
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             request.Headers.Add("accept-encoding", "gzip, deflate");
@@ -141,7 +141,7 @@ namespace Revature_Project2.Controllers
         public async Task<ActionResult> AddComponentPizza( int OrderID, int PizzaID)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                Program.API + "Detail/" + OrderID);
+                Program.API + "reorders/Detail/" + OrderID);
             // Must include these headers for GET
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             request.Headers.Add("accept-encoding", "gzip, deflate");
@@ -175,7 +175,7 @@ namespace Revature_Project2.Controllers
         {
 
             var request = new HttpRequestMessage(HttpMethod.Get,
-               Program.API + "Detail/" + OrderID);
+               Program.API + "reorders/Detail/" + OrderID);
             // Must include these headers for GET
             request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
             request.Headers.Add("accept-encoding", "gzip, deflate");

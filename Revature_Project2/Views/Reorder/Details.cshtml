@@ -28,9 +28,6 @@
         left: 20%;
 
     }
-    .container-shoppingCart:hover {
-        opacity: 0.95;
-    }
     table tr {
         font-family: sans-serif;
         font-size: 15px;
@@ -56,8 +53,26 @@
     .card-text-cart {
         color: cadetblue;
     }
+
+    #btn-checkout {
+        opacity: 0.8;
+        border: 0;
+    }
+
+    #btn-checkout:hover{
+        opacity: 1;
+    }
+
+    table {
+        width:75%;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
 </style>
-<h1 class="text-white">Order Details</h1>
 
 
 <div class="container-shoppingCart" id="container-shoppingCart">
@@ -69,14 +84,15 @@
         </div>
         <hr />
     </div>
-    <div id="shoppingCart-items" style="height: 400px; overflow: scroll; overflow-x: hidden; text-align:center">
+    <div id="shoppingCart-items" style="height: 400px; overflow: scroll; overflow-x: hidden; text-align:left">
         <table>
             @if (Model != null)
             {
                 <tr>
-                    <th>Item</th>
-                    <th>Price</th>
+                    <th style="width:20%">Item</th>
+                    <th style="width: 12%">Price</th>
                     <th>Details</th>
+                    <th style="width: 12%"></th>
                 </tr>
 
                 @foreach (Pizza pie in Model.Pizzas)
@@ -126,7 +142,7 @@
                             }
                         </td>
                         <td>
-                            <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentPizza", "Reorder", new { OrderID = pie.OrderID, PizzaID = pie.PizzaID})'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                            <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentPizza", "Reorder", new { OrderID = pie.OrderID, PizzaID = pie.PizzaID})'" style="background-color:darkorange; color:white; border-radius:5px; padding:3px; padding-left: 8px; padding-right: 8px;">Add To Cart</button>
                         </td>
                     </tr>
                 }
@@ -160,7 +176,7 @@
                             }
                         }
                         <td>
-                             <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentDrink", "Reorder", new { OrderID = pie.OrderID, DrinkID = pie.DrinkID})'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                             <button id="btn-checkout" onclick="location.href='@Url.Action("AddComponentDrink", "Reorder", new { OrderID = pie.OrderID, DrinkID = pie.DrinkID})'" style="background-color:darkorange; color:white; border-radius:5px; padding:3px; padding-left: 8px; padding-right: 8px;">Add To Cart</button>
                         </td>
                     </tr>
                 }
@@ -171,7 +187,7 @@
     <hr />
     <p style="font-size: 25px">Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
     <div>
-        <button id="btn-checkout" onclick="location.href='@Url.Action("Reorder", "Reorder", new { id = Model.OrderID } )'" style="background-color:cadetblue; border-radius:5px">Order Again!</button>
+        <button id="btn-checkout" onclick="location.href='@Url.Action("Reorder", "Reorder", new { id = Model.OrderID } )'" style="background-color:cadetblue; border-radius:5px; padding:8px; padding-left: 30px; padding-right: 30px; color: white">Order Again</button>
     </div>
     <br />
 

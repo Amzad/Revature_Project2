@@ -16,38 +16,78 @@
         background-color: white;
         color: black;
         padding: 10px;
-        height: 500px;
-        width: 900px;
-        margin-top: 600px;
-        opacity: 0.9;
+        width: 60%;
+        margin-top: 180px;
+        opacity: 1;
         user-select: none;
         text-align: center;
-        position: relative;
-        bottom: 605px;
-        left: 0%;
+        position: absolute;
+        top: 0%;
+        left: 20%;
     }
 
-        .container-shoppingCart:hover {
-            opacity: 0.95;
-        }
+    table {
+        width:75%;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+        table tr {
+        font-family: sans-serif;
+        font-size: 15px;
+    }
+
+    table tr th {
+        color: cadetblue;
+        position: sticky;
+        top: 0px;
+        background-color: white;
+    }
+
+    table tr td {
+        border-bottom: 1px solid cadetblue;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+    #btn-details {
+        background-color: lightskyblue;
+        color: white;
+        padding: 6px;
+        padding-right: 15px;
+        padding-left: 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        opacity: 0.8;
+    }
+    #btn-details:hover {
+        opacity: 1;
+    }
+
+
 </style>
-<h1 class="text-white"> Order History</h1>
+
 
 <div class="container-shoppingCart" id="container-shoppingCart">
     <br>
     <div id="shoppingCart-header">
-        <img src="https://images.vexels.com/media/users/3/132114/isolated/lists/5367202ad4dd11725544cb3008049f96-shoppingcart-flat-icon.png" width="32" height="32" />
-        <span style="font-size: 29px; color: orange"> PAST ORDER</span>
+        <div>
+            <h1 style="color: orange">Past Orders</h1>
+            <img src="https://images.vexels.com/media/users/3/132114/isolated/lists/5367202ad4dd11725544cb3008049f96-shoppingcart-flat-icon.png" width="42" height="42" />
+        </div>
+        <hr />
     </div>
-    <hr />
-    <div id="shoppingCart-items" style="height: 235px; overflow: scroll; overflow-x: hidden">
-        <table class="table">
+    <div id="shoppingCart-items" style="height: 480px; overflow: scroll; overflow-x: hidden; text-align: left">
+        <table>
             <thead>
                 <tr>
-                    <th>
+                    <th style="width: 17%">
                         Order Number
                     </th>
-                    <th>
+                    <th style="width: 28%">
                         Date/Time
                     </th>
                     <th>
@@ -57,7 +97,7 @@
                         Total Items
                     </th>
 
-                    <th></th>
+                    <th style="width: 10%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -71,14 +111,13 @@
                             @Html.DisplayFor(modelItem => item.OrderDateTime)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OrderPrice)
+                            $@Html.DisplayFor(modelItem => item.OrderPrice)
                         </td>
                         <td>
                             @(item.Pizzas.Count+item.Drinks.Count)
                         </td>
                         <td>
-
-                            <a asp-action="Details" asp-route-id="@item.OrderID">Details</a>
+                            <a id="btn-details" asp-action="Details" asp-route-id="@item.OrderID">Details</a>
                         </td>
                     </tr>
                 }
@@ -87,7 +126,7 @@
     </div>
     <hr />
     @*<p>Total price: @(Model != null ? Model.OrderPrice : 0)</p>*@
-    <button id="btn-checkout" onclick="location.href='@Url.Action("Menu", "Home")'" style="background-color:cadetblue; border-radius:5px">Go Menu!</button>
+    @*<button id="btn-checkout" onclick="location.href='@Url.Action("Menu", "Home")'" style="background-color:cadetblue; border-radius:5px">Go Menu!</button>*@
 </div>
 
 

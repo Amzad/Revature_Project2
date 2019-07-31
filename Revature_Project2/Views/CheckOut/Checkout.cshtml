@@ -9,118 +9,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/index.css" />
+    <style>
+        .row {
+            padding: 30px;
+        }
+
+        .sub-titile {
+            color: darkorange;
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 15px;
+        }
+
+        input {
+            height: 28px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            border: 1px solid cadetblue;
+            /*background-color: #AAA;*/
+        }
+        #btn-submitOrder{
+            opacity: 0.85;
+            border-radius: 5px;
+        }
+        #btn-submitOrder:hover{
+            opacity: 1;
+        }
+
+    </style>
 </head>
 <body>
 
     <div class="row">
         @using (Html.BeginForm("Finalize", "CheckOut", FormMethod.Post, new { @class = "form", role = "form" }))
         {
-            <div class="row" style="background-color:white; opacity:50">
-                <div class="col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Your cart</span>
-                    </h4>
-                    <ul class="list-group mb-3">
+            <div class="row" style="background-color:white; opacity:50; font-family: sans-serif; border-radius: 15px; padding: 70px">
+
+                <div class="">
+                    <h2 style="color: cadetblue; font-family: 'Shadows Into Light', cursive; font-size: 45px; margin-bottom: 20px">
+                        Checkout
+                    </h2>
+                    <hr />
+                    <br />
+                    <h4 class="sub-titile">Billing address</h4>
+                    <div class="">
+                        <div class="">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="" id="firstName" placeholder="" value="@Model.CustomerFirstName" readonly>
+                        </div>
+                        <div class="">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="" id="lastName" placeholder="" value="@Model.CustomerLastName" readonly>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <label for="email">Email</label>
+                        <input style="width: 210px" type="email" class="" id="email" placeholder="" value="@Model.CustomerEmail" readonly>
+                    </div>
+
+                    <div class="">
+                        <label for="address">Address</label>
+                        <input type="text" class="" id="address" placeholder="" value="@Model.CustomerAddress" readonly>
+                    </div>
+
+                    <div class="">
+                        <div class="">
+                            <label for="state">State</label>
+                            <input style="width: 70px" type="text" class="" id="state" placeholder="" value="@Model.State" readonly>
+
+                        </div>
+                        <div class="">
+                            <label for="zip">Zip</label>
+                            <input style="width: 90px" type="text" class="" id="zip" placeholder="" value="@Model.ZipCode" readonly>
+                        </div>
+                    </div>
+                    <hr class="">
+                    <br />
+                    <h4 class="sub-titile">Payment</h4>
+
+                    <div class="">
+                        <div class="">
+                            <label for="cc-name">Name on card</label>
+                            <input type="text" class="" id="cc-name" placeholder="" readonly value="@Model.CustomerFirstName @Model.CustomerLastName">
+                            <small class="" style="color: white">Full name as displayed on card</small>
+                        </div>
+                        <div class="">
+                            <label for="cc-number">Credit card number</label>
+                            <input type="text" class="" id="cc-number" placeholder="" value="@Model.CreditCardNumber" readonly>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="">
+                            <label for="cc-expiration">Expiration</label>
+                            <input style="width: 100px" type="text" class="" id="cc-expiration" placeholder="" readonly value="@Model.ExpMonth">
+                        </div>
+                        <div class="">
+                            <label for="cc-cvv">CVV</label>
+                            <input style="width:60px" type="text" class="" id="cc-cvv" placeholder="" value="@Model.SecurityCode" readonly>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mini-cart">
+                    <ul class="" style="border: 1.5px solid cadetblue; padding: 10px;list-style: none; margin-top: 130px;">
+                        <p class="" style="color: cadetblue; font-size: 25px">Cart Items</p>
 
 
                         @foreach (Order order in Model.Orders)
                         {
                             @foreach (Pizza pizza in order.Pizzas)
                             {
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">@pizza.PizzaType</h6>
-                                    </div>
-                                    <span class="text-muted">$@pizza.PizzaPrice</span>
+                                <li class="" style="border-bottom: 1px solid gray; font-size: 16px">
+                                    <span style="color: black" class="">@pizza.PizzaType: </span>
+                                    <span class="">$@pizza.PizzaPrice</span>
                                 </li>
                             }
                             @foreach (Drink drink in order.Drinks)
                             {
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">@drink.DrinkType</h6>
-                                    </div>
-                                    <span class="text-muted">$@drink.Price</span>
+                                <li class="" style="border-bottom: 1px solid gray; font-size: 16px">
+                                    <span style="color: black" class="">@drink.DrinkType: </span>
+                                    <span class="">$@drink.Price</span>
                                 </li>
                             }
-                            <li class="list-group-item d-flex justify-content-between">
+                            <li class="" style="font-size:18px">
+                                <br />
                                 <span>Total (USD)</span>
                                 <strong>$@order.OrderPrice</strong>
                             </li>
                         }
                     </ul>
+                    <hr class="">
+                    <button id="btn-submitOrder" type="submit" style="background-color: cadetblue; color: white; border: 0; padding: 5px; padding-left: 20px; padding-right: 20px; font-size: 17px">Submit Order</button>
                 </div>
-                <div class="col-md-8 order-md-1">
-                    <h2>
-                        Checkout
-                    </h2>
-                    <h4 class="mb-3">Billing address</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value="@Model.CustomerFirstName" readonly>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="@Model.CustomerLastName" readonly>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="" value="@Model.CustomerEmail" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="" value="@Model.CustomerAddress" readonly>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="state">State</label>
-                                <input type="text" class="form-control" id="state" placeholder="" value="@Model.State" readonly>
-
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="zip">Zip</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" value="@Model.ZipCode" readonly>
-                            </div>
-                        </div>
-                        <hr class="mb-4">
-                        <h4 class="mb-3">Payment</h4>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-name">Name on card</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" readonly value="@Model.CustomerFirstName @Model.CustomerLastName">
-                                <small class="text-muted">Full name as displayed on card</small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-number">Credit card number</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" value="@Model.CreditCardNumber" readonly>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">Expiration</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" readonly value="@Model.ExpMonth">
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-cvv">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" value="@Model.SecurityCode" readonly>
-
-                            </div>
-                        </div>
-                        <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit Order</button>
-                </div>
             </div>
         }
     </div>

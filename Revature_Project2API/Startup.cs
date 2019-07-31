@@ -39,7 +39,7 @@ namespace Revature_Project2API
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-             
+
 
             services.AddCors(options => options.AddPolicy("Cors", builder =>
             {
@@ -93,6 +93,7 @@ namespace Revature_Project2API
                 app.UseHsts();
             }
             app.UseAuthentication();
+            app.UseCors("Cors");
 
             app.UseHttpsRedirection();
             app.UseMvc();

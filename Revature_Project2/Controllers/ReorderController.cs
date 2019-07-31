@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Revature_Project2.Controllers
 {
@@ -22,7 +20,7 @@ namespace Revature_Project2.Controllers
             _clientFactory = clientFactory;
         }
 
-     
+
         // GET: Reorder
         public async Task<IActionResult> Index()
         {
@@ -57,8 +55,9 @@ namespace Revature_Project2.Controllers
         }
 
         // GET: Reorder/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
+            //this controller should go to reorder/detail and fetech order with the same id
             // Sample GET Request
             //var usersessionid = _userManager.GetUserId();
             //int id = Convert.ToInt32(User.FindFirstValue("customerID"));
@@ -74,10 +73,9 @@ namespace Revature_Project2.Controllers
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-               //System.Diagnostics.Debug.WriteLine(response.Content);
-                var item = await response.Content
-                    .ReadAsAsync<IEnumerable<Pizza>>();
-                return View(item);
+                System.Diagnostics.Debug.WriteLine(response.Content);
+                var orders = await response.Content.ReadAsAsync<Order>();
+                return View(orders);
             }
             else
             {
@@ -87,29 +85,105 @@ namespace Revature_Project2.Controllers
                 //Branches = Array.Empty<Customer>();
             }
         }
-        //not working 
-        public async Task<ActionResult> Reorder(Pizza Item)
-        {         
 
-                var client = _clientFactory.CreateClient();
-                client.DefaultRequestHeaders.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
-                string var = JsonConvert.SerializeObject(Item);
-                var httpContent = new StringContent(var, Encoding.UTF8, "application/json");
-                //string id = User.FindFirstValue("customerID");
-                var response2 = await client.PutAsync("https://localhost:44376/api/Orders/", httpContent);
-
-
-                if (response2.IsSuccessStatusCode)
+            //not working error think it cuz i have the drink id and pizza id already need to remove them...
+        public async Task<ActionResult> Reorder(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://localhost:44376/api/reorders/Detail/" + id);
+            // Must include these headers for GET
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            request.Headers.Add("accept-encoding", "gzip, deflate");
+            //request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                //System.Diagnostics.Debug.WriteLine(response.Content);
+                var item = await response.Content
+                    .ReadAsAsync<Order>();
+                //inporgress ask amzad for the nonlazzy loading 
+                if (item.Pizzas != null)
                 {
-                    //Branches = await response.Content
-                    //    .ReadAsAsync<IEnumerable<Customer>>();
-                    return RedirectToAction(nameof(Index));
+                    foreach (var x in item.Pizzas)
+                    {
+                        x.OrderID = 0;
+                        x.PizzaID = 0;
+                        //Pizz.PizzaBrsead = x.PizzaBread;
+                        //Pizz.PizzaCheese = x.PizzaCheese;
+                        //Pizz.PizzaSauce = x.PizzaSauce;
+                        //var Top = new List<Topping>();
+
+                        AddToList(x);
+                    }
                 }
-                else
+                if (item.Drinks != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("DAMN");
-                    return RedirectToAction(nameof(Index));
+                    foreach (var y in item.Drinks)
+                    {
+                        y.DrinkID = 0;
+                        y.OrderID = 0; 
+                        AddDrink(y);
+                    }
                 }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public void AddToList(Pizza Item)
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            bool hasCust = CheckOutController.CustomerOrder.Exists(c => c.CustomerID == custID);
+            if (hasCust)
+            {
+                Order order = CheckOutController.CustomerOrder.Find(c => c.CustomerID == custID);
+                order.Pizzas.Add(Item);
+                order.OrderPrice += Item.PizzaPrice;
+
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    CustomerID = int.Parse(User.FindFirst("customerID").Value)
+                };
+                order.Pizzas = new List<Pizza>();
+                order.Drinks = new List<Drink>();
+                order.Pizzas.Add(Item);
+                order.OrderPrice = Item.PizzaPrice;
+                CheckOutController.CustomerOrder.Add(order);
+            }
+
+        }
+
+        public void AddDrink(Drink Item)
+        {
+
+
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            bool hasCust = CheckOutController.CustomerOrder.Exists(c => c.CustomerID == custID);
+            if (hasCust)
+            {
+                Order order = CheckOutController.CustomerOrder.Find(c => c.CustomerID == custID);
+                order.Drinks.Add(Item);
+                order.OrderPrice += Item.Price;
+            }
+            else
+            {
+                Order order = new Order()
+                {
+                    CustomerID = int.Parse(User.FindFirst("customerID").Value)
+                };
+                order.Pizzas = new List<Pizza>();
+                order.Drinks = new List<Drink>();
+                order.Drinks.Add(Item);
+                order.OrderPrice = Item.Price;
+                CheckOutController.CustomerOrder.Add(order);
+            }
+
         }
 
         // POST: Reorder/Create
@@ -129,28 +203,28 @@ namespace Revature_Project2.Controllers
             }
         }
 
-        //// GET: Reorder/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Reorder/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
 
-        //// POST: Reorder/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
+        // POST: Reorder/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         // GET: Reorder/Delete/5
         public ActionResult Delete(int id)

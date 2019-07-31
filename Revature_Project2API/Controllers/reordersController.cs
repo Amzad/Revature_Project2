@@ -22,11 +22,11 @@ namespace Revature_Project2API.Controllers
         }
 
         // GET: api/reorders
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
-        {
-            return await _context.Orders.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        //{
+        //    return await _context.Orders.ToListAsync();
+        //}
 
         // GET: api/reorders/5
         [HttpGet("{id}")]
@@ -43,14 +43,19 @@ namespace Revature_Project2API.Controllers
 
             return order;
         }
-       
+
+
         [HttpGet("Detail/{id}")]
-        public async Task<ICollection<Pizza>> PizzaDetail(int id)
+        public async Task<Order> PizzaDetail(int id)
         {
 
             //var order = await _context.Order.FindAsync(id);
             //string custid = id.ToString();
-            var item = await _context.Pizzas.Where(x => x.OrderID == id).ToListAsync();
+            Order item = new Order();
+            item = _context.Orders.FirstOrDefault(u => u.OrderID == id);
+            item.Pizzas = await _context.Pizzas.Where(o => o.OrderID == id).Include(o => o.Toppings).ToListAsync();
+            item.Drinks = await _context.Drinks.Where(d => d.OrderID == id).ToListAsync();
+            //.ThenInclude(c => c.Toppings)
             if (item == null)
             {
                 return null;
@@ -58,6 +63,7 @@ namespace Revature_Project2API.Controllers
 
             return item;
         }
+
         // PUT: api/reorders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
@@ -88,31 +94,31 @@ namespace Revature_Project2API.Controllers
             return NoContent();
         }
 
-        // POST: api/reorders
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
-        {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+        //// POST: api/reorders
+        //[HttpPost]
+        //public async Task<ActionResult<Order>> PostOrder(Order order)
+        //{
+        //    _context.Orders.Add(order);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
-        }
+        //    return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+        //}
 
         // DELETE: api/reorders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<Order>> DeleteOrder(int id)
+        //{
+        //    var order = await _context.Orders.FindAsync(id);
+        //    if (order == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+        //    _context.Orders.Remove(order);
+        //    await _context.SaveChangesAsync();
 
-            return order;
-        }
+        //    return order;
+        //}
 
         private bool OrderExists(int id)
         {

@@ -1,76 +1,185 @@
 ﻿
-@model IEnumerable<Entities.Models.Pizza>
+@using Entities.Models
+@model Order
 
 @{
     ViewData["Title"] = "View";
 }
+<style>
+    body {
+        background-image: url('https://img.taste.com.au/YfX0h9hC/taste/2017/10/mexican-taco-pizza-131640-1.jpg');
+        font-family: 'Shadows Into Light', cursive;
+        font-size: 20px;
+        user-select: none;
+    }
 
+    .container-shoppingCart {
+        border-radius: 15px;
+        background-color: white;
+        color: black;
+        padding: 10px;
+        width: 60%;
+        margin-top: 180px;
+        opacity: 1;
+        user-select: none;
+        text-align: center;
+        position: absolute;
+        top: 0%;
+        left: 20%;
+
+    }
+    .container-shoppingCart:hover {
+        opacity: 0.95;
+    }
+    table tr {
+        font-family: sans-serif;
+        font-size: 15px;
+    }
+
+    table tr th {
+        color: cadetblue;
+        position: sticky;
+        top: 0px;
+        background-color: white;
+    }
+
+    table tr td {
+        border-bottom: 1px solid cadetblue;
+        padding-bottom: 15px;
+        padding-top: 15px;
+    }
+    .card-title {
+        font-weight: 800;
+        color: cadetblue;
+    }
+
+    .card-text-cart {
+        color: cadetblue;
+    }
+</style>
 <h1>View</h1>
 
-@*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PizzaType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PizzaSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PizzaSauce)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PizzaBread)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PizzaCheese)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <form  asp-controller="Reorder" asp-action="Reorder">
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderID)
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PizzaType)
-                    </td>
-                    <input type="hidden" id="PizzaType" name="PizzaType" value="item.PizzaType">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PizzaSize)
-                    </td>
-                    <input type="hidden" id="PizzaSize" name="PizzaSize" value="item.PizzaSize">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PizzaSauce)
-                    </td>
-                    <input type="hidden" id="PizzaSauce" name="PizzaSauce" value="item.PizzaSauce">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PizzaBread)
-                    </td>
-                    <input type="hidden" id="PizzaBread" name="PizzaBread" value="item.PizzaBread">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PizzaCheese)
-                    </td>
-                    <input type="hidden" id="PizzaCheese" name="PizzaCheese" value="item.PizzaCheese">
-                    <td>
-                        @*<a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a>*@
-                        <a asp-controller="Reorder" asp-action="Reorder" asp-route-id="@item.OrderID">Reorder</a>
-                        <button type="submit">Order Again!</button>
-                        @*|
-        <a asp-action="Delete" asp-route-id="@item.PizzaID">Delete</a>*@
-                    </td>
+<div class="container-shoppingCart" id="container-shoppingCart">
+    <br>
+    <div id="shoppingCart-header">
+        <div>
+            <h1 style="color: orange">Order Details</h1>
+            <img src="https://images.vexels.com/media/users/3/132114/isolated/lists/5367202ad4dd11725544cb3008049f96-shoppingcart-flat-icon.png" width="42" height="42" />
+        </div>
+        <hr />
+    </div>
+    <div id="shoppingCart-items" style="height: 400px; overflow: scroll; overflow-x: hidden; text-align:center">
+        <table>
+            @if (Model != null)
+            {
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Details</th>
                 </tr>
-             </form>  }
-        </tbody>
-</table>
+
+                @foreach (Pizza pie in Model.Pizzas)
+                {
+                    <tr>
+                        <td style="width: 300px">
+                            <span class="card-text-cart">Pizza: </span>
+                            <span>@pie.PizzaType</span>
+                        </td>
+
+                         <td style="width: 300px">
+                            <span>$@pie.PizzaPrice</span>
+                        </td>
+
+                        <td style="width: 500px">
+
+                            @if (pie.PizzaBread != null)
+                            {
+                                <span class="card-text-cart">Crust: </span>
+                                <span>@pie.PizzaBread</span><br />
+                            }
+                            @if (pie.PizzaSauce != null)
+                            {
+                                <span class="card-text-cart">Sauce: </span>
+                                <span>@pie.PizzaSauce</span><br />
+                            }
+                            @if (pie.PizzaCheese == true)
+                            {
+                                <span class="card-text-cart">Cheese: </span>
+                                <span>Yes</span><br />
+                            }
+                            @if (pie.PizzaSize != null)
+                            {
+                                <span class="card-text-cart">Size: </span>
+                                <span>@pie.PizzaSize</span><br />
+                            }
+                            @if (Model != null)
+                            {
+                                if (pie.Toppings.Count != 0)
+                                {
+                                    <span class="card-text-cart">Toppings: </span>
+                                }
+                                @foreach (Topping top in pie.Toppings)
+                                {
+                                    <span>@top.ToppingName,</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                        </td>
+                    </tr>
+                }
+
+                @foreach (Drink pie in Model.Drinks)
+                {
+
+                    <tr>
+                        <td>
+                            <span class="card-text-cart">Drink: </span>
+                            <span>@pie.DrinkType</span>
+                        </td>
+                        <td>
+                            <span>$@pie.Price</span>
+                        </td>
+                        
+                        @{
+                            if (pie.DrinkType == "Ramune")
+                            {
+                                <td>
+                                    <span style="color: cadetblue">Size: </span>
+                                    <span>200g</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span style="color: cadetblue">Size: </span>
+                                    <span>20oz</span>
+                                </td>
+                            }
+                        }
+                        <td>
+                             <button id="btn-checkout" onclick="location.href='@Url.Action("Index", "CheckOut")'" style="background-color:cadetblue; border-radius:5px">Add To Cart</button>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+    <hr />
+    <p style="font-size: 25px">Total price:  $@(Model != null ? Model.OrderPrice : 0)</p>
+    <div>
+        <button id="btn-checkout" onclick="location.href='@Url.Action("Reorder", "Reorder", new { id = Model.OrderID } )'" style="background-color:cadetblue; border-radius:5px">Order Again!</button>
+    </div>
+    <br />
+
+</div>
+
+
+
+
+
+
+

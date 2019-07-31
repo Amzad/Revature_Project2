@@ -204,7 +204,7 @@ namespace Revature_Project2.Controllers
                 Customer cust = await response.Content.ReadAsAsync<Customer>();
                 if (cust.CreditCardNumber == null)
                 {
-                    return RedirectToAction("UpdateCreditCard", "Account");
+                    return RedirectToAction("CreditCard", "Account");
                 } else
                 {
                     return RedirectToAction("Checkout", "CheckOut");

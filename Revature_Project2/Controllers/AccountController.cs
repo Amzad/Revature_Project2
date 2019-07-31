@@ -29,13 +29,45 @@ namespace Revature_Project2.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateCreditCard()
+        public async Task<IActionResult> UpdateCreditCard()
         {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                Program.API + "customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                return View("UpdateCreditCard", cust);
+            }
             return View("CreditCard");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UpdateProfile()
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                Program.API + "customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                return View("UpdateProfile", cust);
+            }
+            return View("");
+        }
+
         [HttpPost]
-        public async Task<IActionResult> UpdateCreditCard(string cardnumber, string expmonth, string securitycode)
+        public async Task<IActionResult> CreditCard(string cardnumber, string expmonth, string securitycode, string cardtype)
         {
             int custID = int.Parse(User.FindFirst("customerID").Value);
             var httpClient = _clientFactory.CreateClient("API");
@@ -51,6 +83,7 @@ namespace Revature_Project2.Controllers
                 cust.CreditCardNumber = cardnumber;
                 cust.ExpMonth = expmonth;
                 cust.SecurityCode = securitycode;
+                cust.ExpYear = cardtype;
 
                 // Update Customer Object
                 httpClient = _clientFactory.CreateClient("API");
@@ -58,6 +91,87 @@ namespace Revature_Project2.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Checkout", "CheckOut");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCreditCard(string cardnumber, string expmonth, string securitycode, string cardtype)
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                Program.API + "customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                cust.CreditCardNumber = cardnumber;
+                cust.ExpMonth = expmonth;
+                cust.SecurityCode = securitycode;
+                cust.ExpYear = cardtype;
+
+                // Update Customer Object
+                httpClient = _clientFactory.CreateClient("API");
+                response = await httpClient.PutAsJsonAsync(Program.API + "Customers/" + custID, cust);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Unable to update credit card details");
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(string firstname, string lastname, string address, string state, string zipcode)
+        {
+            int custID = int.Parse(User.FindFirst("customerID").Value);
+            var httpClient = _clientFactory.CreateClient("API");
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                Program.API + "customers/" + custID);
+            request.Headers.Add("authorization", "Bearer " + User.FindFirstValue("access_token"));
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Customer cust = await response.Content.ReadAsAsync<Customer>();
+                cust.CustomerFirstName = firstname;
+                cust.CustomerLastName = lastname;
+                cust.CustomerAddress = address;
+                cust.State = state;
+                cust.ZipCode = zipcode;
+
+                // Update Customer Object
+                httpClient = _clientFactory.CreateClient("API");
+                response = await httpClient.PutAsJsonAsync(Program.API + "Customers/" + custID, cust);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

@@ -111,6 +111,12 @@ namespace Revature_Project2.Controllers
                     {
                         x.OrderID = 0;
                         x.PizzaID = 0;
+
+                        foreach(var z in x.Toppings)
+                        {
+                            z.PizzaID = 0;
+                            z.ToppingID = 0;
+                        }
                         //Pizz.PizzaBrsead = x.PizzaBread;
                         //Pizz.PizzaCheese = x.PizzaCheese;
                         //Pizz.PizzaSauce = x.PizzaSauce;

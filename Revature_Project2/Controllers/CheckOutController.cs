@@ -239,15 +239,16 @@ namespace Revature_Project2.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                Order newOrder = await response.Content.ReadAsAsync<Order>();
                 CustomerOrder.Remove(order);
-                return View();
+                return View("OrderConfirmed", newOrder);
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("DAMN"); ;
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
 
         }
 

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Entities.Models.Order>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Order History";
 }
 <style>
     body {
@@ -31,7 +31,7 @@
             opacity: 0.95;
         }
 </style>
-<h1>View</h1>
+<h1 class="text-white"> Order History</h1>
 
 <div class="container-shoppingCart" id="container-shoppingCart">
     <br>
@@ -45,19 +45,16 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.OrderID)
+                        Order Number
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OrderDateTime)
+                        Date/Time
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OrderPrice)
+                        Order Price
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.CustomerID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Pizzas.Count)
+                        Total Items
                     </th>
 
                     <th></th>
@@ -77,10 +74,7 @@
                             @Html.DisplayFor(modelItem => item.OrderPrice)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CustomerID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Pizzas.Count)
+                            @(item.Pizzas.Count+item.Drinks.Count)
                         </td>
                         <td>
 

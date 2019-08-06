@@ -36,7 +36,7 @@ namespace Revature_Project2.Controllers
             return View(orderList);
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Payment()
         {
             return View();

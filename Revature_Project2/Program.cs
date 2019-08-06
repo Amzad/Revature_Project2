@@ -10,10 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Revature_Project2
 {
+     
     public class Program
     {
-        //public static string API = "https://localhost:44376/api/";
-        public static string API = "https://masterteamapi.azurewebsites.net/api/";
+        static IConfiguration _configuration;
+
+        public Program(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public static string API = _configuration.GetSection("API").GetSection("DefaultAddress").Value;
 
         public static void Main(string[] args)
         {

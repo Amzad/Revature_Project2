@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Revature_Project2.Controllers
 {
@@ -28,6 +29,7 @@ namespace Revature_Project2.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> UpdateCreditCard()
         {
@@ -47,6 +49,7 @@ namespace Revature_Project2.Controllers
             return View("CreditCard");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
         {
@@ -66,6 +69,7 @@ namespace Revature_Project2.Controllers
             return View("");
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreditCard(string cardnumber, string expmonth, string securitycode, string cardtype)
         {
@@ -106,6 +110,7 @@ namespace Revature_Project2.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> UpdateCreditCard(string cardnumber, string expmonth, string securitycode, string cardtype)
         {
@@ -146,6 +151,7 @@ namespace Revature_Project2.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(string firstname, string lastname, string address, string state, string zipcode)
         {

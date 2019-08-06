@@ -22,6 +22,7 @@ namespace Revature_Project2.Controllers
 
 
         // GET: Reorder
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             // Sample GET Request
@@ -55,6 +56,7 @@ namespace Revature_Project2.Controllers
         }
 
         // GET: Reorder/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             //this controller should go to reorder/detail and fetech order with the same id
@@ -86,7 +88,8 @@ namespace Revature_Project2.Controllers
             }
         }
 
-            //not working error think it cuz i have the drink id and pizza id already need to remove them...
+        //not working error think it cuz i have the drink id and pizza id already need to remove them...
+        [Authorize]
         public async Task<ActionResult> Reorder(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
@@ -138,6 +141,7 @@ namespace Revature_Project2.Controllers
             return RedirectToAction("Menu", "Home");
         }
 
+        [Authorize]
         public async Task<ActionResult> AddComponentPizza( int OrderID, int PizzaID)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
@@ -171,6 +175,8 @@ namespace Revature_Project2.Controllers
             }
             return RedirectToAction("Menu", "Home");
         }
+
+        [Authorize]
         public async Task<ActionResult> AddComponentDrink(int OrderID, int DrinkID)
         {
 
@@ -234,6 +240,7 @@ namespace Revature_Project2.Controllers
 
         }
 
+        [Authorize]
         public void AddDrink(Drink Item)
         {
 
@@ -262,6 +269,7 @@ namespace Revature_Project2.Controllers
         }
 
         // POST: Reorder/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -285,6 +293,7 @@ namespace Revature_Project2.Controllers
         }
 
         // POST: Reorder/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -302,12 +311,14 @@ namespace Revature_Project2.Controllers
         }
 
         // GET: Reorder/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: Reorder/Delete/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
